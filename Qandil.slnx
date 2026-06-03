@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Qandil.API/Qandil.API.csproj" />
+  <Project Path="Qandil.Core/Qandil.Core.csproj" />
+  <Project Path="Qandil.Infrastructure/Qandil.Infrastructure.csproj" />
+  <Project Path="Qandil.Service/Qandil.Service.csproj" />
+</Solution>

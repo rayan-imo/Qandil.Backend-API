@@ -1,0 +1,6 @@
+@Qandil.API_HostAddress = http://localhost:5091
+
+GET {{Qandil.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
