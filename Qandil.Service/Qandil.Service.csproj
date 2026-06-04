@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\ChildDto\" />
     <Folder Include="Dtos\ClassRoomDto\Responses\" />
   </ItemGroup>
 

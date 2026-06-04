@@ -1,6 +1,6 @@
-﻿namespace Qandil.Service.Dtos
+﻿namespace Qandil.Service.Dtos.ChildDto.Request
 {
-    public class ChildDto
+    public class ChildRequesDto
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }

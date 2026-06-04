@@ -5,7 +5,7 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.Employee.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Child;
 using Qandil.Service.Validation.Employee;
@@ -36,7 +36,7 @@ namespace Qandil.Service.Services
             return Result<Employee>.Success(employee);
         }
 
-        public async Task<Result<Guid>> AddAsync(EmployeeDto dto)
+        public async Task<Result<Guid>> AddAsync(EmployeeRequestDto dto)
         {
             await new EmployeeValidator().ValidateAndThrowAsync(dto);
             var employee = new Employee
@@ -52,7 +52,7 @@ namespace Qandil.Service.Services
             await _uow.CompleteAsync();
             return Result<Guid>.Success(employee.Id);
         }
-        public async Task<Result<Guid>> UpdateAsync(EmployeeDto dto, Guid id)
+        public async Task<Result<Guid>> UpdateAsync(EmployeeRequestDto dto, Guid id)
         {
             if (id == Guid.Empty)
                 return Result<Guid>.Failure("Employee ID cannot be empty.");

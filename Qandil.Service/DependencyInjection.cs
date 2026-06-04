@@ -11,6 +11,9 @@ public static class DependencyInjection
     {
         services.AddScoped<IEmployeeService,EmployeeService>();
         services.AddScoped<IChildService,ChildService>();
+        services.AddScoped<ILevelService,LevelService>();
+        services.AddScoped<ITestService,TestService>();
+        services.AddScoped<ISchoolService,SchoolService>();
 
         return services;
     }

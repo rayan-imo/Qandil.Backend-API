@@ -12,7 +12,7 @@ using Qandil.Infrastructure.Data;
 namespace Qandil.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260603100622_init")]
+    [Migration("20260604182940_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -350,15 +350,12 @@ namespace Qandil.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrincipalName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SchoolName")
@@ -408,14 +405,10 @@ namespace Qandil.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("EmployeeId")
@@ -428,7 +421,7 @@ namespace Qandil.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("testType")
+                    b.Property<int>("TestType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

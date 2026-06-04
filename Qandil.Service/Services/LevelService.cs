@@ -4,7 +4,7 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.LevelDto.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Level;
 namespace Qandil.Service.Services
@@ -33,7 +33,7 @@ namespace Qandil.Service.Services
             return Result<Level>.Success(level);
         }
 
-        public async Task<Result<Guid>> AddAsync(LevelDto dto)
+        public async Task<Result<Guid>> AddAsync(LevelRequestDto dto)
         {
             await new LevelValidator().ValidateAndThrowAsync(dto);
             var level = new Level
@@ -47,7 +47,7 @@ namespace Qandil.Service.Services
             await _uow.CompleteAsync();
             return Result<Guid>.Success(level.Id);
         }
-        public async Task<Result<Guid>> UpdateAsync(LevelDto dto, Guid id)
+        public async Task<Result<Guid>> UpdateAsync(LevelRequestDto dto, Guid id)
         {
             if (id == Guid.Empty)
                 return Result<Guid>.Failure("Level ID cannot be empty.");

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.ChildDto.Request;
 
 namespace Qandil.Service.Validation.Child
 {
-    public class ChildValidator : AbstractValidator<ChildDto>
+    public class ChildValidator : AbstractValidator<ChildRequesDto>
     {
         public ChildValidator()
         {

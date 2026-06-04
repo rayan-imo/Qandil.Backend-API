@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.LevelDto.Request;
 
 namespace Qandil.Service.Validation.Level
 {
-    public class LevelValidator : AbstractValidator<LevelDto>
+    public class LevelValidator : AbstractValidator<LevelRequestDto>
     {
         public LevelValidator()
         {
