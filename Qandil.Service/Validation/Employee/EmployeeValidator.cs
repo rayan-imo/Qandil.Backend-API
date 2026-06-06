@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.Employee.Request;
 
 namespace Qandil.Service.Validation.Employee
 {
-    public class EmployeeValidator : AbstractValidator<EmployeeDto>
+    public class EmployeeValidator : AbstractValidator<EmployeeRequestDto>
     {
         public EmployeeValidator()
         {

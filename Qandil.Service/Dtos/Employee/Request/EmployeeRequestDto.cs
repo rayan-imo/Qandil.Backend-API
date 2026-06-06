@@ -1,6 +1,6 @@
-﻿namespace Qandil.Service.Dtos
+﻿namespace Qandil.Service.Dtos.Employee.Request
 {
-    public class EmployeeDto
+    public class EmployeeRequestDto
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }

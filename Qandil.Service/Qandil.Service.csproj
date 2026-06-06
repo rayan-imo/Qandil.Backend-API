@@ -28,11 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Classroom\Responses\" />
-    <Folder Include="Dtos\Classroom\Responses\" />
-    <Folder Include="Dtos\Diagnosis\Responses\" />
-    <Folder Include="Dtos\Disability\Responses\" />
-    <Folder Include="Dtos\Program\Responsis\" />
+    <Folder Include="Dtos\ClassRoomDto\Responses\" />
   </ItemGroup>
 
 </Project>

@@ -16,9 +16,9 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.AddService(configuration);
 
 
-//builder.Services.AddControllers(options =>
+//builder.Services.Addcontrollers(options =>
 //{
-//    options.Filters.Add(new HttpResponseExceptionFilter());
+//    options.filters.add(new httpresponseexceptionfilter());
 //});
 var app = builder.Build();
 

@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Qandil.API.Dtos.Requests.Children;
 using Qandil.API.Dtos.Responses.Children;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.ChildDto;
+using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers
@@ -41,9 +42,24 @@ namespace Qandil.API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Add(ChildDto dto)
+        public async Task<IActionResult> Add(ChildRequest childRequest)
         {
-            var result = await _childService.AddAsync(dto);
+            var childDto = new ChildRequesDto
+            {
+                FatherName = childRequest.FatherName,
+                LastName = childRequest.LastName,
+                MotherName = childRequest.MotherName,
+                FirstName = childRequest.FirstName,
+                Address = childRequest.Address,
+                DateOfBirth = childRequest.DateOfBirth,
+                Gender = childRequest.Gender,
+                GuardianName = childRequest.GuardianName,
+                GuardianRelationship = childRequest.GuardianRelationship,
+                GuardianPhoneNumber = childRequest.GuardianPhoneNumber,
+                HasDisability = childRequest.HasDisability,
+
+            };
+            var result = await _childService.AddAsync(childDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -61,9 +77,24 @@ namespace Qandil.API.Controllers
             });
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ChildDto dto, Guid id)
+        public async Task<IActionResult> Update(ChildRequest childRequest, Guid id)
         {
-            var result = await _childService.UpdateAsync(dto, id);
+            var childDto = new ChildRequesDto
+            {
+                FatherName = childRequest.FatherName,
+                LastName = childRequest.LastName,
+                MotherName = childRequest.MotherName,
+                FirstName = childRequest.FirstName,
+                Address = childRequest.Address,
+                DateOfBirth = childRequest.DateOfBirth,
+                Gender = childRequest.Gender,
+                GuardianName = childRequest.GuardianName,
+                GuardianRelationship = childRequest.GuardianRelationship,
+                GuardianPhoneNumber = childRequest.GuardianPhoneNumber,
+                HasDisability = childRequest.HasDisability,
+
+            };
+            var result = await _childService.UpdateAsync(childDto, id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>

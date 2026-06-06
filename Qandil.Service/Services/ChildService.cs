@@ -4,7 +4,7 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.ChildDto;
+using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Child;
 
@@ -34,7 +34,7 @@ namespace Qandil.Service.Services
             return Result<Child>.Success(child);
         }
 
-        public async Task<Result<Guid>> AddAsync(ChildDto dto)
+        public async Task<Result<Guid>> AddAsync(ChildRequesDto dto)
         {
             await new ChildValidator().ValidateAndThrowAsync(dto);
             var child = new Child
@@ -56,7 +56,7 @@ namespace Qandil.Service.Services
             await _uow.CompleteAsync();
             return Result<Guid>.Success(child.Id);
         }
-        public async Task<Result<Guid>> UpdateAsync(ChildDto dto, Guid id)
+        public async Task<Result<Guid>> UpdateAsync(ChildRequesDto dto, Guid id)
         {
             if (id == Guid.Empty)
                 return Result<Guid>.Failure("Child ID cannot be empty.");
@@ -87,7 +87,7 @@ namespace Qandil.Service.Services
         public async Task<Result<bool>> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)
-                return  Result<bool>.Failure("Child ID cannot be empty.");
+                return Result<bool>.Failure("Child ID cannot be empty.");
 
             var child = await _uow.ChildRepository.GetByIdAsync(id);
 
