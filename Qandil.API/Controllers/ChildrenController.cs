@@ -3,7 +3,7 @@ using Qandil.API.Dtos.Responses.Children;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.ChildDto;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers

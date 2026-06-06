@@ -2,6 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface ITestRepository : IBaseRepository<Test> { }
+    public interface ITestRepository : IBaseRepository<Test>
+    {
+    
+    }
 
 }

@@ -1,4 +1,4 @@
-﻿namespace Qandil.Service.Dtos
+﻿namespace Qandil.Service.Dtos.ChildDto
 {
     public class ChildDto
     {

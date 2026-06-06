@@ -12,6 +12,9 @@ namespace Qandil.Infrastructure
         private ISchoolRepository? _schoolRepository;
         private ITestRepository? _testRepository;
         private IChildRepository? _childRepository;
+        private IClassroomRepository? _classroomRepository; 
+        private IDisabilityRepository? _disabilityRepository;
+        private IDiagnosisRepository? _diagnosisRepository;
 
 
 
@@ -24,7 +27,11 @@ namespace Qandil.Infrastructure
         public ISchoolRepository? SchoolRepository=>_schoolRepository??= new SchoolRepository(_context);
         public ITestRepository? TestRepository => _testRepository ??= new TestRepository(_context);
         public IChildRepository? ChildRepository => _childRepository ??= new ChildRepository(_context);
+        public IClassroomRepository? ClassroomRepository => _classroomRepository??=new ClassroomRepository(_context);
+        public IDisabilityRepository? DisabilityRepository=> _disabilityRepository??= new DisabilityRepository(_context);
+        public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);
 
+        
 
         public int Complete()
         {

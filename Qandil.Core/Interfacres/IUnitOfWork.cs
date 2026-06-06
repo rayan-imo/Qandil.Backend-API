@@ -8,6 +8,9 @@
         ITestRepository TestRepository { get; }
         ISchoolRepository SchoolRepository { get; }
         IChildRepository ChildRepository { get; }
+        IClassroomRepository ClassroomRepository { get; }
+        IDiagnosisRepository DiagnosisRepository { get; }
+        IDisabilityRepository DisabilityRepository { get; }
         int Complete();
         public Task<int> CompleteAsync();
     }

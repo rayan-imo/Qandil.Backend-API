@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.ChildDto;
 
 namespace Qandil.Service.Validation.Child
 {

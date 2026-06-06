@@ -2,7 +2,7 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IEmployeeRepository:IBaseRepository<Employee>
+    public interface IDisabilityRepository:IBaseRepository<Disability>
     {
 
     }

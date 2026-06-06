@@ -2,6 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface ILevelRepository : IBaseRepository<Level> { }
+    public interface ILevelRepository : IBaseRepository<Level> 
+    { 
+    
+    }
 
 }

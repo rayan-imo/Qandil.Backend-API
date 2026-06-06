@@ -4,7 +4,7 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.ChildDto;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Child;
 
@@ -87,7 +87,7 @@ namespace Qandil.Service.Services
         public async Task<Result<bool>> DeleteAsync(Guid id)
         {
             if (id == Guid.Empty)
-                return Result<bool>.Failure("Child ID cannot be empty.");
+                return  Result<bool>.Failure("Child ID cannot be empty.");
 
             var child = await _uow.ChildRepository.GetByIdAsync(id);
 

@@ -2,9 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IProgramRepositoy : IBaseRepository<Program>
+    public interface IClassroomRepository : IBaseRepository<Classroom>
     {
-    
+
     }
 
 }

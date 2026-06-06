@@ -1,16 +1,16 @@
 ﻿using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos;
+using Qandil.Service.Dtos.ClassRoom.Requests;
 
 namespace Qandil.Service.IServices
 {
-    public interface IClassreoomService
+    public interface IClassroomService
     {
         public Task<Result<PagedResult<Classroom>>> GetAllAsync(PaginationParameter paginationParameter);
         public Task<Result<Classroom>> GetById(Guid id);
-        public Task<Result<Guid>> AddAsync(ChildDto dto);
-        public Task<Result<Guid>> UpdateAsync(ChildDto dto, Guid id);
+        public Task<Result<Guid>> AddAsync(ClassroomDto dto);
+        public Task<Result<Guid>> UpdateAsync(ClassroomDto dto, Guid id);
         public Task<Result<bool>> DeleteAsync(Guid id);
     }
 }

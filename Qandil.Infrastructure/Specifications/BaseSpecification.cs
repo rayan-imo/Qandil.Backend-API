@@ -1,12 +1,13 @@
 ﻿using Qandil.Core.Common;
 using Qandil.Core.Specifications;
+using Qandil.Infrastructure.Service.Expressions;
 using System.Linq.Expressions;
 
 namespace Qandil.Infrastructure.Specifications
 {
-    public class BaseSpecification<T>: ISpecification<T> where T : BaseEntity
+    public class BaseSpecification<T> : ISpecification<T> where T : BaseEntity
     {
-        public Expression<Func<T, bool>>? Criteria { get;  set; }
+        public Expression<Func<T, bool>>? Criteria { get; set; }
 
         public List<Expression<Func<T, object>>> Includes { get; } = new();
 
@@ -21,7 +22,8 @@ namespace Qandil.Infrastructure.Specifications
         public bool EnableCaching { get; private set; } = false;
         public string? CacheKey { get; private set; }
 
-        public bool IgnoreSoftDeleteFilter {  get; protected set; }
+        public bool IgnoreSoftDeleteFilter { get; protected set; }
+
 
         public BaseSpecification<T> UseCache(string cacheKey)
         {
@@ -35,8 +37,71 @@ namespace Qandil.Infrastructure.Specifications
             Take = pageSize;
             return this;
         }
-        // Helpers
-        protected void ApplyCriteria(Expression<Func<T, bool>> criteria) => Criteria = criteria;
+
+
+        public static BaseSpecification<T> Create()
+        {
+            return new BaseSpecification<T>();
+        }
+
+        public BaseSpecification<T> Where(Expression<Func<T, bool>> filter)
+        {
+            Criteria = filter;
+            return this;
+        }
+
+        public BaseSpecification<T> AndFilter(Expression<Func<T, bool>> filter)
+        {
+            if (Criteria == null)
+                Criteria = filter;
+            else
+                Criteria = Combine(Criteria, filter, Expression.AndAlso);
+            return this;
+        }
+
+        public BaseSpecification<T> OrFilter(Expression<Func<T, bool>> filter)
+        {
+            if (Criteria == null)
+                Criteria = filter;
+            else
+                Criteria = Combine(Criteria, filter, Expression.OrElse);
+            return this;
+        }
+
+        public BaseSpecification<T> AndCompositeFilter(BaseSpecification<T> other)
+        {
+            if (other.Criteria == null) return this;
+            if (Criteria == null)
+                Criteria = other.Criteria;
+            else
+                Criteria = Combine(Criteria, other.Criteria, Expression.AndAlso);
+            return this;
+        }
+
+        public BaseSpecification<T> OrCompositeFilter(BaseSpecification<T> other)
+        {
+            if (other.Criteria == null) return this;
+            if (Criteria == null)
+                Criteria = other.Criteria;
+            else
+                Criteria = Combine(Criteria, other.Criteria, Expression.OrElse);
+            return this;
+        }
+
+
+        private Expression<Func<T, bool>> Combine(
+
+           Expression<Func<T, bool>> left,
+           Expression<Func<T, bool>> right,
+           Func<Expression, Expression, BinaryExpression> combiner)
+        {
+            var param = Expression.Parameter(typeof(T));
+            var leftVisitor = new ReplaceVisitor(left.Parameters[0], param);
+            var rightVisitor = new ReplaceVisitor(right.Parameters[0], param);
+
+            var combined = combiner(leftVisitor.Visit(left.Body), rightVisitor.Visit(right.Body));
+            return Expression.Lambda<Func<T, bool>>(combined, param);
+        }
 
 
         protected void AddInclude(Expression<Func<T, object>> include) => Includes.Add(include);
@@ -46,11 +111,11 @@ namespace Qandil.Infrastructure.Specifications
             Take = take;
         }
 
-        protected void ApplyOrderBy(Expression<Func<T, object>> orderBy)=> OrderBy = orderBy;
+        protected void ApplyOrderBy(Expression<Func<T, object>> orderBy) => OrderBy = orderBy;
         protected void ApplyOrderByDescending(Expression<Func<T, object>> orderByDesc) => OrderByDescending = orderByDesc;
 
 
-        protected void ApplyNoTracking()=> AsNoTracking = true;
+        protected void ApplyNoTracking() => AsNoTracking = true;
 
     }
 }

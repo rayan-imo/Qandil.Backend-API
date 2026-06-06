@@ -2,6 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface ISchoolRepository : IBaseRepository<School> { }
+    public interface ISchoolRepository : IBaseRepository<School>
+    { 
+    
+    }
 
 }

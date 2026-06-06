@@ -2,6 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IChildRepository : IBaseRepository<Child> { }
+    public interface IChildRepository : IBaseRepository<Child>
+    { 
+    
+    }
 
 }
