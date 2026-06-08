@@ -2,7 +2,7 @@
 
 namespace Qandil.Service.Dtos.ClassRoom.Requests
 {
-    public class ClassroomDto
+    public class ClassroomRequestDto
     {
         public Guid ClassroomId { get; set; }   
         public int MaxCapacity { get; set; }

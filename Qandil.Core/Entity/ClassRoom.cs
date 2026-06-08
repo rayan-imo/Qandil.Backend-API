@@ -7,7 +7,7 @@ namespace Qandil.Core.Entity
         public int MaxCapacity { get; set; }
         public int CurrentCapacity { get; set; }
         public Guid? ProgramId { get; set; }
-        public Program? Program { get; set; }
+        public EduProgram? Program { get; set; }
         public Guid? LevelId { get; set; }
         public Level? Level { get; set; }
         public Guid? EmployeeId { get; set; }

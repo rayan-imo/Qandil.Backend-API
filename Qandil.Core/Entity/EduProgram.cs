@@ -2,7 +2,7 @@
 
 namespace Qandil.Core.Entity
 {
-    public class Program: BaseEntity 
+    public class EduProgram: BaseEntity 
     {
         public string Name { get; set; }
         public int SessionNumber { get; set; }

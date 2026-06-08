@@ -1,6 +1,4 @@
 using Qandil.API;
-using Qandil.API.Filters;
-using Qandil.API.Middlewares;
 using Qandil.Infrastructure;
 using Qandil.Service;
 

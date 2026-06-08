@@ -15,7 +15,7 @@ namespace Qandil.Infrastructure.Data
         public DbSet<Test> Tests { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Program> Programs { get; set; }
+        public DbSet<EduProgram> Programs { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<SupportivSession> SupportivSessions { get; set; }
         public DbSet<Tracking> Trackings { get; set; }

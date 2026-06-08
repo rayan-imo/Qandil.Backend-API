@@ -2,7 +2,7 @@
 
 namespace Qandil.Service.Dtos.Diagnosis.Requests
 {
-    public class DiagnosisDto
+    public class DiagnosisRequestDto
     {
         public Guid DiagnosisId { get; set; }
         public DateTime DisabilityOnsetDate { get; set; }

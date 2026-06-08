@@ -8,10 +8,10 @@ namespace Qandil.Service.IServices
 {
     public interface IDisabilityService
     {
-        public Task<Result<PagedResult<Child>>> GetAllAsync(PaginationParameter paginationParameter);
-        public Task<Result<Child>> GetById(Guid id);
-        public Task<Result<Guid>> AddAsync(DisabilityDto dto);
-        public Task<Result<Guid>> UpdateAsync(DiagnosisDto dto, Guid id);
+        public Task<Result<PagedResult<Disability>>> GetAllAsync(PaginationParameter paginationParameter);
+        public Task<Result<Disability>> GetById(Guid id);
+        public Task<Result<Guid>> AddAsync(DisabilityRequestDto dto);
+        public Task<Result<Guid>> UpdateAsync(DisabilityRequestDto dto, Guid id);
         public Task<Result<bool>> DeleteAsync(Guid id);
     }
 }

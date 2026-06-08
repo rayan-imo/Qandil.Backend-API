@@ -14,6 +14,10 @@ public static class DependencyInjection
         services.AddScoped<ILevelService,LevelService>();
         services.AddScoped<ITestService,TestService>();
         services.AddScoped<ISchoolService,SchoolService>();
+        services.AddScoped<IClassroomService,ClassroomService>();
+        services.AddScoped<IEduProgramService,EduProgramService>();
+        services.AddScoped<IDiagnosisService,DiagnosisService>();
+        services.AddScoped<IDisabilityService,DisabilityService>();
 
         return services;
     }

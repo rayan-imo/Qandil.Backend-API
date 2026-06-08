@@ -1,32 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Qandil.API.Dtos.Requests.Children;
-using Qandil.API.Dtos.Requests.Schools;
-using Qandil.API.Dtos.Responses.Children;
-using Qandil.API.Dtos.Responses.Schools;
+﻿using Microsoft.AspNetCore.Mvc;
+using Qandil.API.Dtos.Requests.EduProgram;
+using Qandil.API.Dtos.Responses.EduPrograms;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.SchoolDto.Request;
+using Qandil.Service.Dtos.Program.Requests;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchoolsController(ISchoolService _schoolService) : ControllerBase
+    public class EduProgramsControllers(IEduProgramService _eduProgramService) : ControllerBase
     {
+
         [HttpGet]
-        public async Task<ActionResult<PagedResult<SchoolResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<EduProgramResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
-            var schools = await _schoolService.GetAllAsync(paginationParameter);
-            return Ok(schools?.Value?.MapTo(s => SchoolResponse.Transform(s)));
+            var classroom = await _eduProgramService.GetAllAsync(paginationParameter);
+            return Ok(classroom?.Value?.MapTo(p => EduProgramResponse.Transform(p)));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _schoolService.GetById(id);
+            var result = await _eduProgramService.GetById(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -36,26 +34,25 @@ namespace Qandil.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<School>
+            return Ok(new ApiResponse<EduProgram>
             {
                 Success = true,
-                Message = "School added successfully",
+                Message = "EduProgram added successfully",
                 Data = result.Value
             });
 
         }
         [HttpPost]
-        public async Task<IActionResult> Add(SchoolRequest schoolRequest)
+        public async Task<IActionResult> Add(EduProgramRequest eduProgramRequest)
         {
-            var schoolDto = new SchoolRequestDto
+            var eduProgramDto = new EduProgramRequestDto
             {
-                SchoolName = schoolRequest.SchoolName,
-                PhoneNumber = schoolRequest.PhoneNumber,
-                PrincipalName = schoolRequest.PrincipalName,
-                Address = schoolRequest.Address,
-                Notes = schoolRequest.Notes
+                Name = eduProgramRequest.Name,
+                SessionDuration = eduProgramRequest.SessionDuration,
+                SessionNumber = eduProgramRequest.SessionNumber,
+
             };
-            var result = await _schoolService.AddAsync(schoolDto);
+            var result = await _eduProgramService.AddAsync(eduProgramDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -68,22 +65,21 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "School added successfully",
+                Message = "EduProgram added successfully",
                 Data = result.Value
             });
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(SchoolRequest schoolRequest, Guid id)
+        public async Task<IActionResult> Update(EduProgramRequest eduProgramRequest, Guid id)
         {
-            var schoolDto = new SchoolRequestDto
+            var eduProgramDto = new EduProgramRequestDto
             {
-                SchoolName = schoolRequest.SchoolName,
-                PhoneNumber = schoolRequest.PhoneNumber,
-                PrincipalName = schoolRequest.PrincipalName,
-                Address = schoolRequest.Address,
-                Notes = schoolRequest.Notes
+                Name = eduProgramRequest.Name,
+                SessionDuration = eduProgramRequest.SessionDuration,
+                SessionNumber = eduProgramRequest.SessionNumber,
+
             };
-            var result = await _schoolService.UpdateAsync(schoolDto,id);
+            var result = await _eduProgramService.UpdateAsync(eduProgramDto, id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>
@@ -97,14 +93,14 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "School updated successfully",
+                Message = "EduProgram updated successfully",
                 Data = result.Value
             });
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _schoolService.DeleteAsync(id);
+            var result = await _eduProgramService.DeleteAsync(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -117,7 +113,7 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "School removed successfully",
+                Message = "EduProgram removed successfully",
             });
         }
     }

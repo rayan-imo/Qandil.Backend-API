@@ -1,6 +1,6 @@
-﻿namespace Qandil.Service.Dtos.Disability.Requests
+﻿namespace Qandil.API.Dtos.Requests.Disability
 {
-    public class DisabilityDto
+    public class DisabilityRequest
     {
         public Guid DisabilityId { get; set; }
         public string Name { get; set; }

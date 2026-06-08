@@ -1,32 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Qandil.API.Dtos.Requests.Children;
-using Qandil.API.Dtos.Requests.Schools;
-using Qandil.API.Dtos.Responses.Children;
-using Qandil.API.Dtos.Responses.Schools;
+﻿using Microsoft.AspNetCore.Mvc;
+using Qandil.API.Dtos.Requests.Disability;
+using Qandil.API.Dtos.Responses.Diagnosises;
+using Qandil.API.Dtos.Responses.Disabilities;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.SchoolDto.Request;
+using Qandil.Service.Dtos.Disability.Requests;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchoolsController(ISchoolService _schoolService) : ControllerBase
+    public class DisabilitiesController(IDisabilityService _disabilityService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<PagedResult<SchoolResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<DiagnosisResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
-            var schools = await _schoolService.GetAllAsync(paginationParameter);
-            return Ok(schools?.Value?.MapTo(s => SchoolResponse.Transform(s)));
+            var diagnosises = await _disabilityService.GetAllAsync(paginationParameter);
+            return Ok(diagnosises?.Value?.MapTo(c => DisabilityResponse.Transform(c)));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _schoolService.GetById(id);
+            var result = await _disabilityService.GetById(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -36,26 +34,22 @@ namespace Qandil.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<School>
+            return Ok(new ApiResponse<Disability>
             {
                 Success = true,
-                Message = "School added successfully",
+                Message = "Disabity added successfully",
                 Data = result.Value
             });
 
         }
         [HttpPost]
-        public async Task<IActionResult> Add(SchoolRequest schoolRequest)
+        public async Task<IActionResult> Add(DisabilityRequest disabilityRequest)
         {
-            var schoolDto = new SchoolRequestDto
+            var disabilityDto = new DisabilityRequestDto
             {
-                SchoolName = schoolRequest.SchoolName,
-                PhoneNumber = schoolRequest.PhoneNumber,
-                PrincipalName = schoolRequest.PrincipalName,
-                Address = schoolRequest.Address,
-                Notes = schoolRequest.Notes
+                Name = disabilityRequest.Name,
             };
-            var result = await _schoolService.AddAsync(schoolDto);
+            var result = await _disabilityService.AddAsync(disabilityDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -68,22 +62,18 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "School added successfully",
+                Message = "Disability added successfully",
                 Data = result.Value
             });
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(SchoolRequest schoolRequest, Guid id)
+        public async Task<IActionResult> Update(DisabilityRequest disabilityRequest, Guid id)
         {
-            var schoolDto = new SchoolRequestDto
+            var disabilityDto = new DisabilityRequestDto
             {
-                SchoolName = schoolRequest.SchoolName,
-                PhoneNumber = schoolRequest.PhoneNumber,
-                PrincipalName = schoolRequest.PrincipalName,
-                Address = schoolRequest.Address,
-                Notes = schoolRequest.Notes
+                Name = disabilityRequest.Name,
             };
-            var result = await _schoolService.UpdateAsync(schoolDto,id);
+            var result = await _disabilityService.UpdateAsync(disabilityDto, id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>
@@ -97,14 +87,14 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "School updated successfully",
+                Message = "Disability updated successfully",
                 Data = result.Value
             });
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _schoolService.DeleteAsync(id);
+            var result = await _disabilityService.DeleteAsync(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -117,7 +107,7 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "School removed successfully",
+                Message = "Disability removed successfully",
             });
         }
     }

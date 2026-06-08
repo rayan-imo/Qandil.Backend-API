@@ -19,7 +19,7 @@ namespace Qandil.Core.Entity
         public bool HasDisability { get; set; }
         public Diagnosis? Diagnosis { get; set; }
         public Guid? ProgramId { get; set; }
-        public Program? Program { get; set; }
+        public EduProgram? Program { get; set; }
         public Guid? ClassroomId { get; set; }
         public Classroom? Classroom { get; set; }
 

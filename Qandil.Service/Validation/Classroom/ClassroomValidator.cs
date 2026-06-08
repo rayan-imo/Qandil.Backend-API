@@ -3,7 +3,7 @@ using Qandil.Service.Dtos.ClassRoom.Requests;
 
 namespace Qandil.Service.Validation.Classroom
 {
-    class ClassroomValidator : AbstractValidator<ClassroomDto>
+    class ClassroomValidator : AbstractValidator<ClassroomRequestDto>
     {
         public ClassroomValidator()
         {

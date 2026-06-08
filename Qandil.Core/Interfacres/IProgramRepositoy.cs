@@ -2,7 +2,7 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IProgramRepositoy : IBaseRepository<Program>
+    public interface IProgramRepositoy : IBaseRepository<EduProgram>
     {
     
     }

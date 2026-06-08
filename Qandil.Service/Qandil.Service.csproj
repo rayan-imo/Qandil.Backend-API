@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Qandil.Infrastructure\Qandil.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\ClassRoomDto\Responses\" />
-  </ItemGroup>
-
 </Project>

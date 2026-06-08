@@ -3,13 +3,11 @@ using Qandil.Service.Dtos.Program.Requests;
 
 namespace Qandil.Service.Validation.Program
 {
-    public class ProgramValidator:AbstractValidator<ProgramDto>
+    public class ProgramValidator:AbstractValidator<EduProgramRequestDto>
     {
         public ProgramValidator()
         {
-            RuleFor(x => x.ProgramId)
-            .NotEmpty().WithMessage("معرف البرنامج مطلوب ");
-
+       
             RuleFor(x => x.Name)
             .NotEmpty().WithMessage("اسم البرنامج مطلوب ");
 

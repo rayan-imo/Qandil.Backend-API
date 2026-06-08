@@ -3,7 +3,7 @@ using Qandil.Service.Dtos.Diagnosis.Requests;
 
 namespace Qandil.Service.Validation.Diagnosis
 {
-    public class DiagnosisValidator : AbstractValidator<DiagnosisDto>
+    public class DiagnosisValidator : AbstractValidator<DiagnosisRequestDto>
     {
         public DiagnosisValidator()
         {
