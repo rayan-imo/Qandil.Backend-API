@@ -4,7 +4,6 @@ namespace Qandil.Service.Dtos.Diagnosis.Requests
 {
     public class DiagnosisRequestDto
     {
-        public Guid DiagnosisId { get; set; }
         public DateTime DisabilityOnsetDate { get; set; }
         public string MedicalNots { get; set; }
         public string StatusDescription { get; set; }

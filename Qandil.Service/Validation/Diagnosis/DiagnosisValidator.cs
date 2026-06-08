@@ -7,10 +7,7 @@ namespace Qandil.Service.Validation.Diagnosis
     {
         public DiagnosisValidator()
         {
-            RuleFor(x => x.DiagnosisId)
-              .NotEmpty()
-              .WithMessage(" معرف التشخيص مطلوب ");
-
+            
             RuleFor(x => x.DisabilityOnsetDate)
              .NotEmpty()
              .WithMessage(" تاريخ ظهور الإعاقة مطلوب ");
