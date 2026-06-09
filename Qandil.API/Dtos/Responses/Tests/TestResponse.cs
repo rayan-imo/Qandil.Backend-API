@@ -5,6 +5,7 @@ namespace Qandil.API.Dtos.Responses.Tests
 {
     public class TestResponse
     {
+        public Guid Id { get; set; }
         public string TestName { get; set; }
         public TestType TestType { get; set; }
         public string? Description { get; set; }
@@ -13,6 +14,7 @@ namespace Qandil.API.Dtos.Responses.Tests
         {
             return new TestResponse
             {
+                Id = test.Id,
                 TestName = test.TestName,
                 TestType = test.TestType,
                 Description = test.Description,

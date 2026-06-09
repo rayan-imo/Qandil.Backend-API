@@ -28,17 +28,18 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "الطفل غير موجود",
+                    MessageEn = "Child not found"
                 });
             }
 
             return Ok(new ApiResponse<Child>
             {
                 Success = true,
-                Message = "Child added successfully",
+                MessageAr = "تم جلب بيانات الطفل بنجاح",
+                MessageEn = "Child retrieved successfully",
                 Data = result.Value
             });
-
         }
         [HttpPost]
         public async Task<IActionResult> Add(ChildRequest childRequest)
@@ -64,14 +65,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشلت عملية إضافة الطفل",
+                    MessageEn = "Failed to add child"
                 });
             }
 
-            return Ok(new ApiResponse<Guid>
+            return Ok(new ApiResponse<Child>
             {
                 Success = true,
-                Message = "Child added successfully",
+                MessageAr = "تمت إضافة الطفل بنجاح",
+                MessageEn = "Child added successfully",
                 Data = result.Value
             });
         }
@@ -99,15 +102,17 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل تحديث بيانات الطفل",
+                    MessageEn = "Failed to update child"
 
                 });
             }
 
-            return Ok(new ApiResponse<Guid>
+            return Ok(new ApiResponse<Child>
             {
                 Success = true,
-                Message = "Child updated successfully",
+                MessageAr = "تم تحديث بيانات الطفل بنجاح",
+                MessageEn = "Child updated successfully",
                 Data = result.Value
             });
         }
@@ -120,14 +125,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل حذف الطفل",
+                    MessageEn = "Failed to delete child"
                 });
             }
 
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "Child removed successfully",
+                MessageAr = "تم حذف الطفل بنجاح",
+                MessageEn = "Child deleted successfully"
             });
         }
     }

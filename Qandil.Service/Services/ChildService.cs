@@ -33,7 +33,7 @@ namespace Qandil.Service.Services
             return Result<Child>.Success(child);
         }
 
-        public async Task<Result<Guid>> AddAsync(ChildRequesDto dto)
+        public async Task<Result<Child>> AddAsync(ChildRequesDto dto)
         {
             await new ChildValidator().ValidateAndThrowAsync(dto);
             var child = new Child
@@ -53,17 +53,14 @@ namespace Qandil.Service.Services
             };
             await _uow.ChildRepository.AddAsync(child);
             await _uow.CompleteAsync();
-            return Result<Guid>.Success(child.Id);
+            return Result<Child>.Success(child);
         }
-        public async Task<Result<Guid>> UpdateAsync(ChildRequesDto dto, Guid id)
+        public async Task<Result<Child>> UpdateAsync(ChildRequesDto dto, Guid id)
         {
-            if (id == Guid.Empty)
-                return Result<Guid>.Failure("Child ID cannot be empty.");
-
             var child = await _uow.ChildRepository.GetByIdAsync(id);
 
             if (child == null || child.DeletedAt != null)
-                return Result<Guid>.Failure($"Child with ID was not found.");
+                return Result<Child>.Failure($"Child with ID was not found.");
 
             await new ChildValidator().ValidateAndThrowAsync(dto);
 
@@ -80,7 +77,7 @@ namespace Qandil.Service.Services
             child.HasDisability = dto.HasDisability;
             await _uow.ChildRepository.UpdateAsync(child);
             await _uow.CompleteAsync();
-            return Result<Guid>.Success(child.Id);
+            return Result<Child>.Success(child);
 
         }
         public async Task<Result<bool>> DeleteAsync(Guid id)

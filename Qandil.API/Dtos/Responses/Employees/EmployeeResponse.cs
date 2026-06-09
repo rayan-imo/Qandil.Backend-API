@@ -4,6 +4,7 @@ namespace Qandil.API.Dtos.Responses.Employees
 {
     public class EmployeeResponse
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
@@ -13,6 +14,7 @@ namespace Qandil.API.Dtos.Responses.Employees
         {
             return new EmployeeResponse()
             {
+                Id = employee.Id,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Age = employee.Age,

@@ -24,23 +24,26 @@ namespace Qandil.API.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _testService.GetById(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "الاختبار غير موجود",
+                    MessageEn = "Test not found"
                 });
             }
 
             return Ok(new ApiResponse<Test>
             {
                 Success = true,
-                Message = "Test added successfully",
+                MessageAr = "تم جلب بيانات الاختبار بنجاح",
+                MessageEn = "Test retrieved successfully",
                 Data = result.Value
             });
-
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(TestRequest testRequest)
         {
@@ -49,70 +52,79 @@ namespace Qandil.API.Controllers
                 TestName = testRequest.TestName,
                 TestDate = testRequest.TestDate,
                 TestType = testRequest.testType,
-
             };
+
             var result = await _testService.AddAsync(testDto);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشلت عملية إضافة الاختبار",
+                    MessageEn = "Failed to add test"
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Test added successfully",
+                MessageAr = "تمت إضافة الاختبار بنجاح",
+                MessageEn = "Test added successfully",
                 Data = result.Value
             });
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(TestRequest testRequest, Guid id)
         {
             var testDto = new TestRequestDto
             {
-
                 TestName = testRequest.TestName,
                 TestDate = testRequest.TestDate,
                 TestType = testRequest.testType
             };
+
             var result = await _testService.UpdateAsync(testDto, id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
-                    Message = result.Error
-
+                    MessageAr = "فشل تحديث بيانات الاختبار",
+                    MessageEn = "Failed to update test"
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Test updated successfully",
+                MessageAr = "تم تحديث بيانات الاختبار بنجاح",
+                MessageEn = "Test updated successfully",
                 Data = result.Value
             });
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _testService.DeleteAsync(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل حذف الاختبار",
+                    MessageEn = "Failed to delete test"
                 });
             }
-
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "Test removed successfully",
+                MessageAr = "تم حذف الاختبار بنجاح",
+                MessageEn = "Test deleted successfully"
             });
         }
     }

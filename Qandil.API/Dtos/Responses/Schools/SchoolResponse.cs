@@ -4,6 +4,7 @@ namespace Qandil.API.Dtos.Responses.Schools
 {
     public class SchoolResponse
     {
+        public Guid Id { get; set; }
         public required string SchoolName { get; set; }
         public string? PhoneNumber { get; set; }
         public required string Address { get; set; }
@@ -13,6 +14,7 @@ namespace Qandil.API.Dtos.Responses.Schools
         {
             return new SchoolResponse
             {
+                Id = school.Id,
                 SchoolName = school.SchoolName,
                 PhoneNumber = school.PhoneNumber,
                 Address = school.Address,

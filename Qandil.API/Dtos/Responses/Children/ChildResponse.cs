@@ -3,7 +3,7 @@
 namespace Qandil.API.Dtos.Responses.Children
 {
     public class ChildResponse
-    {
+    {  public Guid Id { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required string MotherName { get; set; }
@@ -20,6 +20,7 @@ namespace Qandil.API.Dtos.Responses.Children
         {
             return new ChildResponse()
             {
+                Id = child.Id,
                 FirstName = child.FirstName,
                 LastName = child.LastName,
                 MotherName = child.MotherName,
