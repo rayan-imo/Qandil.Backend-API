@@ -130,7 +130,6 @@ namespace Qandil.API.Controllers
 
 
             });
-    
 
         }
     }

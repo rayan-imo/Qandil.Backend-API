@@ -1,4 +1,6 @@
 using Qandil.API;
+using Qandil.API.Extensions;
+using Qandil.API.Filters;
 using Qandil.Infrastructure;
 using Qandil.Service;
 
@@ -9,15 +11,16 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();
+builder.Services.AddCustomCors(configuration);
 builder.Services.AddAPI(configuration);
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddService(configuration);
 
 
-//builder.Services.Addcontrollers(options =>
-//{
-//    options.filters.add(new httpresponseexceptionfilter());
-//});
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new HttpResponseExceptionFilter()); 
+});
 var app = builder.Build();
 
 app.UseSwagger();

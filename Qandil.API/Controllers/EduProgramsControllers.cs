@@ -30,24 +30,17 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-<<<<<<< HEAD
                     MessageAr = "البرنامج غير موجود",
                     MessageEn = "Program not found"
-=======
-                    MessageEn = result.Error
->>>>>>> d919681 (Add AuthServices)
                 });
             }
 
             return Ok(new ApiResponse<EduProgram>
             {
                 Success = true,
-<<<<<<< HEAD
                 MessageAr = "تم جلب بيانات البرنامج بنجاح",
                 MessageEn = "Program retrieved successfully",
-=======
-                MessageEn = "EduProgram added successfully",
->>>>>>> d919681 (Add AuthServices)
+
                 Data = result.Value
             });
 
@@ -68,24 +61,17 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-<<<<<<< HEAD
                     MessageAr = "فشلت عملية إضافة البرنامج",
                     MessageEn = "Failed to add program"
-=======
-                    MessageEn = result.Error
->>>>>>> d919681 (Add AuthServices)
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-<<<<<<< HEAD
                 MessageAr = "تمت إضافة البرنامج بنجاح",
                 MessageEn = "Program added successfully",
-=======
-                MessageEn = "EduProgram added successfully",
->>>>>>> d919681 (Add AuthServices)
+
                 Data = result.Value
             });
         }
@@ -105,12 +91,9 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
-<<<<<<< HEAD
                     MessageAr = "فشل تحديث بيانات البرنامج",
                     MessageEn = "Failed to update program"
-=======
-                    MessageEn = result.Error
->>>>>>> d919681 (Add AuthServices)
+
 
                 });
             }
@@ -118,12 +101,8 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-<<<<<<< HEAD
                 MessageAr = "تم تحديث بيانات البرنامج",
                 MessageEn = "Program updated successfully",
-=======
-                MessageEn = "EduProgram updated successfully",
->>>>>>> d919681 (Add AuthServices)
                 Data = result.Value
             });
         }
@@ -136,24 +115,17 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-<<<<<<< HEAD
                     MessageAr = "فشل حذف البرنامج",
                     MessageEn = "Failed to delete program"
-=======
-                    MessageEn = result.Error
->>>>>>> d919681 (Add AuthServices)
                 });
             }
 
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-<<<<<<< HEAD
-                MessageAr = "تم حذف البرنامج بنجاح",
-                MessageEn = "Program deleted successfully"
-=======
-                MessageEn = "EduProgram removed successfully",
->>>>>>> d919681 (Add AuthServices)
+               MessageAr = "تم حذف البرنامج بنجاح",
+               MessageEn = "Program deleted successfully"
+              
             });
         }
     }

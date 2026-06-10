@@ -11,11 +11,8 @@
         IClassroomRepository ClassroomRepository { get; }
         IDiagnosisRepository DiagnosisRepository { get; }
         IDisabilityRepository DisabilityRepository { get; }
-<<<<<<< HEAD
-     
-=======
         IUsersRepository UsersRepository { get; }
->>>>>>> d919681 (Add AuthServices)
+
         int Complete();
         public Task<int> CompleteAsync();
     }
