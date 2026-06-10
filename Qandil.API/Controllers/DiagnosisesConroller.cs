@@ -60,7 +60,7 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                   MessageAr = "فشلت عملية إضافة التشخيص",
+                    MessageAr = "فشلت عملية إضافة التشخيص",
                     MessageEn = "Failed to add Diagnonsise"
 
                 });
@@ -119,7 +119,6 @@ namespace Qandil.API.Controllers
                     Success = false,
                     MessageAr = "فشل حذف التشخيص",
                     MessageEn = "Failed to delete Diagnosise"
-
                 });
             }
 
@@ -128,8 +127,12 @@ namespace Qandil.API.Controllers
                 Success = true,
                 MessageAr = "تم حذف التشخيص بنجاح",
                 MessageEn = "Diagnosise deleted successfully"
-            });
-        }
 
+
+            });
+    
+
+        }
     }
 }
+
