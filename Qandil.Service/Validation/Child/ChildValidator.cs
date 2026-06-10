@@ -23,15 +23,6 @@ namespace Qandil.Service.Validation.Child
             .NotEmpty().WithMessage("اسم الأب مطلوب")
             .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على حروف فقط");
 
-            RuleFor(x => x.GuardianName)
-            .NotEmpty().WithMessage("اسم ولي ألأمر مطلوب")
-            .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على حروف فقط");
-
-            RuleFor(x => x.GuardianPhoneNumber)
-            .NotEmpty().WithMessage("رقم الهاتف مطلوب")
-            .Must(x => x.All(char.IsDigit)).WithMessage("رقم الهاتف يجب أن يحتوي على أرقام فقط")
-            .Length(10).WithMessage("رقم الهاتف يجب أن يحتوي 10 أرقام");
-
             RuleFor(x => x.DateOfBirth)
             .NotEmpty().WithMessage("تاريخ الميلاد مطلوب");
 

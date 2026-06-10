@@ -54,9 +54,6 @@ namespace Qandil.API.Controllers
                 Address = childRequest.Address,
                 DateOfBirth = childRequest.DateOfBirth,
                 Gender = childRequest.Gender,
-                GuardianName = childRequest.GuardianName,
-                GuardianRelationship = childRequest.GuardianRelationship,
-                GuardianPhoneNumber = childRequest.GuardianPhoneNumber,
                 HasDisability = childRequest.HasDisability,
 
             };
@@ -91,10 +88,7 @@ namespace Qandil.API.Controllers
                 Address = childRequest.Address,
                 DateOfBirth = childRequest.DateOfBirth,
                 Gender = childRequest.Gender,
-                GuardianName = childRequest.GuardianName,
-                GuardianRelationship = childRequest.GuardianRelationship,
-                GuardianPhoneNumber = childRequest.GuardianPhoneNumber,
-                HasDisability = childRequest.HasDisability,
+               HasDisability = childRequest.HasDisability,
 
             };
             var result = await _childService.UpdateAsync(childDto, id);

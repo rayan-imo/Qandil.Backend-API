@@ -46,10 +46,8 @@ namespace Qandil.Service.Services
                 MotherName = dto.MotherName,
                 FatherName = dto.FatherName,
                 Gender = dto.Gender,
-                GuardianName = dto.GuardianName,
-                GuardianPhoneNumber = dto.GuardianPhoneNumber,
-                GuardianRelationship = dto.GuardianRelationship,
                 HasDisability = dto.HasDisability,
+                JoiningDate = dto.JoiningDate,
 
             };
             await _uow.ChildRepository.AddAsync(child);
@@ -72,10 +70,8 @@ namespace Qandil.Service.Services
             child.MotherName = dto.MotherName;
             child.FatherName = dto.FatherName;
             child.Gender = dto.Gender;
-            child.GuardianName = dto.GuardianName;
-            child.GuardianPhoneNumber = dto.GuardianPhoneNumber;
-            child.GuardianRelationship = dto.GuardianRelationship;
             child.HasDisability = dto.HasDisability;
+            child.JoiningDate = dto.JoiningDate;
             await _uow.ChildRepository.UpdateAsync(child);
             await _uow.CompleteAsync();
             return Result<Child>.Success(child);
