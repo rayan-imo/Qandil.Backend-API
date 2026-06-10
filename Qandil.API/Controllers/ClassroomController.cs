@@ -29,14 +29,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "الصف غير موجود",
+                    MessageEn = "Classroom not found"
                 });
             }
 
             return Ok(new ApiResponse<Classroom>
             {
                 Success = true,
-                Message = "Classroom added successfully",
+                MessageAr = "تم جلب بيانات الصف بنجاح",
+                MessageEn = "Classroom retrieved successfully",
                 Data = result.Value
             });
 
@@ -60,14 +62,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشلت عملية إضافة الصف",
+                    MessageEn = "Failed to add Classroom"
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Child added successfully",
+                MessageAr = "تمت إضافة الصف بنجاح",
+                MessageEn = "Child added successfully",
                 Data = result.Value
             });
         }
@@ -90,7 +94,8 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل تحديث بيانات الصف",
+                    MessageEn = "Failed to update classroom"
 
                 });
             }
@@ -98,7 +103,8 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Classroom updated successfully",
+                MessageAr = "تم تحديث بيانات الصف بنجاح",
+                MessageEn = "Classroom updated successfully",
                 Data = result.Value
             });
         }
@@ -111,14 +117,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل حذف الصف",
+                    MessageEn = "Failed to delete classroom"
                 });
             }
 
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "Classroom removed successfully",
+                MessageAr = "تم حذف الصف بنجاح",
+                MessageEn = "Classroom deleted successfully"
             });
         }
 

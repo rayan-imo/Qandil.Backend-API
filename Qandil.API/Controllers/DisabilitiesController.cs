@@ -15,7 +15,7 @@ namespace Qandil.API.Controllers
     public class DisabilitiesController(IDisabilityService _disabilityService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<PagedResult<DiagnosisResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<DisabilityResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
             var diagnosises = await _disabilityService.GetAllAsync(paginationParameter);
             return Ok(diagnosises?.Value?.MapTo(c => DisabilityResponse.Transform(c)));
@@ -30,14 +30,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "الإعاقة غير موجودة",
+                    MessageEn = "Disability not found"
                 });
             }
 
             return Ok(new ApiResponse<Disability>
             {
                 Success = true,
-                Message = "Disabity added successfully",
+                MessageAr = "تم جلب بيانات الإعاقة بنجاح",
+                MessageEn = "Disability retrieved successfully",
                 Data = result.Value
             });
 
@@ -55,14 +57,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشلت عملية إضافة الإعاقة",
+                    MessageEn = "Failed to add disability"
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Disability added successfully",
+                MessageAr = "تمت إضافة الإعاقة بنجاح",
+                MessageEn = "Disability added successfully",
                 Data = result.Value
             });
         }
@@ -79,7 +83,8 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل تحديث بيانات الإعاقة",
+                    MessageEn = "Failed to update disability"
 
                 });
             }
@@ -87,7 +92,8 @@ namespace Qandil.API.Controllers
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
-                Message = "Disability updated successfully",
+                MessageAr = "تم تحديث بيانات الإعاقة",
+                MessageEn = "Disability updated successfully",
                 Data = result.Value
             });
         }
@@ -100,14 +106,16 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    Message = result.Error
+                    MessageAr = "فشل حذف الإعاقة",
+                    MessageEn = "Failed to delete Disability"
                 });
             }
 
             return Ok(new ApiResponse<bool>
             {
                 Success = true,
-                Message = "Disability removed successfully",
+                MessageAr = "تم حذف الإعاقة بنجاح",
+                MessageEn = "Disability deleted successfully"
             });
         }
     }

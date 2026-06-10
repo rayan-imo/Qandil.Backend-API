@@ -15,7 +15,8 @@ namespace Qandil.Infrastructure
         private IClassroomRepository? _classroomRepository; 
         private IDisabilityRepository? _disabilityRepository;
         private IDiagnosisRepository? _diagnosisRepository;
-
+        private IQuestionRepository? _questionRepository;
+        private IAnswerRepository? _answerRepository;
 
 
 
@@ -30,8 +31,8 @@ namespace Qandil.Infrastructure
         public IClassroomRepository? ClassroomRepository => _classroomRepository??=new ClassroomRepository(_context);
         public IDisabilityRepository? DisabilityRepository=> _disabilityRepository??= new DisabilityRepository(_context);
         public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);
-
-        
+        public IQuestionRepository? QuestionRepository => _questionRepository??= new QuestionRepository(_context);  
+        public IAnswerRepository AnswerRepository => _answerRepository??= new AnswerRepository(_context);
 
         public int Complete()
         {
