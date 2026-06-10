@@ -89,30 +89,23 @@ namespace Qandil.Service.Services
             if (id == Guid.Empty)
                 return Result<bool>.Failure("Classroom ID cannot be empty.");
 
-<<<<<<< HEAD
             var classroom = await _uow.ClassroomRepository.GetByIdAsync(id);
-=======
-            var child = await _uow.ChildRepository.GetByIdAsync(id);
->>>>>>> ee749da (AddEmployeeControllerAndEditResponseMessage)
 
             if (classroom == null || classroom.DeletedAt != null)
                 return Result<bool>.Failure("Classroom with iD was not found ");
 
             classroom.DeletedAt = DateTime.UtcNow;
             await _uow.CompleteAsync();
-
             return Result<bool>.Success(true);
-<<<<<<< HEAD
-=======
-        }
->>>>>>> ee749da (AddEmployeeControllerAndEditResponseMessage)
 
         }
-
-
-
 
     }
 
 
+
+
 }
+
+
+

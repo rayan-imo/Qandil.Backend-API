@@ -14,7 +14,7 @@ namespace Qandil.Core.Entity
 
         public ICollection<DiagnosisDisability> DiagnosisDisabilities { get; set; }
         public ICollection<ReEvalution>? ReEvalutions { get; set; }
-        public ICollection<Answer> Answers { get; set; }
+      
 
 
 
