@@ -12,5 +12,6 @@ namespace Qandil.Service.IServices
         public Task<Result<Guid>> AddAsync(DiagnosisRequestDto dto);
         public Task<Result<Guid>> UpdateAsync(DiagnosisRequestDto dto, Guid id);
         public Task<Result<bool>> DeleteAsync(Guid id);
+
     }
 }

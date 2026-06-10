@@ -11,8 +11,7 @@
         IClassroomRepository ClassroomRepository { get; }
         IDiagnosisRepository DiagnosisRepository { get; }
         IDisabilityRepository DisabilityRepository { get; }
-        IQuestionRepository QuestionRepository { get; }
-        IAnswerRepository AnswerRepository { get; }
+     
         int Complete();
         public Task<int> CompleteAsync();
     }
