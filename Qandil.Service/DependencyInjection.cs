@@ -1,7 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Qandil.Service.IServices;
 using Qandil.Service.Services;
+using Qandil.Services.AuthServices.GenerateToken;
+using Qandil.Services.AuthServices.Hasher;
+using Qandil.Services.AuthServices.Helper;
+using Qandil.Services.AuthServices.Service;
+using Qandil.Services.AuthServices.Services;
+using System.Text;
 
 namespace Qandil.Service;
 
@@ -9,7 +17,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddService(this IServiceCollection services, IConfiguration config)
     {
-        services.AddScoped<IEmployeeService,EmployeeService>();
+        services.Configure<JWT>(config.GetSection("JWT")); services.AddScoped<IEmployeeService,EmployeeService>();
         services.AddScoped<IChildService,ChildService>();
         services.AddScoped<ILevelService,LevelService>();
         services.AddScoped<ITestService,TestService>();
@@ -18,7 +26,36 @@ public static class DependencyInjection
         services.AddScoped<IEduProgramService,EduProgramService>();
         services.AddScoped<IDiagnosisService,DiagnosisService>();
         services.AddScoped<IDisabilityService,DisabilityService>();
+        services.AddScoped<IAuthService,AuthService>();
+        services.AddScoped<IPasswordHasher,PasswordHasher>();
+        services.AddScoped<IGenerateTokenJwt, GenerateTokenJwt>();
 
+        return services;
+
+    }
+    public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration config)
+    {
+        services.Configure<JWT>(config.GetSection("JWT"));
+
+        var jwt = config.GetSection("JWT").Get<JWT>();
+
+        services.AddAuthentication(option =>
+        {
+            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            o.RequireHttpsMetadata = false;
+            o.SaveToken = false;
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Secret))
+            };
+        });
         return services;
     }
 

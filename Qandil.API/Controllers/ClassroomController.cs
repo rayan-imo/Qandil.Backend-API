@@ -1,25 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Qandil.API.Dtos.Requests.Classroom;
-using Qandil.API.Dtos.Responses.Classrooms;
-using Qandil.Core.Common;
-using Qandil.Core.Dtos;
-using Qandil.Core.Entity;
-using Qandil.Service.Dtos.ClassRoom.Requests;
-using Qandil.Service.IServices;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Qandil.API.Dtos.Requests.Classroom;
+//using Qandil.API.Dtos.Responses.Classrooms;
+//using Qandil.Core.Common;
+//using Qandil.Core.Dtos;
+//using Qandil.Core.Entity;
+//using Qandil.Service.Dtos.ClassRoom.Requests;
+//using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ClassroomController(IClassroomService _classroomService) : ControllerBase
-    {
-        [HttpGet]
-        public async Task<ActionResult<PagedResult<ClassroomResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
-        {
-            var classroom = await _classroomService.GetAllAsync(paginationParameter);
-            return Ok(classroom?.Value?.MapTo(c => ClassroomResponse.Transform(c)));
-        }
+//namespace Qandil.API.Controllers
+//{
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class ClassroomController(IClassroomService _classroomService) : ControllerBase
+//    {
+//        [HttpGet]
+//        public async Task<ActionResult<PagedResult<ClassroomResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+//        {
+//            var classroom = await _classroomService.GetAllAsync(paginationParameter);
+//            return Ok(classroom?.Value?.MapTo(c => ClassroomResponse.Transform(c)));
+//        }
 
+<<<<<<< HEAD
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -96,10 +97,84 @@ namespace Qandil.API.Controllers
                     Success = false,
                     MessageAr = "فشل تحديث بيانات الصف",
                     MessageEn = "Failed to update classroom"
+=======
+//        [HttpGet("{id}")]
+//        public async Task<IActionResult> GetById(Guid id)
+//        {
+//            var result = await _classroomService.GetById(id);
+//            if (!result.IsSuccess)
+//            {
+//                return BadRequest(new ApiResponse<string>
+//                {
+//                    Success = false,
+//                    Message = result.Error
+//                });
+//            }
 
-                });
-            }
+//            return Ok(new ApiResponse<Classroom>
+//            {
+//                Success = true,
+//                Message = "Classroom added successfully",
+//                Data = result.Value
+//            });
 
+//        }
+//        [HttpPost]
+//        public async Task<IActionResult> Add(ClassroomRequest classroomRequest)
+//        {
+//            var classroomDto = new ClassroomRequestDto
+//            {
+//                ClassroomId = classroomRequest.ClassroomId,
+//                MaxCapacity = classroomRequest.MaxCapacity,
+//                CurrentCapacity = classroomRequest.CurrentCapacity,
+//                ProgramId = classroomRequest.ProgramId,
+//                LevelId = classroomRequest.LevelId,
+//                EmployeeId = classroomRequest.EmployeeId,
+
+//            };
+//            var result = await _classroomService.AddAsync(classroomDto);
+//            if (!result.IsSuccess)
+//            {
+//                return BadRequest(new ApiResponse<string>
+//                {
+//                    Success = false,
+//                    Message = result.Error
+//                });
+//            }
+
+//            return Ok(new ApiResponse<Guid>
+//            {
+//                Success = true,
+//                Message = "Child added successfully",
+//                Data = result.Value
+//            });
+//        }
+//        [HttpPut("{id}")]
+//        public async Task<IActionResult> Update(ClassroomRequest classroomRequest, Guid id)
+//        {
+//            var classroomDto = new ClassroomRequestDto
+//            {
+//                ClassroomId = classroomRequest.ClassroomId,
+//                MaxCapacity = classroomRequest.MaxCapacity,
+//                CurrentCapacity = classroomRequest.CurrentCapacity,
+//                ProgramId = classroomRequest.ProgramId,
+//                LevelId = classroomRequest.LevelId,
+//                EmployeeId = classroomRequest.EmployeeId,
+
+//            };
+//            var result = await _classroomService.UpdateAsync(classroomDto, id);
+//            if (!result.IsSuccess)
+//            {
+//                return BadRequest(new ApiResponse<object>
+//                {
+//                    Success = false,
+//                    Message = result.Error
+>>>>>>> d919681 (Add AuthServices)
+
+//                });
+//            }
+
+<<<<<<< HEAD
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
@@ -129,6 +204,34 @@ namespace Qandil.API.Controllers
                 MessageEn = "Classroom deleted successfully"
             });
         }
+=======
+//            return Ok(new ApiResponse<Guid>
+//            {
+//                Success = true,
+//                Message = "Classroom updated successfully",
+//                Data = result.Value
+//            });
+//        }
+//        [HttpDelete("{id}")]
+//        public async Task<IActionResult> Delete(Guid id)
+//        {
+//            var result = await _classroomService.DeleteAsync(id);
+//            if (!result.IsSuccess)
+//            {
+//                return BadRequest(new ApiResponse<string>
+//                {
+//                    Success = false,
+//                    Message = result.Error
+//                });
+//            }
 
-    }
-}
+//            return Ok(new ApiResponse<bool>
+//            {
+//                Success = true,
+//                Message = "Classroom removed successfully",
+//            });
+//        }
+>>>>>>> d919681 (Add AuthServices)
+
+//    }
+//}

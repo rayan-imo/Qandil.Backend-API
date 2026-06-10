@@ -15,7 +15,12 @@ namespace Qandil.Infrastructure
         private IClassroomRepository? _classroomRepository; 
         private IDisabilityRepository? _disabilityRepository;
         private IDiagnosisRepository? _diagnosisRepository;
+<<<<<<< HEAD
         
+=======
+        private IUsersRepository? _usersRepository;
+
+>>>>>>> d919681 (Add AuthServices)
 
 
 
@@ -29,7 +34,13 @@ namespace Qandil.Infrastructure
         public IClassroomRepository? ClassroomRepository => _classroomRepository??=new ClassroomRepository(_context);
         public IDisabilityRepository? DisabilityRepository=> _disabilityRepository??= new DisabilityRepository(_context);
         public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);
+<<<<<<< HEAD
       
+=======
+        public IUsersRepository? UsersRepository=> _usersRepository??= new UsersRepository(_context);
+
+        
+>>>>>>> d919681 (Add AuthServices)
 
         public int Complete()
         {

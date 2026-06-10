@@ -12,9 +12,22 @@ namespace Qandil.Core.Entity
         public DateTime JoiningDate {  get; set; }
         public string MotherName { get; set; }
         public string FatherName { get; set; }
+<<<<<<< HEAD
        
 
         public DateTime DateOfBirth { get; set; }
+=======
+        public string? Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string BirthPlace { get; set; }
+        public string GuardianName { get; set; }
+        public string GuardianPhoneNumber { get; set; }
+        public string GuardianRelationship { get; set; }
+        public EducationLevel FatherEducationLevel { get; set; }
+        public EducationLevel MotherEducationLevel { get; set; }
+        public int ChildOrderAmongSiblings { get; set; }
+        public int TotalFamilyMembers { get; set; }
+>>>>>>> d919681 (Add AuthServices)
         public string Address { get; set; }
         public bool HasDisability { get; set; }
         public Diagnosis? Diagnosis { get; set; }

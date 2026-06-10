@@ -22,6 +22,7 @@ namespace Qandil.Infrastructure.Data
         public DbSet<ChildTest> ChildTests { get; set; }
         public DbSet<Classroom> Classrooms { get; set; }
         public DbSet<Level> Levels { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<ReEvalution> ReEvalutions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

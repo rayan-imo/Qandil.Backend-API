@@ -60,8 +60,9 @@ namespace Qandil.API.Controllers
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    MessageAr = "فشلت عملية إضافة التشخيص",
+                   MessageAr = "فشلت عملية إضافة التشخيص",
                     MessageEn = "Failed to add Diagnonsise"
+
                 });
             }
 
@@ -70,6 +71,7 @@ namespace Qandil.API.Controllers
                 Success = true,
                 MessageAr = "تمت إضافة التشخيص بنجاح",
                 MessageEn = "Diagnonsise added successfully",
+
                 Data = result.Value
             });
         }
@@ -93,15 +95,16 @@ namespace Qandil.API.Controllers
                     MessageAr = "فشل تحديث بيانات التشخيص",
                     MessageEn = "Failed to update diagnonsise"
 
-
                 });
             }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
+
                 MessageAr = "تم تحديث بيانات التشخيص بنجاح",
                 MessageEn = "Diagnonsise updated successfully",
+
                 Data = result.Value
             });
         }
@@ -116,6 +119,7 @@ namespace Qandil.API.Controllers
                     Success = false,
                     MessageAr = "فشل حذف التشخيص",
                     MessageEn = "Failed to delete Diagnosise"
+
                 });
             }
 

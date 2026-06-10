@@ -97,9 +97,18 @@ namespace Qandil.Service.Services
             classroom.DeletedAt = DateTime.UtcNow;
             await _uow.CompleteAsync();
             return Result<bool>.Success(true);
+<<<<<<< HEAD
 
         }
 
+=======
+
+
+        }
+
+
+
+>>>>>>> d919681 (Add AuthServices)
     }
 
 

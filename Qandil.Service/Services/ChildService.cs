@@ -7,6 +7,8 @@ using Qandil.Infrastructure.Specifications;
 using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Child;
+using System.Net;
+using System.Reflection;
 
 namespace Qandil.Service.Services
 {
@@ -14,7 +16,7 @@ namespace Qandil.Service.Services
     {
         public async Task<Result<PagedResult<Child>>> GetAllAsync(PaginationParameter paginationParameter)
         {
-            var spec = new BaseSpecification<Child>()                       
+            var spec = new BaseSpecification<Child>()
             {
                 Criteria = x => x.DeletedAt == null
             }.Paginate(paginationParameter.page, paginationParameter.pageSize);
@@ -42,10 +44,22 @@ namespace Qandil.Service.Services
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Address = dto.Address,
+                Gender = dto.Gender,
                 DateOfBirth = dto.DateOfBirth,
+                BirthPlace = dto.BirthPlace,
                 MotherName = dto.MotherName,
                 FatherName = dto.FatherName,
+<<<<<<< HEAD
                 Gender = dto.Gender,
+=======
+                FatherEducationLevel = dto.FatherEducationLevel,
+                MotherEducationLevel = dto.MotherEducationLevel,
+                TotalFamilyMembers = dto.TotalFamilyMembers,
+                ChildOrderAmongSiblings = dto.ChildOrderAmongSiblings,
+                GuardianName = dto.GuardianName,
+                GuardianPhoneNumber = dto.GuardianPhoneNumber,
+                GuardianRelationship = dto.GuardianRelationship,
+>>>>>>> d919681 (Add AuthServices)
                 HasDisability = dto.HasDisability,
                 JoiningDate = dto.JoiningDate,
 
@@ -66,12 +80,26 @@ namespace Qandil.Service.Services
             child.FirstName = dto.FirstName;
             child.LastName = dto.LastName;
             child.Address = dto.Address;
+            child.Gender = dto.Gender;
             child.DateOfBirth = dto.DateOfBirth;
+            child.BirthPlace = dto.BirthPlace;
             child.MotherName = dto.MotherName;
             child.FatherName = dto.FatherName;
+<<<<<<< HEAD
             child.Gender = dto.Gender;
             child.HasDisability = dto.HasDisability;
             child.JoiningDate = dto.JoiningDate;
+=======
+            child.FatherEducationLevel = dto.FatherEducationLevel;
+            child.MotherEducationLevel = dto.MotherEducationLevel;
+            child.TotalFamilyMembers = dto.TotalFamilyMembers;
+            child.ChildOrderAmongSiblings = dto.ChildOrderAmongSiblings;
+            child.GuardianName = dto.GuardianName;
+            child.GuardianPhoneNumber = dto.GuardianPhoneNumber;
+            child.GuardianRelationship = dto.GuardianRelationship;
+            child.HasDisability = dto.HasDisability;
+
+>>>>>>> d919681 (Add AuthServices)
             await _uow.ChildRepository.UpdateAsync(child);
             await _uow.CompleteAsync();
             return Result<Child>.Success(child);
