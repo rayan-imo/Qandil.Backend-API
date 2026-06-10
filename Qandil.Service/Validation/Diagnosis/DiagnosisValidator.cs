@@ -22,7 +22,7 @@ namespace Qandil.Service.Validation.Diagnosis
             .WithMessage(" معرف أخصائي التشخيص مطلوب ");
 
 
-            RuleFor(x => x.EmployeeId)
+            RuleFor(x => x.ChildId)
               .NotEmpty()
              .WithMessage(" معرف الطفل مطلوب ");
 

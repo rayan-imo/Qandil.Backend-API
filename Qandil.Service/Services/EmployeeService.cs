@@ -79,12 +79,12 @@ namespace Qandil.Service.Services
             if (id == Guid.Empty)
                 return Result<bool>.Failure("Child ID cannot be empty.");
 
-            var child = await _uow.ChildRepository.GetByIdAsync(id);
+            var employee = await _uow.EmployeeRepository.GetByIdAsync(id);
 
-            if (child == null || child.DeletedAt != null)
+            if (employee == null || employee.DeletedAt != null)
                 return Result<bool>.Failure($"Child with ID was not found.");
 
-            child.DeletedAt = DateTime.UtcNow;
+            employee.DeletedAt = DateTime.UtcNow;
             await _uow.CompleteAsync();
 
             return Result<bool>.Success(true);

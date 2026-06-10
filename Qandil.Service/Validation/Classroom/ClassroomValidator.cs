@@ -22,6 +22,10 @@ namespace Qandil.Service.Validation.Classroom
             RuleFor(x => x.EmployeeId)
           .NotEmpty().WithMessage("معرف المعلم للصف مطلوب ");
 
+            RuleFor(x => x.CurrentCapacity)
+           .LessThanOrEqualTo(x => x.MaxCapacity)
+           .WithMessage("السعة الحالية لا يمكن أن تتجاوز السعة العظمى");
+
         }
     }
 }
