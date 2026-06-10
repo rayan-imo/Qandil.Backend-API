@@ -48,7 +48,7 @@ namespace Qandil.API.Controllers
         {
             var classroomDto = new ClassroomRequestDto
             {
-                ClassroomId = classroomRequest.ClassroomId,
+              
                 MaxCapacity = classroomRequest.MaxCapacity,
                 CurrentCapacity = classroomRequest.CurrentCapacity,
                 ProgramId = classroomRequest.ProgramId,
@@ -80,7 +80,7 @@ namespace Qandil.API.Controllers
         {
             var classroomDto = new ClassroomRequestDto
             {
-                ClassroomId = classroomRequest.ClassroomId,
+              
                 MaxCapacity = classroomRequest.MaxCapacity,
                 CurrentCapacity = classroomRequest.CurrentCapacity,
                 ProgramId = classroomRequest.ProgramId,

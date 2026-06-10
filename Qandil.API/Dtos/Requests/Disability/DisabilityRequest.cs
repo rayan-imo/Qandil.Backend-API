@@ -2,7 +2,7 @@
 {
     public class DisabilityRequest
     {
-        public Guid DisabilityId { get; set; }
+        
         public string Name { get; set; }
     }
 }

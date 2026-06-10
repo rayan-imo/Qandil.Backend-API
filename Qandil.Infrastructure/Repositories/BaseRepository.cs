@@ -243,7 +243,7 @@ namespace Qandil.Infrastructure.Repositories
                 exist = await query.AnyAsync();
             }
 
-            return false;
+            return exist;
         }
         public async Task<bool> AnyAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes)
         {
