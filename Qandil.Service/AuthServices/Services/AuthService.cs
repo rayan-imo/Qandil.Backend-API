@@ -5,6 +5,7 @@ using Qandil.Services.AuthServices.GenerateToken;
 using Qandil.Services.AuthServices.Services;
 using Qandil.Services.AuthServices.Helper;
 using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 
 namespace Qandil.Services.AuthServices.Service;
 
@@ -29,6 +30,7 @@ public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
             Email = model.Email,
             Name = model.Name,
             Password = haspassword,
+            Role=RoleType.User
         };
         await _uow.UsersRepository.AddAsync(user);
 
