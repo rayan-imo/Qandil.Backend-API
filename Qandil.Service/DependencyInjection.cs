@@ -9,6 +9,7 @@ using Qandil.Services.AuthServices.Hasher;
 using Qandil.Services.AuthServices.Helper;
 using Qandil.Services.AuthServices.Service;
 using Qandil.Services.AuthServices.Services;
+using System.Security.Claims;
 using System.Text;
 
 namespace Qandil.Service;
@@ -53,7 +54,8 @@ public static class DependencyInjection
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Secret))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Secret)),
+                RoleClaimType=ClaimTypes.Role
             };
         });
         return services;

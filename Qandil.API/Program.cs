@@ -15,6 +15,8 @@ builder.Services.AddCustomCors(configuration);
 builder.Services.AddAPI(configuration);
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddService(configuration);
+builder.Services.AddAuthentication(configuration);
+builder.Services.AddAuthorization();
 
 
 builder.Services.AddControllers(options =>

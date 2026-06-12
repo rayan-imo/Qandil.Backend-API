@@ -16,10 +16,10 @@ namespace Qandil.Service.Services
     {
         public async Task<Result<PagedResult<Employee>>> GetAllAsync(PaginationParameter paginationParameter)
         {
-            var spec = new BaseSpecification<Employee>()
-            {
-                Criteria = x => x.DeletedAt == null
-            }.Paginate(paginationParameter.page, paginationParameter.pageSize);
+            var spec = BaseSpecification<Employee>
+                .Create()
+                .Where(x => x.DeletedAt == null)
+                .Paginate(paginationParameter.page, paginationParameter.pageSize);
 
             return Result<PagedResult<Employee>>.Success(await _uow.EmployeeRepository.PagedListAsync(spec));
         }

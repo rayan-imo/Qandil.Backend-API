@@ -14,11 +14,10 @@ namespace Qandil.Service.Services
     {
         public async Task<Result<PagedResult<School>>> GetAllAsync(PaginationParameter paginationParameter)
         {
-            var spec = new BaseSpecification<School>()
-            {
-                Criteria = x => x.DeletedAt == null
-            }.Paginate(paginationParameter.page, paginationParameter.pageSize);
-
+            var spec = BaseSpecification<School>
+                .Create()
+                .Where(x => x.DeletedAt == null)
+                .Paginate(paginationParameter.page, paginationParameter.pageSize);
             return Result<PagedResult<School>>.Success(await _uow.SchoolRepository.PagedListAsync(spec));
         }
         public async Task<Result<School>> GetById(Guid id)
