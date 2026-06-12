@@ -14,7 +14,7 @@ namespace Qandil.Service.Services
     {
         public async Task<Result<PagedResult<Test>>> GetAllAsync(PaginationParameter paginationParameter)
         {
-            var spac = BaseSpecification<Test>
+            var spec = BaseSpecification<Test>
                  .Create()
                  .Where(x => x.DeletedAt == null)
                  .Paginate(paginationParameter.page, paginationParameter.pageSize);
