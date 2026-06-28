@@ -5,8 +5,8 @@ namespace Qandil.Services.AuthServices.Helper;
 
 public class RegisterModel
 {
-    [MaxLength(20)]
-    public required string Name {  get; set; }
+//    [MaxLength(20)]
+//    public required string Name {  get; set; }
 
     [EmailAddress(ErrorMessage = "Invalid email format.")]
     [MaxLength(50)]

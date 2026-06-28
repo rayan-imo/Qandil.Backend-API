@@ -8,7 +8,7 @@ namespace Qandil.Core.Enums
 {
     public enum Gender
     {
-        male,
+        Male,
         Fmale,
         
     }

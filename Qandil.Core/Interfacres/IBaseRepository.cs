@@ -1,4 +1,5 @@
-﻿using Qandil.Core.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using Qandil.Core.Common;
 using Qandil.Core.Consts;
 using Qandil.Core.Specifications;
 using System.Linq.Expressions;
@@ -31,6 +32,8 @@ namespace Qandil.Core.Interfacres
         Task<bool> AnyAsync(Expression<Func<T, bool>>? filter = null);
         Task<bool> AnyAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes);
         Task<int> CountAsync();
+        Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        
         Task<IEnumerable<T>> GetBySpecAsync(ISpecification<T> spec);
         public Task<IEnumerable<TResult>> GetProjectedAsync<TResult>(ISpecification<T> spec);
     }

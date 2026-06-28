@@ -1,4 +1,4 @@
-﻿namespace Qandil.Services.AuthServices.Hasher;
+﻿namespace Qandil.Core.AuthServices.Hasher;
 
 public interface IPasswordHasher
 {

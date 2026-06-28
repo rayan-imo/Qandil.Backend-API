@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.AspNetCore.Identity;
+using Qandil.Core.AuthServices.Hasher;
+using System.Security.Cryptography;
 
 namespace Qandil.Services.AuthServices.Hasher;
 

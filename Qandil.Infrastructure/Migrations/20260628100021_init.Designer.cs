@@ -12,7 +12,7 @@ using Qandil.Infrastructure.Data;
 namespace Qandil.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260604182940_init")]
+    [Migration("20260628100021_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid?>("ClassroomId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
@@ -52,23 +55,14 @@ namespace Qandil.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GuardianName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GuardianPhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GuardianRelationship")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("HasDisability")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("JoiningDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -99,6 +93,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -122,6 +119,9 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.Property<Guid?>("ChildTestId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CurrentCapacity")
                         .HasColumnType("int");
@@ -163,6 +163,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -196,6 +199,9 @@ namespace Qandil.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -220,6 +226,9 @@ namespace Qandil.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -232,6 +241,34 @@ namespace Qandil.Infrastructure.Migrations
                     b.ToTable("Disabilities");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.EduProgram", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SessionNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Programs");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -240,6 +277,9 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -270,6 +310,9 @@ namespace Qandil.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -287,36 +330,14 @@ namespace Qandil.Infrastructure.Migrations
                     b.ToTable("Levels");
                 });
 
-            modelBuilder.Entity("Qandil.Core.Entity.Program", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SessionDuration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SessionNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Programs");
-                });
-
             modelBuilder.Entity("Qandil.Core.Entity.ReEvalution", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -345,6 +366,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -376,6 +400,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid?>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -404,6 +431,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -440,6 +470,9 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid?>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -466,6 +499,66 @@ namespace Qandil.Infrastructure.Migrations
                     b.ToTable("Trackings");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Qandil.Core.Entity.UserOtp", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserOtp");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Child", b =>
                 {
                     b.HasOne("Qandil.Core.Entity.Classroom", "Classroom")
@@ -473,7 +566,7 @@ namespace Qandil.Infrastructure.Migrations
                         .HasForeignKey("ClassroomId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Qandil.Core.Entity.Program", "Program")
+                    b.HasOne("Qandil.Core.Entity.EduProgram", "Program")
                         .WithMany("Children")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -519,7 +612,7 @@ namespace Qandil.Infrastructure.Migrations
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Qandil.Core.Entity.Program", "Program")
+                    b.HasOne("Qandil.Core.Entity.EduProgram", "Program")
                         .WithMany("Classrooms")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -573,7 +666,7 @@ namespace Qandil.Infrastructure.Migrations
 
             modelBuilder.Entity("Qandil.Core.Entity.Level", b =>
                 {
-                    b.HasOne("Qandil.Core.Entity.Program", "Program")
+                    b.HasOne("Qandil.Core.Entity.EduProgram", "Program")
                         .WithMany("Levels")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -666,6 +759,15 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("DiagnosisDisabilities");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.EduProgram", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("Classrooms");
+
+                    b.Navigation("Levels");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Employee", b =>
                 {
                     b.Navigation("Classrooms");
@@ -682,15 +784,6 @@ namespace Qandil.Infrastructure.Migrations
             modelBuilder.Entity("Qandil.Core.Entity.Level", b =>
                 {
                     b.Navigation("Classrooms");
-                });
-
-            modelBuilder.Entity("Qandil.Core.Entity.Program", b =>
-                {
-                    b.Navigation("Children");
-
-                    b.Navigation("Classrooms");
-
-                    b.Navigation("Levels");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.School", b =>

@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Qandil.Service.AuthServices.Helper.Dtos;
+using Qandil.Service.AuthServices.Helper.Dtos.OtpDto.Request;
 using Qandil.Services.AuthServices.Helper;
 using Qandil.Services.AuthServices.Services;
 
@@ -42,6 +46,37 @@ namespace Qandil.API.Controllers
                 return BadRequest(result.Message);
             }
 
+            return Ok(result);
+        }
+        [Authorize(Policy = "CreateAdminPolicy")]
+        [HttpPost("create-admin")]
+        public async Task<IActionResult> CreateAdmin(CreateAdminDto dto)
+        {
+            var result = await _authService.CreateAdminAsync(dto);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgetPasswordRequestDto dto)
+        {
+            var result = await _authService.ForgetPasswordAsync(dto);
+            return Ok(result);
+        }
+
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp(VerifyOtpRequestDto dto)
+        {
+            var result = await _authService.VerfiyOtpAsync(dto);
+            return Ok(result);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto dto)
+        {
+            var result = await _authService.ResetPasswordAsync(dto);
             return Ok(result);
         }
     }

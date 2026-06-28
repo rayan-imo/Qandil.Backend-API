@@ -10,9 +10,6 @@ using Qandil.Service.Validation.Classroom;
 
 namespace Qandil.Service.Services
 {
-
-
-
     public class ClassroomService(IUnitOfWork _uow) : IClassroomService
     {
 

@@ -12,7 +12,7 @@ namespace Qandil.Services.AuthServices.GenerateToken;
 public class GenerateTokenJwt(IOptions<JWT> jwt) :IGenerateTokenJwt
 {
     private readonly IOptions<JWT> _jwt = jwt;
-    public string GenerateAccessToken(Guid userId, RoleType role, string Name, string? email = null)
+    public string GenerateAccessToken(Guid userId, RoleType role,string? email = null)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Value.Secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -20,7 +20,6 @@ public class GenerateTokenJwt(IOptions<JWT> jwt) :IGenerateTokenJwt
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new(ClaimTypes.Name, Name),
             new(ClaimTypes.Role, role.ToString()),
         };
 

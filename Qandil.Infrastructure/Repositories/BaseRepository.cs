@@ -105,7 +105,12 @@ namespace Qandil.Infrastructure.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            IQueryable<T> query = _context.Set<T>().Where(predicate);
 
+            return await query.ToListAsync();
+        }
         public async Task<T> GetByIdAsync(Guid Id)
         {
             return await _context.Set<T>().FindAsync(Id);
@@ -218,7 +223,7 @@ namespace Qandil.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> FindAllItemsAsync(Expression<Func<T, bool>> predicate)
         {
             IQueryable<T> query = _context.Set<T>().Where(predicate);
 

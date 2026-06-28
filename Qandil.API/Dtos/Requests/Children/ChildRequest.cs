@@ -6,7 +6,7 @@ namespace Qandil.API.Dtos.Requests.Children
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-        public required Gender? Gender { get; set; }
+        public required Gender Gender { get; set; }
         public required DateTime JoiningDate { get; set; }
         public required string MotherName { get; set; }
         public required string FatherName { get; set; }

@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Qandil.Core.AuthServices.Hasher;
+using Qandil.Core.Interfacres.EmailService;
+using Qandil.Infrastructure.Service.EmailService;
 using Qandil.Service.IServices;
 using Qandil.Service.Services;
 using Qandil.Services.AuthServices.GenerateToken;
@@ -30,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthService,AuthService>();
         services.AddScoped<IPasswordHasher,PasswordHasher>();
         services.AddScoped<IGenerateTokenJwt, GenerateTokenJwt>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
 

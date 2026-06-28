@@ -16,6 +16,7 @@ namespace Qandil.Infrastructure
         private IDisabilityRepository? _disabilityRepository;
         private IDiagnosisRepository? _diagnosisRepository;
         private IUsersRepository? _usersRepository;
+        private IUserOtpRepository? _usersOtpRepository;
 
 
         public IEmployeeRepository? EmployeeRepository=>_employeeRepository??= new EmployeeRepository(_context);
@@ -29,6 +30,7 @@ namespace Qandil.Infrastructure
         public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);
 
         public IUsersRepository? UsersRepository=> _usersRepository??= new UsersRepository(_context);
+        public IUserOtpRepository? UserOtpRepository=> _usersOtpRepository??= new UserOtpRepository(_context);
 
    
 

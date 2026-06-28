@@ -12,6 +12,7 @@
         IDiagnosisRepository DiagnosisRepository { get; }
         IDisabilityRepository DisabilityRepository { get; }
         IUsersRepository UsersRepository { get; }
+        IUserOtpRepository UserOtpRepository { get; }
 
         int Complete();
         public Task<int> CompleteAsync();

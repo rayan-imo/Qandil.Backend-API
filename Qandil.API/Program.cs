@@ -2,6 +2,7 @@ using Qandil.API;
 using Qandil.API.Extensions;
 using Qandil.API.Filters;
 using Qandil.Infrastructure;
+using Qandil.Infrastructure.Data;
 using Qandil.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +20,19 @@ builder.Services.AddAuthentication(configuration);
 builder.Services.AddAuthorization();
 
 
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new HttpResponseExceptionFilter()); 
 });
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+    await seeder.SeedSuperAdminAsync();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
