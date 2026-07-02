@@ -79,7 +79,7 @@ namespace Qandil.Infrastructure.Repositories
         // Asynchronous 
         public async Task<T?> GetByIdWithAllIncludes(Guid id)
         {
-            var entityType = _context.Model.FindEntityType(typeof(T)); 
+            var entityType = _context.Model.FindEntityType(typeof(T));
             if (entityType == null) return null;
 
             IQueryable<T> query = _context.Set<T>();
@@ -105,12 +105,7 @@ namespace Qandil.Infrastructure.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
-        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
-        {
-            IQueryable<T> query = _context.Set<T>().Where(predicate);
 
-            return await query.ToListAsync();
-        }
         public async Task<T> GetByIdAsync(Guid Id)
         {
             return await _context.Set<T>().FindAsync(Id);
@@ -223,7 +218,7 @@ namespace Qandil.Infrastructure.Repositories
             return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<IEnumerable<T>> FindAllItemsAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
         {
             IQueryable<T> query = _context.Set<T>().Where(predicate);
 
@@ -350,7 +345,7 @@ namespace Qandil.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetBySpecAsync( ISpecification<T> spec)
+        public async Task<IEnumerable<T>> GetBySpecAsync(ISpecification<T> spec)
         {
             var query = SpecificationEvaluator<T>.GetQuery(
                 _context.Set<T>(),

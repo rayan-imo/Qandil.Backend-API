@@ -1,7 +1,6 @@
 ﻿using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.Diagnosis.Requests;
 using Qandil.Service.Dtos.Disability.Requests;
 
 namespace Qandil.Service.IServices

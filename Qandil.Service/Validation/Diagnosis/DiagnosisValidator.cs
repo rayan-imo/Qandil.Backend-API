@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos.Diagnosis.Requests;
+using Qandil.Service.Dtos.DiagnosisDto.Requests;
 
 namespace Qandil.Service.Validation.Diagnosis
 {
@@ -7,14 +7,10 @@ namespace Qandil.Service.Validation.Diagnosis
     {
         public DiagnosisValidator()
         {
-            
+
             RuleFor(x => x.DisabilityOnsetDate)
              .NotEmpty()
              .WithMessage(" تاريخ ظهور الإعاقة مطلوب ");
-
-            RuleFor(x => x.StatusDescription)
-            .NotEmpty()
-            .WithMessage(" وصف الحالة مطلوب ");
 
 
             RuleFor(x => x.EmployeeId)

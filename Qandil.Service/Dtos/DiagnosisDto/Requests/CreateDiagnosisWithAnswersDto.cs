@@ -1,15 +1,17 @@
-﻿using Qandil.Core.Entity;
+﻿using Qandil.Service.Dtos.AnswerDto.Requests;
 
 namespace Qandil.Service.Dtos.DiagnosisDto.Requests
 {
-    public class DiagnosisRequestDto
+    public class CreateDiagnosisWithAnswersDto
     {
-
-        public Guid DiagnosisId {  get; set; }
         public DateTime DisabilityOnsetDate { get; set; }
-        public string MedicalNots { get; set; }
+
+        public string? MedicalNots { get; set; }
+
         public Guid EmployeeId { get; set; }
+
         public Guid ChildId { get; set; }
 
+        public List<AnswerRequestDto> Answers { get; set; }
     }
 }

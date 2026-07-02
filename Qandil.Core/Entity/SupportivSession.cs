@@ -8,7 +8,8 @@ namespace Qandil.Core.Entity
         public string SessionDuration { get; set; }
         public Child Child { get; set; }
         public Guid? ChildId { get; set; }
-       // public SessionType SessionType { get; set; }
+
+       // public SessionType SessionType  { get; set; }
 
 
     }

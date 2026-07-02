@@ -13,6 +13,9 @@
         IDisabilityRepository DisabilityRepository { get; }
         IUsersRepository UsersRepository { get; }
         IUserOtpRepository UserOtpRepository { get; }
+        IQuestionRepository QuestionRepository { get; }
+        IAnswerRepository AnswerRepository { get; }
+        IEvaluationCardRepository EvaluationCardRepository { get; }
 
         int Complete();
         public Task<int> CompleteAsync();

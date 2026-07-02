@@ -4,10 +4,8 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.Diagnosis.Requests;
 using Qandil.Service.Dtos.UserDto.Request;
 using Qandil.Service.IServices;
-using Qandil.Service.Validation.Diagnosis;
 using Qandil.Service.Validation.User;
 
 public class UserService(IUnitOfWork _uow) : IUserService

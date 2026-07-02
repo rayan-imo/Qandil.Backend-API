@@ -18,6 +18,10 @@ namespace Qandil.Infrastructure
         private IUsersRepository? _usersRepository;
         private IUserOtpRepository? _usersOtpRepository;
 
+        private IQuestionRepository? _questionRepository;
+        private IAnswerRepository? _answerRepository;
+        public IEvaluationCardRepository _evaluationCardRepository;
+
 
         public IEmployeeRepository? EmployeeRepository=>_employeeRepository??= new EmployeeRepository(_context);
         public IProgramRepositoy? ProgramRepositoy=>_programRepositoy??= new ProgramRepository(_context);
@@ -31,8 +35,12 @@ namespace Qandil.Infrastructure
 
         public IUsersRepository? UsersRepository=> _usersRepository??= new UsersRepository(_context);
         public IUserOtpRepository? UserOtpRepository=> _usersOtpRepository??= new UserOtpRepository(_context);
+        public IQuestionRepository? QuestionRepository => _questionRepository ??= new QuestionRepository(_context);
+        public IAnswerRepository? AnswerRepository => _answerRepository ??= new AnswerRepository(_context);
 
-   
+        public IEvaluationCardRepository EvaluationCardRepository => _evaluationCardRepository ??= new EvaluationCardRepository(_context);
+
+
 
         public int Complete()
         {

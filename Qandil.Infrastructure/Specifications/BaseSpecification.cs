@@ -110,7 +110,17 @@ namespace Qandil.Infrastructure.Specifications
             Skip = skip;
             Take = take;
         }
+        public BaseSpecification<T> OrderByAsc(Expression<Func<T, object>> orderBy)
+        {
+            OrderBy = orderBy;
+            return this;
+        }
 
+        public BaseSpecification<T> OrderByDesc(Expression<Func<T, object>> orderBy)
+        {
+            OrderByDescending = orderBy;
+            return this;
+        }
         protected void ApplyOrderBy(Expression<Func<T, object>> orderBy) => OrderBy = orderBy;
         protected void ApplyOrderByDescending(Expression<Func<T, object>> orderByDesc) => OrderByDescending = orderByDesc;
 
