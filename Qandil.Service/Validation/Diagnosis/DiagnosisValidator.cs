@@ -7,6 +7,7 @@ namespace Qandil.Service.Validation.Diagnosis
     {
         public DiagnosisValidator()
         {
+           
 
             RuleFor(x => x.DisabilityOnsetDate)
              .NotEmpty()

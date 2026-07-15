@@ -4,6 +4,7 @@ namespace Qandil.API.Dtos.Responses.Diagnosises
 {
     public class DiagnosisResponse
     {
+        public Guid Id { get; set; }
         public DateTime DisabilityOnsetDate { get; set; }
         public string MedicalNots { get; set; }
         public Guid EmployeeId { get; set; }
@@ -13,6 +14,7 @@ namespace Qandil.API.Dtos.Responses.Diagnosises
         {
             return new DiagnosisResponse
             {
+                Id=diagnosi.Id,
                 DisabilityOnsetDate = diagnosi.DisabilityOnsetDate,
                 MedicalNots = diagnosi.MedicalNots,
                 EmployeeId = diagnosi.EmployeeId,

@@ -11,7 +11,7 @@ namespace Qandil.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EduProgramsControllers(IEduProgramService _eduProgramService) : ControllerBase
+    public class EduProgramsController(IEduProgramService _eduProgramService) : ControllerBase
     {
 
         [HttpGet]

@@ -24,7 +24,6 @@ namespace Qandil.Infrastructure.Data
         public DbSet<Level> Levels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOtp> UserOtp{ get; set; }
-        public DbSet<ReEvalution> ReEvalutions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<EvaluationCard> EvaluationCards { get; set; }

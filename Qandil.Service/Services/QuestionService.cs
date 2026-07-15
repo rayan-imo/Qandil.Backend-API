@@ -34,17 +34,25 @@ namespace Qandil.Service.Services
                 .AndFilter(q => q.CardName == cardName)
                 .OrderByAsc(q => q.Order);
 
-            var CardQuestions = await _uof.QuestionRepository.ListAsync(spec);
+            var cardQuestions = await _uof.QuestionRepository.ListAsync(spec);
 
-            return Result<List<Question>>.Success(CardQuestions);
+            if (cardQuestions == null || !cardQuestions.Any())
+
+                return Result<List<Question>>.Failure($"There are no questions for this card {cardName}");
+
+            return Result<List<Question>>.Success(cardQuestions);
 
         }
         public async Task<Result<List<Question>>> GetDiagnosisQuestions()
         {
 
-            var DiagnosisQuestion = await _uof.QuestionRepository.GetDiagnosisQuestionsAsync();
+            var diagnosisQuestion = await _uof.QuestionRepository.GetDiagnosisQuestionsAsync();
+            
+            if(diagnosisQuestion == null || !diagnosisQuestion.Any())
+                return Result<List<Question>>.Failure($"There are no questions ");
 
-            return Result<List<Question>>.Success(DiagnosisQuestion);
+
+            return Result<List<Question>>.Success(diagnosisQuestion);
 
         }
 

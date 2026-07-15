@@ -12,7 +12,7 @@ using Qandil.Infrastructure.Data;
 namespace Qandil.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260702091539_init")]
+    [Migration("20260715121438_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -77,6 +77,9 @@ namespace Qandil.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ClassInSchool")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("ClassroomId")
                         .HasColumnType("uniqueidentifier");
 
@@ -88,6 +91,12 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("FamilyMembers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FatherJob")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FatherName")
                         .IsRequired()
@@ -110,9 +119,22 @@ namespace Qandil.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MotherJob")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MotherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceOfBearth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PostTestResilt")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PreEduTestResult")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("ProgramId")
                         .HasColumnType("uniqueidentifier");
@@ -421,6 +443,7 @@ namespace Qandil.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MainTitle")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Options")
@@ -442,33 +465,6 @@ namespace Qandil.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("Qandil.Core.Entity.ReEvalution", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("DiagnosisId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiagnosisId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("ReEvalutions");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.School", b =>
@@ -523,7 +519,7 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Nmae")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -818,23 +814,6 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("Program");
                 });
 
-            modelBuilder.Entity("Qandil.Core.Entity.ReEvalution", b =>
-                {
-                    b.HasOne("Qandil.Core.Entity.Diagnosis", "Diagnosis")
-                        .WithMany("ReEvalutions")
-                        .HasForeignKey("DiagnosisId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Qandil.Core.Entity.Employee", "Employee")
-                        .WithMany("ReEvalutions")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Diagnosis");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("Qandil.Core.Entity.SupportivSession", b =>
                 {
                     b.HasOne("Qandil.Core.Entity.Child", "Child")
@@ -896,8 +875,6 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("DiagnosisDisabilities");
 
                     b.Navigation("EvaluationCards");
-
-                    b.Navigation("ReEvalutions");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Disability", b =>
@@ -919,8 +896,6 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("Classrooms");
 
                     b.Navigation("Diagnoses");
-
-                    b.Navigation("ReEvalutions");
 
                     b.Navigation("SupportivSessions");
 

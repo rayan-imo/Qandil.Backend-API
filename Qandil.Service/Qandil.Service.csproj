@@ -28,4 +28,9 @@
     <ProjectReference Include="..\Qandil.Infrastructure\Qandil.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validation\EvaluateCard\" />
+    <Folder Include="Validation\Answer\" />
+  </ItemGroup>
+
 </Project>

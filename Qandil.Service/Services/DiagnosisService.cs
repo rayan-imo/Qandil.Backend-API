@@ -45,8 +45,15 @@ namespace Qandil.Service.Services
         public async Task<Result<Diagnosis>> AddAsync(DiagnosisRequestDto dto)
         {
             await new DiagnosisValidator().ValidateAndThrowAsync(dto);
+            var child = _uow.ChildRepository.GetById(dto.ChildId);
+            if (child == null)
+                return Result<Diagnosis>.Failure("الطفل غير موجود ");
+            var employee= _uow.EmployeeRepository.GetById(dto.EmployeeId);
+            if (employee == null)
+                return Result<Diagnosis>.Failure("الموظف غير موجود");
             var diagnosis = new Diagnosis
             {
+                Id=Guid.NewGuid(),
                 DisabilityOnsetDate = dto.DisabilityOnsetDate,
                 MedicalNots = dto.MedicalNots,
                 ChildId = dto.ChildId,

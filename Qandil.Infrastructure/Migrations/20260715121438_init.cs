@@ -65,7 +65,7 @@ namespace Qandil.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CardName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
@@ -207,12 +207,19 @@ namespace Qandil.Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PlaceOfBearth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClassInSchool = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JoiningDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HasDisability = table.Column<bool>(type: "bit", nullable: false),
                     MotherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FatherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FatherJob = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MotherJob = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FamilyMembers = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HasDisability = table.Column<bool>(type: "bit", nullable: false),
+                    PreEduTestResult = table.Column<int>(type: "int", nullable: true),
+                    PostTestResilt = table.Column<int>(type: "int", nullable: true),
                     ProgramId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ClassroomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -285,7 +292,7 @@ namespace Qandil.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nmae = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SessionDuration = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ChildId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -422,31 +429,6 @@ namespace Qandil.Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ReEvalutions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DiagnosisId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReEvalutions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ReEvalutions_Diagnoses_DiagnosisId",
-                        column: x => x.DiagnosisId,
-                        principalTable: "Diagnoses",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ReEvalutions_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_DiagnosisId",
                 table: "Answers",
@@ -529,16 +511,6 @@ namespace Qandil.Infrastructure.Migrations
                 column: "ProgramId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReEvalutions_DiagnosisId",
-                table: "ReEvalutions",
-                column: "DiagnosisId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReEvalutions_EmployeeId",
-                table: "ReEvalutions",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SupportivSessions_ChildId",
                 table: "SupportivSessions",
                 column: "ChildId");
@@ -595,9 +567,6 @@ namespace Qandil.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "EvaluationCards");
-
-            migrationBuilder.DropTable(
-                name: "ReEvalutions");
 
             migrationBuilder.DropTable(
                 name: "SupportivSessions");

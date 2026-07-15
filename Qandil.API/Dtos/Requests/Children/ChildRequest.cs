@@ -12,6 +12,6 @@ namespace Qandil.API.Dtos.Requests.Children
         public required string FatherName { get; set; }
         public required DateTime DateOfBirth { get; set; }
         public required string Address { get; set; }
-        public bool HasDisability { get; set; }
+        public bool HasDisability { get; set; } 
     }
 }

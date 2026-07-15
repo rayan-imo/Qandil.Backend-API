@@ -11,8 +11,10 @@ namespace Qandil.Core.Entity
         public Diagnosis Diagnosis { get; set; }
         public string CardName { get; set; }
         public string MainTitleScoresJson { get; set; }
-     
-    [NotMapped]
+       public int TotalScore { get; set; }
+        public string EvaluationMessage { get; set; }
+
+        [NotMapped]
         public Dictionary<string, int> MainTitleScores
         {
             get => string.IsNullOrEmpty(MainTitleScoresJson)
@@ -21,9 +23,7 @@ namespace Qandil.Core.Entity
             set => MainTitleScoresJson = JsonSerializer.Serialize(value);
         }
 
-        public int TotalScore { get; set; }
-        public string EvaluationMessage { get; set; }
-
+      
 
     }
 }

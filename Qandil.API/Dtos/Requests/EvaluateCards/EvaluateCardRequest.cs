@@ -1,6 +1,8 @@
-﻿namespace Qandil.Service.Dtos.AnswerDto.Requests
+﻿using Qandil.Service.Dtos.AnswerDto.Requests;
+
+namespace Qandil.API.Dtos.Requests.EvaluateCards
 {
-    public class EvaluateCardRequestDto
+    public class EvaluateCardRequest
     {
 
         public Guid DiagnosisId { get; set; }

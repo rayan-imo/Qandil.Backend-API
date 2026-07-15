@@ -6,7 +6,7 @@ namespace Qandil.Core.Entity
     public class Question : BaseEntity
     {
         public string? CardName { get; set; }
-        public string? MainTitle { get; set; }
+        public string MainTitle { get; set; }
         public string? SubTitle { get; set; }
 
         public string QuestionText { get; set; }

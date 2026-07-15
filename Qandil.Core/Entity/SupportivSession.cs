@@ -4,7 +4,7 @@ namespace Qandil.Core.Entity
 {
     public class SupportivSession:BaseEntity
     {
-        public string Nmae { get; set; }
+        public string Name { get; set; }
         public string SessionDuration { get; set; }
         public Child Child { get; set; }
         public Guid? ChildId { get; set; }

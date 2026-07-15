@@ -74,6 +74,8 @@ namespace Qandil.Service.Services
             {
                 var evaluation = new EvaluationCard
                 {
+                    Id = Guid.NewGuid(),
+                    DiagnosisId = dto.DiagnosisId,
                     CardName = dto.CardName,
                     MainTitleScores = new Dictionary<string, int>(),
                     TotalScore = 0,
@@ -85,14 +87,19 @@ namespace Qandil.Service.Services
 
             var questionIds = cardQuestions.Select(q => q.Id).ToList();
 
+            
             var oldAnswers = await _uow.AnswerRepository
                 .FindAllAsync(a => a.DiagnosisId == dto.DiagnosisId && questionIds.Contains(a.QuestionId));
 
-            foreach (var old in oldAnswers)
+            if(oldAnswers.Any())
             {
-                old.DeletedAt = DateTime.UtcNow;
-            }
+                foreach (var old in oldAnswers)
+                {
+                    old.DeletedAt = DateTime.UtcNow;
+                }
 
+            }
+            
             foreach (var answerDto in dto.Answers)
             {
                 var answer = new Answer
@@ -144,6 +151,7 @@ namespace Qandil.Service.Services
         {
             var result = new EvaluationCard
             {
+                Id = Guid.NewGuid(),
                 CardName = cardName,
                 MainTitleScores = new Dictionary<string, int>(),
                 TotalScore = 0,

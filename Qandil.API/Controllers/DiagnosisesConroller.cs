@@ -84,6 +84,7 @@ namespace Qandil.API.Controllers
         {
             var diagnosisDto = new DiagnosisRequestDto
             {
+                DiagnosisId= Guid.NewGuid(),
                 DisabilityOnsetDate = diagnosisRequest.DisabilityOnsetDate,
                 MedicalNots = diagnosisRequest.MedicalNots,
                 EmployeeId = diagnosisRequest.EmployeeId,
