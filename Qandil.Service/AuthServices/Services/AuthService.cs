@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
-using Qandil.Core.AuthServices.Hasher;
+﻿using Qandil.Core.AuthServices.Hasher;
 using Qandil.Core.Common;
 using Qandil.Core.Entity;
 using Qandil.Core.Enums;
@@ -10,20 +8,14 @@ using Qandil.Service.AuthServices.Helper.Dtos;
 using Qandil.Service.AuthServices.Helper.Dtos.OtpDto.Request;
 using Qandil.Service.AuthServices.Helper.EmailTemplates;
 using Qandil.Services.AuthServices.GenerateToken;
-using Qandil.Services.AuthServices.Hasher;
 using Qandil.Services.AuthServices.Helper;
 using Qandil.Services.AuthServices.Services;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
-
-
-
-
 namespace Qandil.Services.AuthServices.Service;
 
 public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
-    IGenerateTokenJwt _generateTokenJwt,IEmailService _emailService) : IAuthService
+    IGenerateTokenJwt _generateTokenJwt, IEmailService _emailService) : IAuthService
 {
- private AuthModel _authModel;
+    private AuthModel _authModel;
     public async Task<AuthModel> RegisterAsync(RegisterModel model)
     {
         if (await _uow.UsersRepository.GetByItemAsync(u => u.Email == model.Email) is not null)
@@ -103,20 +95,31 @@ public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
             Message = "Admin created successfully"
         };
     }
-       public async Task<Result<string>> ForgetPasswordAsync(ForgetPasswordRequestDto dto)
-       {
+    public async Task<Result<string>> ForgetPasswordAsync(ForgetPasswordRequestDto dto)
+    {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
 
         if (user is null)
         {
             return Result<string>.Failure("Account not found.");
         }
+        var oldOtps = await _uow.UserOtpRepository.FindAllAsync(
+    o => o.UserId == user.Id && !o.IsUsed);
+
+        foreach (var oldOtp in oldOtps)
+        {
+            oldOtp.IsUsed = true;
+            await _uow.UserOtpRepository.UpdateAsync(oldOtp);
+        
+        }
 
         var otp = new Random().Next(100000, 999999).ToString();
 
-        await _emailService.SendEmailAsync( user.Email, "Password Reset Verification Code", EmailTemplate.ResetPAsswordOtp(otp));
+
+        await _emailService.SendEmailAsync(user.Email, "Password Reset Verification Code", EmailTemplate.ResetPAsswordOtp(otp));
 
         var hashCode = _passwordHasher.HashPassword(otp);
+        Console.WriteLine($"Hash: {hashCode}");
 
         var result = new UserOtp
         {
@@ -124,16 +127,16 @@ public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
             Email = user.Email,
             Code = hashCode,
             IsUsed = false,
-            CreatedAt=DateTime.UtcNow,
-            ExpireDate = DateTime.UtcNow.AddMinutes(5)
+            CreatedAt = DateTime.UtcNow,
+            ExpireDate = DateTime.UtcNow.AddMinutes(10)
         };
 
         await _uow.UserOtpRepository.AddAsync(result);
         await _uow.CompleteAsync();
         return Result<string>.Success("A verification code has been sent to your email.");
 
-      }
-    public async  Task<Result<string>> VerfiyOtpAsync(VerifyOtpRequestDto dto)
+    }
+    public async Task<Result<string>> VerfiyOtpAsync(VerifyOtpRequestDto dto)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
         if (user == null)
@@ -143,19 +146,24 @@ public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
         var otps = await _uow.UserOtpRepository.FindAllAsync(o => o.UserId == user.Id
         && o.IsUsed == false);
         var otp = otps.OrderByDescending(o => o.CreatedAt).FirstOrDefault();
+        if (otp == null)
+        { 
+            return Result<string>.Failure("Invalid verification code,Please request a new one."); 
+        }
 
-        var verfiy = _passwordHasher.VerifyHashedPassword(otp.Code,dto.Otp);
+        var verfiy = _passwordHasher.VerifyHashedPassword(otp.Code, dto.Otp);
 
-        if (otp == null || !verfiy || DateTime.Now > otp.ExpireDate)
+        if (!verfiy || DateTime.UtcNow > otp.ExpireDate)
         {
             return Result<string>.Failure("Invalid verification code,Please request a new one.");
         }
         otp.IsUsed = true;
-        await _uow.UserOtpRepository.UpdateAsync(otp);
+  
         await _uow.CompleteAsync();
         return Result<string>.Success("Verification code confirmed successfully.");
+
     }
-    public async  Task<Result<string>> ResetPasswordAsync(ResetPasswordRequestDto dto)
+    public async Task<Result<string>> ResetPasswordAsync(ResetPasswordRequestDto dto)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
         if (user == null)
