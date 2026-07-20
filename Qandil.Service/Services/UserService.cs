@@ -36,7 +36,7 @@ public class UserService(IUnitOfWork _uow) : IUserService
         return Result<User>.Success(user);
     }
 
-    public async Task<Result<Guid>> AddAsync(UserRequestdto dto)
+    public async Task<Result<User>> AddAsync(UserRequestdto dto)
     {
         await new UserValidator().ValidateAndThrowAsync(dto);
         var user = new User
@@ -49,21 +49,21 @@ public class UserService(IUnitOfWork _uow) : IUserService
 
         await _uow.UsersRepository.AddAsync(user);
         await _uow.CompleteAsync();
-        return Result<Guid>.Success(user.Id);
+        return Result<User>.Success(user);
 
 
     }
 
-    public async Task<Result<Guid>> UpdateAsync(UserRequestdto dto, Guid id)
+    public async Task<Result<User>> UpdateAsync(UserRequestdto dto, Guid id)
     {
 
         if (id == Guid.Empty)
-            return Result<Guid>.Failure("User ID cannot be empty.");
+            return Result<User>.Failure("User ID cannot be empty.");
 
         var user = await _uow.UsersRepository.GetByIdAsync(id);
 
         if (user == null || user.DeletedAt != null)
-            return Result<Guid>.Failure($"User with ID was not found.");
+            return Result<User>.Failure($"User with ID was not found.");
         await new UserValidator().ValidateAndThrowAsync(dto);
 
         user.Email = dto.Email;
@@ -71,7 +71,7 @@ public class UserService(IUnitOfWork _uow) : IUserService
         user.Role = dto.Role;
         await _uow.UsersRepository.UpdateAsync(user);
         await _uow.CompleteAsync();
-        return Result<Guid>.Success(user.Id);
+        return Result<User>.Success(user);
 
     }
 
