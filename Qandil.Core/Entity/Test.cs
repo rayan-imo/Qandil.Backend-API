@@ -5,7 +5,7 @@ namespace Qandil.Core.Entity
 {
     public class Test:BaseEntity
     {
-        public string TestName { get; set; }
+        public string TestName { get; set; } 
         public TestType TestType { get; set; }
         public string? Description {  get; set; }
         public DateTime TestDate { get; set; }

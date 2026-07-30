@@ -1,4 +1,4 @@
-﻿namespace Qandil.API.Dtos.Requests.Answer
+﻿namespace Qandil.API.Dtos.Requests.DisgnosisAnswer
 {
     public class AnswerRequest
     {

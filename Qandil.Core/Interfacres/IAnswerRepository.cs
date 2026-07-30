@@ -2,8 +2,8 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IAnswerRepository:IBaseRepository<Answer> 
+    public interface IAnswerRepository:IBaseRepository<DiagnosisAnswer> 
     {
-       public Task<List<Answer>> GetAnswersByDiagnosisIdAsync(Guid diagnosisId);
+       public Task<List<DiagnosisAnswer>> GetAnswersByDiagnosisIdAsync(Guid diagnosisId);
     }
 }

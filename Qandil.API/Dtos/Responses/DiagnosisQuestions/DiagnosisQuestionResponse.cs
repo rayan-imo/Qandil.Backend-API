@@ -1,6 +1,6 @@
 ﻿using Qandil.Core.Entity;
 
-namespace Qandil.API.Dtos.Responses.Questions
+namespace Qandil.API.Dtos.Responses.DiagnosisQuestions
 {
     public class DiagnosisQuestionResponse
     {
@@ -12,13 +12,13 @@ namespace Qandil.API.Dtos.Responses.Questions
         public List<string>? Options { get; set; }  // للـ Options فقط
         public int Order { get; set; }
 
-        public static DiagnosisQuestionResponse Transform(Question question)
+        public static DiagnosisQuestionResponse Transform(DiagnosisQuestion question)
         {
             return new DiagnosisQuestionResponse
             {
                 Id = question.Id,
-               SubTitle=question.SubTitle,
                 MainTitle = question.MainTitle,
+                SubTitle = question.SubTitle,
                 QuestionText = question.QuestionText,
                 Type = question.Type.ToString(),  // تحويل Enum إلى نص
                 Options = question.Options,

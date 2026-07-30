@@ -1,6 +1,6 @@
 ﻿using Qandil.Core.Entity;
 
-namespace Qandil.API.Dtos.Responses.Questions
+namespace Qandil.API.Dtos.Responses.DiagnosisQuestions
 {
     public class CardQuestionResponse
     {
@@ -12,7 +12,7 @@ namespace Qandil.API.Dtos.Responses.Questions
         public List<string>? Options { get; set; }  // للـ Options فقط
         public int Order { get; set; }
 
-        public static CardQuestionResponse Transform(Question question)
+        public static CardQuestionResponse Transform(DiagnosisQuestion question)
         {
             return new CardQuestionResponse
             {

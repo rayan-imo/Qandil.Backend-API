@@ -7,7 +7,7 @@ namespace Qandil.Service.Dtos.DiagnosisDto.Response
     {
         public Diagnosis Diagnosis { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public List<DiagnosisAnswer> Answers { get; set; }
 
         public List<EvaluationCard> Evaluations { get; set; }
     }

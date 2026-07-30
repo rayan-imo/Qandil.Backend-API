@@ -5,12 +5,12 @@ using Qandil.Infrastructure.Data;
 
 namespace Qandil.Infrastructure.Repositories
 {
-    public class QuestionRepository(ApplicationDbContext _context) : BaseRepository<Question>(_context), IQuestionRepository
+    public class QuestionRepository(ApplicationDbContext _context) : BaseRepository<DiagnosisQuestion>(_context), IQuestionRepository
     {
-        public async Task<Dictionary<string, Dictionary<string, List<Question>>>> GetGroupedQuestionsAsync()
+        public async Task<Dictionary<string, Dictionary<string, List<DiagnosisQuestion>>>> GetGroupedQuestionsAsync()
         {
 
-            var questions = await _context.Set<Question>()
+            var questions = await _context.Set<DiagnosisQuestion>()
                  .Where(q => q.DeletedAt == null)
                  .OrderBy(q => q.Order)
 
@@ -24,9 +24,9 @@ namespace Qandil.Infrastructure.Repositories
 
         }
 
-        public async Task<List<Question>> GetDiagnosisQuestionsAsync()
+        public async Task<List<DiagnosisQuestion>> GetDiagnosisQuestionsAsync()
         {
-            var diagnosisQuestions = await _context.Set<Question>()
+            var diagnosisQuestions = await _context.Set<DiagnosisQuestion>()
                 .Where(q => q.DeletedAt == null && q.CardName == null)
                 .OrderBy(q => q.Order)
                 .ToListAsync();

@@ -32,7 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IDiagnosisService,DiagnosisService>();
         services.AddScoped<IDisabilityService,DisabilityService>();
         services.AddScoped<IAnswerService, AnswerService>();
-        services.AddScoped<IQuestionService, QuestionService>();
+        services.AddScoped<IDiagnosisQuestionService, DiagnosisQuestionService>();
         services.AddScoped<IAuthService,AuthService>();
         services.AddScoped<IPasswordHasher,PasswordHasher>();
         services.AddScoped<IGenerateTokenJwt, GenerateTokenJwt>();

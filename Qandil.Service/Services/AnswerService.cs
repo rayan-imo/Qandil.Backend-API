@@ -10,16 +10,16 @@ namespace Qandil.Service.Services
 {
     public class AnswerService(IUnitOfWork _uow) : IAnswerService
     {
-        public async Task<Result<PagedResult<Answer>>> GetAnswersByDiagnosisId(Guid id)
+        public async Task<Result<PagedResult<DiagnosisAnswer>>> GetAnswersByDiagnosisId(Guid id)
         {
             if (id == Guid.Empty)
-                return Result<PagedResult<Answer>>.Failure("Diagnosis Id  cannot be empty.");
+                return Result<PagedResult<DiagnosisAnswer>>.Failure("Diagnosis Id  cannot be empty.");
 
-            var spec = BaseSpecification<Answer>.Create()
+            var spec = BaseSpecification<DiagnosisAnswer>.Create()
                 .Where(a => a.DeletedAt == null)
                 .AndFilter(a => a.DiagnosisId == id);
 
-            return Result<PagedResult<Answer>>.Success(await _uow.AnswerRepository.PagedListAsync(spec));
+            return Result<PagedResult<DiagnosisAnswer>>.Success(await _uow.AnswerRepository.PagedListAsync(spec));
         }
 
         public async Task<Result<Guid>> SaveDiagnosisAnswersAsync(Guid diagnosisId, List<AnswerRequestDto> answers)
@@ -44,7 +44,7 @@ namespace Qandil.Service.Services
 
             foreach (var answerDto in answers)
             {
-                var answer = new Answer
+                var answer = new DiagnosisAnswer
                 {
                     Id = Guid.NewGuid(),
                     DiagnosisId = diagnosisId,
@@ -102,7 +102,7 @@ namespace Qandil.Service.Services
             
             foreach (var answerDto in dto.Answers)
             {
-                var answer = new Answer
+                var answer = new DiagnosisAnswer
                 {
                     Id = Guid.NewGuid(),
                     DiagnosisId = dto.DiagnosisId,
@@ -147,7 +147,7 @@ namespace Qandil.Service.Services
             return Result<EvaluationCard>.Success(calculatedResult.Value);
         }
 
-        public async Task<Result<EvaluationCard>> CalculateEvaluationForCard(List<Answer> answers, string cardName)
+        public async Task<Result<EvaluationCard>> CalculateEvaluationForCard(List<DiagnosisAnswer> answers, string cardName)
         {
             var result = new EvaluationCard
             {
@@ -160,7 +160,7 @@ namespace Qandil.Service.Services
 
 
             // 1. فلترة الأسئلة اللي تخص هذه البطاقة الرئيسي
-            var spec = BaseSpecification<Question>.Create()
+            var spec = BaseSpecification<DiagnosisQuestion>.Create()
                 .Where(q => q.DeletedAt == null)
                 .AndFilter(q => q.CardName == cardName)
                 .OrderByAsc(q => q.Order);

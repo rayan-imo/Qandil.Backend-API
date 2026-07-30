@@ -5,11 +5,11 @@ using Qandil.Infrastructure.Data;
 
 namespace Qandil.Infrastructure.Repositories
 {
-    public class AnswerRepository(ApplicationDbContext _context) : BaseRepository<Answer>(_context), IAnswerRepository
+    public class AnswerRepository(ApplicationDbContext _context) : BaseRepository<DiagnosisAnswer>(_context), IAnswerRepository
     {
-        public async Task<List<Answer>> GetAnswersByDiagnosisIdAsync(Guid diagnosisId)
+        public async Task<List<DiagnosisAnswer>> GetAnswersByDiagnosisIdAsync(Guid diagnosisId)
         {
-            return await _context.Set<Answer>()
+            return await _context.Set<DiagnosisAnswer>()
                 .Where(a => a.DiagnosisId == diagnosisId && a.DeletedAt == null)
                 .ToListAsync();
         }

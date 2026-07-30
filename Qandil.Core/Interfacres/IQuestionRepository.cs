@@ -2,9 +2,9 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IQuestionRepository:IBaseRepository<Question>
+    public interface IQuestionRepository:IBaseRepository<DiagnosisQuestion>
     {
-        public Task<Dictionary<string, Dictionary<string, List<Question>>>> GetGroupedQuestionsAsync();
-        public  Task<List<Question>> GetDiagnosisQuestionsAsync();
+        public Task<Dictionary<string, Dictionary<string, List<DiagnosisQuestion>>>> GetGroupedQuestionsAsync();
+        public  Task<List<DiagnosisQuestion>> GetDiagnosisQuestionsAsync();
     }
 }

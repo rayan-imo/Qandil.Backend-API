@@ -122,7 +122,7 @@ namespace Qandil.Service.Services
 
             foreach (var answerDto in dto.Answers)
             {
-                var answer = new Answer
+                var answer = new DiagnosisAnswer
                 {
                     DiagnosisId = diagnosis.Id,
                     QuestionId = answerDto.QuestionId,
@@ -200,7 +200,7 @@ namespace Qandil.Service.Services
 
         }
 
-        private object? GetAnswerValue(Answer? answer, QuestionType type)
+        private object? GetAnswerValue(DiagnosisAnswer? answer, QuestionType type)
         {
             if (answer == null) return null;
 

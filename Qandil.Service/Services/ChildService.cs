@@ -41,6 +41,7 @@ namespace Qandil.Service.Services
             await new ChildValidator().ValidateAndThrowAsync(dto);
             var child = new Child
             {
+                Id=Guid.NewGuid(),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Address = dto.Address,

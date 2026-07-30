@@ -5,6 +5,7 @@ namespace Qandil.Core.Entity
     public class Classroom :BaseEntity
     {
         public int MaxCapacity { get; set; }
+        public int RoomNumber { get; set; }
         public int CurrentCapacity { get; set; }
         public Guid? ProgramId { get; set; }
         public EduProgram? Program { get; set; }

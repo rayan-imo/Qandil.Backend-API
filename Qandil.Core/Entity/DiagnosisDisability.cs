@@ -10,5 +10,5 @@ namespace Qandil.Core.Entity
         public Guid DisabilityId { get; set; }
         public Disability Disability { get; set; }
 
-    }
+    } 
 }

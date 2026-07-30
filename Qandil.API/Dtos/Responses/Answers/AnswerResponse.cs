@@ -17,7 +17,7 @@ namespace Qandil.API.Dtos.Responses.Answers
 
         public string? Notes { get; set; }
 
-        public static AnswerResponse Transform(Answer answer)
+        public static AnswerResponse Transform(DiagnosisAnswer answer)
         {
             return new AnswerResponse
             {

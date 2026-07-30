@@ -13,7 +13,7 @@ namespace Qandil.Service.Dtos.QuestionDto.Responses
         public List<string>? Options { get; set; }  // للـ Options فقط
         public int Order { get; set; }
 
-        public static QuestionResponse Transform(Question question)
+        public static QuestionResponse Transform(DiagnosisQuestion question)
         {
             return new QuestionResponse
             {
