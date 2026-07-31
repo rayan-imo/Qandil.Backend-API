@@ -1,7 +1,10 @@
 ﻿using FluentValidation;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Utilities.Net;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
 using Qandil.Service.Dtos.ChildDto.Request;
@@ -36,7 +39,7 @@ namespace Qandil.Service.Services
             return Result<Child>.Success(child);
         }
 
-        public async Task<Result<Child>> AddAsync(ChildRequesDto dto)
+        public async Task<Result<Child>> AddAsync(ChildAddRequesDto dto)
         {
             await new ChildValidator().ValidateAndThrowAsync(dto);
             var child = new Child
@@ -51,20 +54,27 @@ namespace Qandil.Service.Services
                 FatherName = dto.FatherName,
                 HasDisability = dto.HasDisability,
                 JoiningDate = dto.JoiningDate,
-
+                PlaceOfBearth = dto.PlaceOfBearth,
+                IsEnrolledInSchool = dto.IsEnrolledInSchool,
+                SchoolName = dto.SchoolName,
+                SchoolGrade = dto.SchoolGrade,
+                FatherJob = dto.FatherJob,
+                MotherJob = dto.MotherJob,
+                FamilyMembers = dto.FamilyMembers,
+               
             };
             await _uow.ChildRepository.AddAsync(child);
             await _uow.CompleteAsync();
             return Result<Child>.Success(child);
         }
-        public async Task<Result<Child>> UpdateAsync(ChildRequesDto dto, Guid id)
+        public async Task<Result<Child>> UpdateAsync(ChildUpdateRequesDto dto, Guid id)
         {
             var child = await _uow.ChildRepository.GetByIdAsync(id);
 
             if (child == null || child.DeletedAt != null)
                 return Result<Child>.Failure($"Child with ID was not found.");
 
-            await new ChildValidator().ValidateAndThrowAsync(dto);
+          //  await new ChildValidator().ValidateAndThrowAsync(dto);
 
             child.FirstName = dto.FirstName;
             child.LastName = dto.LastName;
@@ -73,9 +83,19 @@ namespace Qandil.Service.Services
             child.DateOfBirth = dto.DateOfBirth;
             child.MotherName = dto.MotherName;
             child.FatherName = dto.FatherName;
-            child.Gender = dto.Gender;
             child.HasDisability = dto.HasDisability;
             child.JoiningDate = dto.JoiningDate;
+            child.PlaceOfBearth = dto.PlaceOfBearth;
+            child.IsEnrolledInSchool = dto.IsEnrolledInSchool;
+            child.SchoolName = dto.SchoolName;
+            child.SchoolGrade = dto.SchoolGrade;
+            child.FatherJob = dto.FatherJob;
+            child.MotherJob = dto.MotherJob;
+            child.FamilyMembers = dto.FamilyMembers;
+            child.ProgramId = dto.ProgramId;
+            child.ClassroomId = dto.ClassroomId;
+
+
             await _uow.ChildRepository.UpdateAsync(child);
             await _uow.CompleteAsync();
             return Result<Child>.Success(child);

@@ -256,7 +256,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("DiagnosisAnswers");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisDisability", b =>
@@ -323,7 +323,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Question");
+                    b.ToTable("DiagnosisQuestions");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Disability", b =>

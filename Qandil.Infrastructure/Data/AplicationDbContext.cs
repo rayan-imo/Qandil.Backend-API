@@ -24,8 +24,8 @@ namespace Qandil.Infrastructure.Data
         public DbSet<Level> Levels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOtp> UserOtp{ get; set; }
-        public DbSet<DiagnosisAnswer> Answers { get; set; }
-        public DbSet<DiagnosisQuestion> Question { get; set; }
+        public DbSet<DiagnosisAnswer> DiagnosisAnswers { get; set; }
+        public DbSet<DiagnosisQuestion> DiagnosisQuestions { get; set; }
         public DbSet<EvaluationCard> EvaluationCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

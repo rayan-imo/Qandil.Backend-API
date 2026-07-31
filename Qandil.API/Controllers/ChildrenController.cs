@@ -3,10 +3,8 @@ using Qandil.API.Dtos.Requests.Children;
 using Qandil.API.Dtos.Responses.Children;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
-using Qandil.Core.Entity;
 using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Qandil.API.Controllers
 {
@@ -15,10 +13,10 @@ namespace Qandil.API.Controllers
     public class ChildrenController(IChildService _childService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<PagedResult<ChildResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<ChildAddResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
             var children = await _childService.GetAllAsync(paginationParameter);
-            return Ok(children?.Value?.MapTo(c => ChildResponse.Transform(c)));
+            return Ok(children?.Value?.MapTo(c => ChildAddResponse.Transform(c)));
         }
 
         [HttpGet("{id}")]
@@ -36,18 +34,18 @@ namespace Qandil.API.Controllers
             }
             var childEntity = result.Value;
 
-            return Ok(new ApiResponse<ChildResponse>
+            return Ok(new ApiResponse<ChildAddResponse>
             {
                 Success = true,
                 MessageAr = "تم جلب بيانات الطفل بنجاح",
                 MessageEn = "Child retrieved successfully",
-                Data = ChildResponse.Transform(childEntity),
+                Data = ChildAddResponse.Transform(childEntity),
             });
         }
         [HttpPost]
-        public async Task<IActionResult> Add(ChildRequest childRequest)
+        public async Task<IActionResult> Add(ChildAddRequest childRequest)
         {
-            var childDto = new ChildRequesDto
+            var childDto = new ChildAddRequesDto
             {
                 FatherName = childRequest.FatherName,
                 LastName = childRequest.LastName,
@@ -57,14 +55,23 @@ namespace Qandil.API.Controllers
                 DateOfBirth = childRequest.DateOfBirth,
                 Gender = childRequest.Gender,
                 HasDisability = childRequest.HasDisability,
+                JoiningDate = childRequest.JoiningDate,
+                PlaceOfBearth = childRequest.PlaceOfBearth,
+                IsEnrolledInSchool = childRequest.IsEnrolledInSchool,
+                SchoolName = childRequest.SchoolName,
+                SchoolGrade = childRequest.SchoolGrade,
+                FatherJob = childRequest.FatherJob,
+                MotherJob = childRequest.MotherJob,
+                FamilyMembers = childRequest.FamilyMembers,
+                
 
             };
-           
+
             var result = await _childService.AddAsync(childDto);
-         
+
             if (!result.IsSuccess)
             {
-                return BadRequest(new ApiResponse<ChildResponse>
+                return BadRequest(new ApiResponse<ChildAddResponse>
                 {
                     Success = false,
                     MessageAr = "فشلت عملية إضافة الطفل",
@@ -73,19 +80,19 @@ namespace Qandil.API.Controllers
             }
             var childEntity = result.Value;
 
-            return Ok(new ApiResponse<ChildResponse>
+            return Ok(new ApiResponse<ChildAddResponse>
             {
                 Success = true,
                 MessageAr = "تمت إضافة الطفل بنجاح",
                 MessageEn = "Child added successfully",
-                Data = ChildResponse.Transform(childEntity),
+                Data = ChildAddResponse.Transform(childEntity),
             });
         }
-        
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ChildRequest childRequest, Guid id)
+        public async Task<IActionResult> Update(ChildUpdateRequst childRequest, Guid id)
         {
-            var childDto = new ChildRequesDto
+            var childDto = new ChildUpdateRequesDto
             {
                 FatherName = childRequest.FatherName,
                 LastName = childRequest.LastName,
@@ -94,7 +101,17 @@ namespace Qandil.API.Controllers
                 Address = childRequest.Address,
                 DateOfBirth = childRequest.DateOfBirth,
                 Gender = childRequest.Gender,
-               HasDisability = childRequest.HasDisability,
+                HasDisability = childRequest.HasDisability,
+                JoiningDate = childRequest.JoiningDate,
+                PlaceOfBearth = childRequest.PlaceOfBearth,
+                IsEnrolledInSchool = childRequest.IsEnrolledInSchool,
+                SchoolName = childRequest.SchoolName,
+                SchoolGrade = childRequest.SchoolGrade,
+                FatherJob = childRequest.FatherJob,
+                MotherJob = childRequest.MotherJob,
+                FamilyMembers = childRequest.FamilyMembers,
+                ProgramId = childRequest.ProgramId,
+                ClassroomId = childRequest.ClassroomId,
 
             };
             var result = await _childService.UpdateAsync(childDto, id);
@@ -110,12 +127,12 @@ namespace Qandil.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<ChildResponse>
+            return Ok(new ApiResponse<ChildAddResponse>
             {
                 Success = true,
                 MessageAr = "تم تحديث بيانات الطفل بنجاح",
                 MessageEn = "Child updated successfully",
-                Data = ChildResponse.Transform(childEntity),
+                Data = ChildAddResponse.Transform(childEntity),
             });
         }
         [HttpDelete("{id}")]

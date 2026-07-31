@@ -12,7 +12,7 @@ using Qandil.Infrastructure.Data;
 namespace Qandil.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260730092519_init")]
+    [Migration("20260731132953_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -259,7 +259,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("DiagnosisAnswers");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisDisability", b =>
@@ -326,7 +326,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Question");
+                    b.ToTable("DiagnosisQuestions");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Disability", b =>

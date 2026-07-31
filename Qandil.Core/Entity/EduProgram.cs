@@ -14,3 +14,4 @@ namespace Qandil.Core.Entity
     }
 
 }
+  

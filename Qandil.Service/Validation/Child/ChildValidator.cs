@@ -3,7 +3,7 @@ using Qandil.Service.Dtos.ChildDto.Request;
 
 namespace Qandil.Service.Validation.Child
 {
-    public class ChildValidator : AbstractValidator<ChildRequesDto>
+    public class ChildValidator : AbstractValidator<ChildAddRequesDto>
     {
         public ChildValidator()
         {

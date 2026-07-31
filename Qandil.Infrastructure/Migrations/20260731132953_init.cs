@@ -12,6 +12,26 @@ namespace Qandil.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DiagnosisQuestions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CardName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Options = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiagnosisQuestions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Disabilities",
                 columns: table => new
                 {
@@ -57,26 +77,6 @@ namespace Qandil.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Programs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Question",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CardName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Options = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Question", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,31 +171,6 @@ namespace Qandil.Infrastructure.Migrations
                         name: "FK_Levels_Programs_ProgramId",
                         column: x => x.ProgramId,
                         principalTable: "Programs",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Answers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DiagnosisId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BooleanValue = table.Column<bool>(type: "bit", nullable: true),
-                    ScoreValue = table.Column<int>(type: "int", nullable: true),
-                    TextValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SelectedOption = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Answers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Answers_Question_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Question",
                         principalColumn: "Id");
                 });
 
@@ -385,6 +360,36 @@ namespace Qandil.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiagnosisAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DiagnosisId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BooleanValue = table.Column<bool>(type: "bit", nullable: true),
+                    ScoreValue = table.Column<int>(type: "int", nullable: true),
+                    TextValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SelectedOption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiagnosisAnswers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiagnosisAnswers_Diagnoses_DiagnosisId",
+                        column: x => x.DiagnosisId,
+                        principalTable: "Diagnoses",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DiagnosisAnswers_DiagnosisQuestions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "DiagnosisQuestions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DiagnosisDisabilities",
                 columns: table => new
                 {
@@ -431,16 +436,6 @@ namespace Qandil.Infrastructure.Migrations
                         principalTable: "Diagnoses",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Answers_DiagnosisId",
-                table: "Answers",
-                column: "DiagnosisId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Answers_QuestionId",
-                table: "Answers",
-                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Childs_ClassroomId",
@@ -494,6 +489,16 @@ namespace Qandil.Infrastructure.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DiagnosisAnswers_DiagnosisId",
+                table: "DiagnosisAnswers",
+                column: "DiagnosisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiagnosisAnswers_QuestionId",
+                table: "DiagnosisAnswers",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DiagnosisDisabilities_DiagnosisId",
                 table: "DiagnosisDisabilities",
                 column: "DiagnosisId");
@@ -541,13 +546,6 @@ namespace Qandil.Infrastructure.Migrations
                 column: "SchoolId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Answers_Diagnoses_DiagnosisId",
-                table: "Answers",
-                column: "DiagnosisId",
-                principalTable: "Diagnoses",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Childs_Classrooms_ClassroomId",
                 table: "Childs",
                 column: "ClassroomId",
@@ -563,7 +561,7 @@ namespace Qandil.Infrastructure.Migrations
                 table: "Childs");
 
             migrationBuilder.DropTable(
-                name: "Answers");
+                name: "DiagnosisAnswers");
 
             migrationBuilder.DropTable(
                 name: "DiagnosisDisabilities");
@@ -584,7 +582,7 @@ namespace Qandil.Infrastructure.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "DiagnosisQuestions");
 
             migrationBuilder.DropTable(
                 name: "Disabilities");
