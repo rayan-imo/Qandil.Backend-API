@@ -7,7 +7,7 @@ namespace Qandil.Service.Validation.Test
     {
         public TestValidator()
         {
-            RuleFor(x => x.ToutalMark)
+            RuleFor(x => x.TotalMark)
                 .GreaterThan(0).WithMessage("العلامة الكلية مطلوبة");
 
             RuleFor(x => x.LevelId)

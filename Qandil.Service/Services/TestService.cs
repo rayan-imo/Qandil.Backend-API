@@ -4,7 +4,7 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.TestDto.Request;
+using Qandil.Service.Dtos.TestDto.Requests;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Test;
 
@@ -39,10 +39,9 @@ namespace Qandil.Service.Services
             await new TestValidator().ValidateAndThrowAsync(dto);
             var test = new Test
             {
-                TestName = dto.TestName,
-                TestDate = dto.TestDate,
-                Description = dto.Description,
-                TestType = dto.TestType
+                Id=Guid.NewGuid(),
+                TotalMark=dto.TotalMark,
+                LevelId=dto.LevelId,
             };
             await _uow.TestRepository.AddAsync(test);
             await _uow.CompleteAsync();
@@ -60,10 +59,10 @@ namespace Qandil.Service.Services
 
             await new TestValidator().ValidateAndThrowAsync(dto);
 
-            test.TestName = dto.TestName;
-            test.TestDate = dto.TestDate;
-            test.Description = dto.Description;
-            test.TestType = dto.TestType;
+            test.TotalMark = dto.TotalMark;
+            test.SubjectId = dto.SubjectId;
+            test.LevelId = dto.LevelId;
+           
 
             await _uow.TestRepository.UpdateAsync(test);
             await _uow.CompleteAsync();

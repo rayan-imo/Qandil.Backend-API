@@ -1,7 +1,7 @@
 ﻿using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.Employee.Request;
+using Qandil.Service.Dtos.EmployeeDto.Request;
 
 namespace Qandil.Service.IServices
 {

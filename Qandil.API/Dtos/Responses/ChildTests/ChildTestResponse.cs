@@ -23,7 +23,7 @@ namespace Qandil.API.Dtos.Responses.ChildTests
                 Type = childTest.Type,
                 Mark = childTest.Mark,
                 Nots = childTest.Nots,
-                ProctorId = childTest.ProctorId,
+                ProctorId = childTest.EmployeeId,
                 ChildId = childTest.ChildId,
                 TestId = childTest.TestId,
             };

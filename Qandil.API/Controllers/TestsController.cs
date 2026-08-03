@@ -4,7 +4,7 @@ using Qandil.API.Dtos.Responses.Tests;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.TestDto.Request;
+using Qandil.Service.Dtos.TestDto.Requests;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers
@@ -49,9 +49,10 @@ namespace Qandil.API.Controllers
         {
             var testDto = new TestRequestDto
             {
-                TestName = testRequest.TestName,
-                TestDate = testRequest.TestDate,
-                TestType = testRequest.testType,
+                
+                TotalMark=testRequest.TotalMark,
+                SubjectId=testRequest.SubjectId,    
+                LevelId=testRequest.LevelId,
             };
 
             var result = await _testService.AddAsync(testDto);
@@ -80,9 +81,9 @@ namespace Qandil.API.Controllers
         {
             var testDto = new TestRequestDto
             {
-                TestName = testRequest.TestName,
-                TestDate = testRequest.TestDate,
-                TestType = testRequest.testType
+                TotalMark = testRequest.TotalMark,
+                SubjectId = testRequest.SubjectId,
+                LevelId = testRequest.LevelId,
             };
 
             var result = await _testService.UpdateAsync(testDto, id);

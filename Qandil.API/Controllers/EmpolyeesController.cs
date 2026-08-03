@@ -4,7 +4,7 @@ using Qandil.API.Dtos.Responses.Employees;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Service.Dtos.Employee.Request;
+using Qandil.Service.Dtos.EmployeeDto.Request;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers
@@ -49,11 +49,11 @@ namespace Qandil.API.Controllers
         {
             var employeeDto = new EmployeeRequestDto
             {
-               FirstName=employeeRequest.FirstName,
-               LastName=employeeRequest.LastName,
-               Age=employeeRequest.Age,
-               Email=employeeRequest.Email,
-               Specicality=employeeRequest.Specicality,
+                FirstName = employeeRequest.FirstName,
+                LastName = employeeRequest.LastName,
+                Age = employeeRequest.Age,
+                Email = employeeRequest.Email,
+                Specicality = employeeRequest.Specicality,
             };
 
             var result = await _employeeService.AddAsync(employeeDto);

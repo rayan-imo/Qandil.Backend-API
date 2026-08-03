@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos.Employee.Request;
+using Qandil.Service.Dtos.EmployeeDto.Request;
 
 namespace Qandil.Service.Validation.Employee
 {

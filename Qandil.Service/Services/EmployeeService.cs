@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
-using FluentValidation.Validators;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.Employee.Request;
+using Qandil.Service.Dtos.EmployeeDto.Request;
 using Qandil.Service.IServices;
-using Qandil.Service.Validation.Child;
 using Qandil.Service.Validation.Employee;
 
 namespace Qandil.Service.Services

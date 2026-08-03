@@ -5,7 +5,7 @@ namespace Qandil.Core.Entity
 {
     public class Test:BaseEntity
     {
-        public int ToutalMark {  get; set; }
+        public int TotalMark {  get; set; }
 
         public Level Level { get; set; }
         public Guid LevelId { get; set; }
