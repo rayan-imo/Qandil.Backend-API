@@ -1,4 +1,4 @@
-﻿namespace Qandil.Service.Dtos.Employee.Request
+﻿namespace Qandil.Service.Dtos.EmployeeDto.Request
 {
     public class EmployeeRequestDto
     {

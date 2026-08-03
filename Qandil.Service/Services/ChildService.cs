@@ -1,17 +1,12 @@
 ﻿using FluentValidation;
-using Org.BouncyCastle.Asn1.X509;
-using Org.BouncyCastle.Utilities.Net;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
-using Qandil.Core.Enums;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
 using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Child;
-using System.Net;
-using System.Reflection;
 
 namespace Qandil.Service.Services
 {
@@ -41,10 +36,10 @@ namespace Qandil.Service.Services
 
         public async Task<Result<Child>> AddAsync(ChildAddRequesDto dto)
         {
-            await new ChildValidator().ValidateAndThrowAsync(dto);
+            await new ChildAddValidator().ValidateAndThrowAsync(dto);
             var child = new Child
             {
-                Id=Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Address = dto.Address,
@@ -61,7 +56,7 @@ namespace Qandil.Service.Services
                 FatherJob = dto.FatherJob,
                 MotherJob = dto.MotherJob,
                 FamilyMembers = dto.FamilyMembers,
-               
+
             };
             await _uow.ChildRepository.AddAsync(child);
             await _uow.CompleteAsync();
@@ -74,7 +69,7 @@ namespace Qandil.Service.Services
             if (child == null || child.DeletedAt != null)
                 return Result<Child>.Failure($"Child with ID was not found.");
 
-          //  await new ChildValidator().ValidateAndThrowAsync(dto);
+            await new ChildUpdateValidator().ValidateAndThrowAsync(dto);
 
             child.FirstName = dto.FirstName;
             child.LastName = dto.LastName;

@@ -1,17 +1,20 @@
 ﻿using FluentValidation;
-using Qandil.Service.Dtos.TestDto.Request;
+using Qandil.Service.Dtos.TestDto.Requests;
 
 namespace Qandil.Service.Validation.Test
 {
-    public class TestValidator: AbstractValidator<TestRequestDto>
+    public class TestValidator : AbstractValidator<TestRequestDto>
     {
         public TestValidator()
         {
-            RuleFor(x => x.TestName)
-              .NotEmpty().WithMessage("من فضلك، قم بإدخال اسم الاختبار");
-            RuleFor(x => x.TestType)
-                .NotEmpty().WithMessage("من فضلك، قم بإدخال نوع الاختبار");
+            RuleFor(x => x.ToutalMark)
+                .GreaterThan(0).WithMessage("العلامة الكلية مطلوبة");
 
+            RuleFor(x => x.LevelId)
+                .NotEmpty().WithMessage("المرحلة التعليمية مطلوبة");
+
+            RuleFor(x => x.SubjectId)
+                .NotEmpty().WithMessage("المادة مطلوبة");
         }
     }
 }

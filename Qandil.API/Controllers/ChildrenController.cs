@@ -140,7 +140,7 @@ namespace Qandil.API.Controllers
         {
             var result = await _childService.DeleteAsync(id);
             if (!result.IsSuccess)
-            {
+            {  
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,

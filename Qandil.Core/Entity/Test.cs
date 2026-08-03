@@ -5,11 +5,15 @@ namespace Qandil.Core.Entity
 {
     public class Test:BaseEntity
     {
-        public string TestName { get; set; } 
-        public TestType TestType { get; set; }
-        public string? Description {  get; set; }
-        public DateTime TestDate { get; set; }
+        public int ToutalMark {  get; set; }
+
+        public Level Level { get; set; }
+        public Guid LevelId { get; set; }
+         
+        public Subject Subject { get; set; }
+        public Guid SubjectId {  get; set; }
+
         public ICollection<ChildTest> ChildTests { get; set; }
-        public Guid? EmployeeId { get; set; }
+       
     }
 }

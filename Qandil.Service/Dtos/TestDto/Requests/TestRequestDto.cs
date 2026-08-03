@@ -1,12 +1,11 @@
-﻿using Qandil.Core.Enums;
-
-namespace Qandil.API.Dtos.Requests.Tests
+﻿namespace Qandil.Service.Dtos.TestDto.Requests
 {
-    public class TestRequest
+    public class TestRequestDto
     {
         public int ToutalMark { get; set; }
         public Guid LevelId { get; set; }
         public Guid SubjectId { get; set; }
-       
+      
+
     }
 }
