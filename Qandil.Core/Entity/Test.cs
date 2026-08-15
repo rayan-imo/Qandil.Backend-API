@@ -8,11 +8,9 @@ namespace Qandil.Core.Entity
         public int TotalMark {  get; set; }
 
         public Level Level { get; set; }
-        public Guid LevelId { get; set; }
-         
+        public Guid LevelId { get; set; }  
         public Subject Subject { get; set; }
         public Guid SubjectId {  get; set; }
-
         public ICollection<ChildTest> ChildTests { get; set; }
        
     }
