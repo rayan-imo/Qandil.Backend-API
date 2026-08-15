@@ -2,9 +2,14 @@
 
 namespace Qandil.Core.Entity
 {
-    public class Subject:BaseEntity
+    public partial class Subject : BaseEntity
     {
-        public string Name { get; set; }    
-      
+        public string Name { get; set; }
+        public ICollection<TestSubject> TestSubjects
+        {
+            get; set;
+
+        }
+
     }
 }
