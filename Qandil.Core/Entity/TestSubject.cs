@@ -7,7 +7,6 @@
             public Test Test { get; set; }
             public Guid SubjectId { get; set; }
             public Subject Subject { get; set; }
-            public double MaxMark {  get; set; }
 
         }
 }
