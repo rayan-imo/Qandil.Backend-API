@@ -16,9 +16,9 @@ namespace Qandil.API.Dtos.Responses.Tests
             return new TestResponse
             {
                 Id = test.Id,
-                TotalMark = test.TotalMark,
+               // TotalMark = test.TotalMark,
                LevelId = test.LevelId,
-               SubjectId = test.SubjectId,
+              // SubjectId = test.SubjectId,
     
             };
         }
