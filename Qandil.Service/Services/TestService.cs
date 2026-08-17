@@ -40,7 +40,7 @@ namespace Qandil.Service.Services
             var test = new Test
             {
                 Id=Guid.NewGuid(),
-                TotalMark=dto.TotalMark,
+             //   TotalMark=dto.TotalMark,
                 LevelId=dto.LevelId,
             };
             await _uow.TestRepository.AddAsync(test);
@@ -59,8 +59,8 @@ namespace Qandil.Service.Services
 
             await new TestValidator().ValidateAndThrowAsync(dto);
 
-            test.TotalMark = dto.TotalMark;
-            test.SubjectId = dto.SubjectId;
+            //test.TotalMark = dto.TotalMark;
+            //test.SubjectId = dto.SubjectId;
             test.LevelId = dto.LevelId;
            
 

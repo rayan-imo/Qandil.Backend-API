@@ -21,6 +21,8 @@ namespace Qandil.Infrastructure
         private IQuestionRepository? _questionRepository;
         private IAnswerRepository? _answerRepository;
         public IEvaluationCardRepository _evaluationCardRepository;
+        public IChildTestSubjectMarkRepositoy  _childTestSubjectMark;
+        public ITestSubjectRepository _testSubject ;
 
 
         public IEmployeeRepository? EmployeeRepository=>_employeeRepository??= new EmployeeRepository(_context);
@@ -39,6 +41,8 @@ namespace Qandil.Infrastructure
         public IAnswerRepository? AnswerRepository => _answerRepository ??= new AnswerRepository(_context);
 
         public IEvaluationCardRepository EvaluationCardRepository => _evaluationCardRepository ??= new EvaluationCardRepository(_context);
+        public IChildTestSubjectMarkRepositoy ChildTestSubjectMarkRepositoy => _childTestSubjectMark??new ChildTestSubjectMarkRepository(_context);
+        public ITestSubjectRepository TestSubjectRepository => _testSubject ??= new TestSubjectRepository(_context);
 
 
 

@@ -9,5 +9,6 @@ namespace Qandil.Core.Entity
         public Guid? ProgramId { get; set; }
 
         public ICollection<Classroom> Classrooms { get; set; }
+        public ICollection<Test> Tests { get; set; }
     }
 }
