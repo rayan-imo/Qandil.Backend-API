@@ -21,7 +21,7 @@ namespace Qandil.API.Dtos.Responses.ChildTests
                 Id = childTest.Id,
                 Date = childTest.Date,
                 Type = childTest.Type,
-                Mark = childTest.Mark,
+                Mark = childTest.Result,
                 Nots = childTest.Nots,
                 ProctorId = childTest.EmployeeId,
                 ChildId = childTest.ChildId,

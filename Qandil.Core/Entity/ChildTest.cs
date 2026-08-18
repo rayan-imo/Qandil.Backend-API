@@ -17,11 +17,7 @@ namespace Qandil.Core.Entity
         public Child Child { get; set; }
         public Test Test { get; set; }
         public Guid TestId { get; set; }
-<<<<<<< HEAD
-        public ICollection<ChildTestSubjectMark> ChildTestSubjects {  get; set; }
-=======
         public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }
->>>>>>> 3fec87b (Add Repo)
 
     }
 }

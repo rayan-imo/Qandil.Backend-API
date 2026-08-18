@@ -10,11 +10,8 @@ namespace Qandil.Core.Entity
             public Test Test { get; set; }
             public Guid SubjectId { get; set; }
             public Subject Subject { get; set; }
-<<<<<<< HEAD
-=======
             public double MaxMark {  get; set; }
-           public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }  
->>>>>>> 3fec87b (Add Repo)
+            public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }
 
         }
 }
