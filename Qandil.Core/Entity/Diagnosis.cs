@@ -13,11 +13,13 @@ namespace Qandil.Core.Entity
 
         public ICollection<DiagnosisDisability> DiagnosisDisabilities { get; set; }
         public ICollection<EvaluationCard> EvaluationCards { get; set; }
-      
+        public ICollection<DiagnosisAnswer> DiagnosisAnswers { get; set; }
 
 
 
-    
-}
+
+
+
+    }
 
 }

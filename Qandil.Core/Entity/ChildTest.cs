@@ -4,8 +4,7 @@ using Qandil.Core.Enums;
 namespace Qandil.Core.Entity
 {
     public class ChildTest : BaseEntity
-    {
-
+    {   
         public DateTime Date { get; set; }
         public TestType Type { get; set; }
         public float Result { get; set; }
@@ -23,7 +22,6 @@ namespace Qandil.Core.Entity
 =======
         public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }
 >>>>>>> 3fec87b (Add Repo)
-
 
     }
 }

@@ -21,3 +21,4 @@ namespace Qandil.Core.Entity
         public Employee Employee { get; set; }
     }
 }
+ 
