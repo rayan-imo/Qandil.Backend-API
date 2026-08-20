@@ -8,5 +8,8 @@ namespace Qandil.Service.Dtos.TestSubjectDto.Request
 {
     public class TestSubjectRequestDto
     {
+        public Guid TestId { get; set; }
+        public Guid SubjectId { get; set; }
+        public double MaxMark { get; set; }
     }
 }

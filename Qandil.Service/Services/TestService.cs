@@ -39,8 +39,9 @@ namespace Qandil.Service.Services
             await new TestValidator().ValidateAndThrowAsync(dto);
             var test = new Test
             {
-                Id=Guid.NewGuid(),
-             //   TotalMark=dto.TotalMark,
+                Name= dto.Name,
+                Title= dto.Title,
+                HasPreTest= dto.HasPreTest,
                 LevelId=dto.LevelId,
             };
             await _uow.TestRepository.AddAsync(test);
@@ -58,12 +59,10 @@ namespace Qandil.Service.Services
                 return Result<Guid>.Failure($"Test with ID was not found.");
 
             await new TestValidator().ValidateAndThrowAsync(dto);
-
-            //test.TotalMark = dto.TotalMark;
-            //test.SubjectId = dto.SubjectId;
+            test.Name = dto.Name;
+            test.Title = dto.Title;
+            test.HasPreTest = dto.HasPreTest;
             test.LevelId = dto.LevelId;
-           
-
             await _uow.TestRepository.UpdateAsync(test);
             await _uow.CompleteAsync();
             return Result<Guid>.Success(test.Id);
@@ -80,6 +79,12 @@ namespace Qandil.Service.Services
                 return Result<bool>.Failure($"Test with ID was not found.");
 
             test.DeletedAt = DateTime.UtcNow;
+            var childTests= await _uow.ChildTestRepositoy.FindAllAsync
+                (x=>x.TestId == id && x.DeletedAt!=null);
+
+            foreach (var childTest in childTests)
+                childTest.DeletedAt = DateTime.UtcNow;
+
             await _uow.CompleteAsync();
 
             return Result<bool>.Success(true);

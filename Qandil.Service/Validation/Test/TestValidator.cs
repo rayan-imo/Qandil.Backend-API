@@ -7,14 +7,14 @@ namespace Qandil.Service.Validation.Test
     {
         public TestValidator()
         {
-            RuleFor(x => x.TotalMark)
-                .GreaterThan(0).WithMessage("العلامة الكلية مطلوبة");
 
-            RuleFor(x => x.LevelId)
-                .NotEmpty().WithMessage("المرحلة التعليمية مطلوبة");
 
-            RuleFor(x => x.SubjectId)
-                .NotEmpty().WithMessage("المادة مطلوبة");
+            RuleFor(x => x.Name)
+               .NotEmpty().WithMessage("من فضلك، قم بإدخال الاسم");
+
+
+            RuleFor(x => x.Title)
+                .NotEmpty().WithMessage("من فضلك، قم بإدخال العنوان");
         }
     }
 }

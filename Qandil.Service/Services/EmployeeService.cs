@@ -82,6 +82,18 @@ namespace Qandil.Service.Services
             if (employee == null || employee.DeletedAt != null)
                 return Result<bool>.Failure($"Child with ID was not found.");
 
+            var childTests = await _uow.ChildTestRepositoy.FindAllAsync
+             (x => x.TestId == id && x.DeletedAt != null);
+
+            foreach (var childTest in childTests)
+                childTest.DeletedAt = DateTime.UtcNow;
+
+            var childTestSubjectMarks = await _uow.ChildTestSubjectMarkRepositoy.FindAllAsync
+                (x => x.SubjectId == id && x.DeletedAt != null);
+
+            foreach (var childTestSubjectMark in childTestSubjectMarks)
+                childTestSubjectMark.DeletedAt = DateTime.UtcNow;
+
             employee.DeletedAt = DateTime.UtcNow;
             await _uow.CompleteAsync();
 

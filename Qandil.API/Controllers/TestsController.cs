@@ -50,8 +50,8 @@ namespace Qandil.API.Controllers
             var testDto = new TestRequestDto
             {
                 
-                TotalMark=testRequest.TotalMark,
-                SubjectId=testRequest.SubjectId,    
+              //  TotalMark=testRequest.TotalMark,
+                //SubjectId=testRequest.SubjectId,    
                 LevelId=testRequest.LevelId,
             };
 
@@ -81,8 +81,8 @@ namespace Qandil.API.Controllers
         {
             var testDto = new TestRequestDto
             {
-                TotalMark = testRequest.TotalMark,
-                SubjectId = testRequest.SubjectId,
+              //  TotalMark = testRequest.TotalMark,
+                //SubjectId = testRequest.SubjectId,
                 LevelId = testRequest.LevelId,
             };
 

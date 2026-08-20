@@ -1,0 +1,93 @@
+﻿using FluentValidation;
+using Qandil.Core.Common;
+using Qandil.Core.Dtos;
+using Qandil.Core.Entity;
+using Qandil.Core.Interfacres;
+using Qandil.Infrastructure.Specifications;
+using Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request;
+using Qandil.Service.Dtos.SubjectDto.Request;
+using Qandil.Service.IServices;
+using Qandil.Service.Validation.ChildTestSubjectMark;
+using Qandil.Service.Validation.Level;
+
+namespace Qandil.Service.Services
+{
+    public class ChildTestSubjectMarkService(IUnitOfWork _uow) : IChildTestSubjectMarkService
+    {
+        public async Task<Result<PagedResult<ChildTestSubjectMark>>> GetAllAsync(PaginationParameter paginationParameter)
+        {
+            var spec = BaseSpecification<ChildTestSubjectMark>
+                .Create()
+                .Where(x => x.DeletedAt == null)
+                .Paginate(paginationParameter.page, paginationParameter.pageSize);
+            return Result<PagedResult<ChildTestSubjectMark>>.Success(await _uow.ChildTestSubjectMarkRepositoy.PagedListAsync(spec));
+        }
+        public async Task<Result<ChildTestSubjectMark>> GetById(Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<ChildTestSubjectMark>.Failure("ChildTestSubjectMark ID cannot be empty.");
+
+            var result = await _uow.ChildTestSubjectMarkRepositoy.GetByIdAsync(id);
+
+            if (result == null || result.DeletedAt != null)
+                return Result<ChildTestSubjectMark>.Failure($" ChildTestSubjectMark with ID was not found.");
+
+            return Result<ChildTestSubjectMark>.Success(result);
+        }
+
+        public async Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto)
+        {
+            await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
+            var result = new ChildTestSubjectMark
+            {
+                ObtainMark = dto.ObtainMark,
+                ChildTestId = dto.ChildTestId,
+                SubjectId = dto.SubjectId,
+                EmployeeId = dto.EmployeeId,
+                Notes = dto.Notes
+
+            };
+            await _uow.ChildTestSubjectMarkRepositoy.AddAsync(result);
+            await _uow.CompleteAsync();
+            return Result<Guid>.Success(result.Id);
+        }
+        public async Task<Result<Guid>> UpdateAsync(ChildTestSubjectMarkRequestDto dto, Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<Guid>.Failure("ChildTestSubjectMark ID cannot be empty.");
+
+            var result = await _uow.ChildTestSubjectMarkRepositoy.GetByIdAsync(id);
+
+            if (result == null || result.DeletedAt != null)
+                return Result<Guid>.Failure($"ChildTestSubjectMark with ID was not found.");
+
+            await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
+
+            result.ObtainMark = dto.ObtainMark;
+            result.ChildTestId = dto.ChildTestId;
+            result.SubjectId = dto.SubjectId;
+            result.EmployeeId = dto.EmployeeId;
+            result.Notes = dto.Notes;
+
+            await _uow.ChildTestSubjectMarkRepositoy.UpdateAsync(result);
+            await _uow.CompleteAsync();
+            return Result<Guid>.Success(result.Id);
+
+        }
+        public async Task<Result<bool>> DeleteAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<bool>.Failure("ChildTestSubjectMark ID cannot be empty.");
+
+            var result = await _uow.ChildTestSubjectMarkRepositoy.GetByIdAsync(id);
+
+            if (result == null || result.DeletedAt != null)
+                return Result<bool>.Failure($"ChildTestSubjectMark with ID was not found.");
+
+            result.DeletedAt = DateTime.UtcNow;
+            await _uow.CompleteAsync();
+
+            return Result<bool>.Success(true);
+        }
+    }
+}
