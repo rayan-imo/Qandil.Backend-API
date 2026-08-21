@@ -12,6 +12,8 @@ namespace Qandil.Service.IServices
         public Task<Result<Guid>> AddAsync(ChildTestRequestDto dto);
         public Task<Result<Guid>> UpdateAsync(ChildTestRequestDto dto, Guid id);
         public Task<Result<bool>> DeleteAsync(Guid id);
+        public Task<Result<IEnumerable<ChildLevelAverageDto>>> GetChildAveragesByChildIdAsync(Guid childId);
+        public Task<Result<ChildTestsDto>> GetChildLevelAveragesAsync(Guid childId, Guid levelId);
     }
 }
 
