@@ -5,7 +5,7 @@ namespace Qandil.Core.Entity
     public class Diagnosis:BaseEntity
     {
         public DateTime DisabilityOnsetDate { get; set; }
-        public string MedicalNots { get; set; }
+        public string?  MedicalNots { get; set; }
          public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public Guid ChildId { get; set; }

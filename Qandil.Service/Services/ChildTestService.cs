@@ -10,7 +10,7 @@ using Qandil.Service.IServices;
 
 namespace Qandil.Service.Services
 {
-    public class ChildTestService(IUnitOfWork _uow) : IChildTestService
+    public class ChildTestService(IUnitOfWork _uow) : IChildTestService 
     {
         public async Task<Result<PagedResult<ChildTest>>> GetAllAsync(PaginationParameter paginationParameter)
         {
