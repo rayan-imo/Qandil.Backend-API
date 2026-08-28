@@ -61,6 +61,11 @@ namespace Qandil.Infrastructure.Repositories
             }
             return query.ToList();
         }
+        public IQueryable<T> GetQueryable()
+        {
+
+            return _context.Set<T>().Where(e => e.DeletedAt == null).AsQueryable();
+        }
         public void Add(T entity)
         {
             _context.Add(entity);
@@ -274,7 +279,7 @@ namespace Qandil.Infrastructure.Repositories
             var query = ApplySpec(spec);
             return await query.ToListAsync(ct);
         }
-        public async Task<T?> GetBySpecAsync(ISpecification<T> spec, CancellationToken ct = default)
+        public async Task<T?> GetFirstBySpecAsync(ISpecification<T> spec, CancellationToken ct = default)
         {
             var query = ApplySpec(spec);
             return await query.FirstOrDefaultAsync(ct);

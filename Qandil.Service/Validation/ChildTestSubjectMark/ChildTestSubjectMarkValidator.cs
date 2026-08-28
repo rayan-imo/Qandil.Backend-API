@@ -8,9 +8,6 @@ namespace Qandil.Service.Validation.ChildTestSubjectMark
     {
         public ChildTestSubjectMarkValidator()
         {
-            RuleFor(x => x.ChildTestId)
-             .NotEmpty().WithMessage("معرف الاختبار للطفل مطلوب");
-
             RuleFor(x => x.SubjectId)
            .NotEmpty().WithMessage("معرف المادة مطلوب");
 

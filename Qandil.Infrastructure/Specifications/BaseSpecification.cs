@@ -15,6 +15,7 @@ namespace Qandil.Infrastructure.Specifications
 
         public Expression<Func<T, object>>? OrderByDescending { get; protected set; }
         public List<(Expression<Func<T, object>> KeySelector, bool Descending)> Orderings { get; private set; } = [];
+        
         public LambdaExpression? Selector { get; private set; }
         public int? Skip { get; protected set; }
         public int? Take { get; protected set; }
@@ -23,8 +24,10 @@ namespace Qandil.Infrastructure.Specifications
         public string? CacheKey { get; private set; }
 
         public bool IgnoreSoftDeleteFilter { get; protected set; }
+        public List<Func<IQueryable<T>, IQueryable<T>>> IncludeQueries { get; }
+    = new();
 
-
+        
         public BaseSpecification<T> UseCache(string cacheKey)
         {
             EnableCaching = true;
@@ -115,7 +118,26 @@ namespace Qandil.Infrastructure.Specifications
             OrderBy = orderBy;
             return this;
         }
+        public BaseSpecification<T> Include(Expression<Func<T, object>> include)
+        {
+            Includes.Add(include);
+            return this;
+        }
 
+        public BaseSpecification<T> Include(
+            Func<IQueryable<T>, IQueryable<T>> includeQuery)
+        {
+            IncludeQueries.Add(includeQuery);
+            return this;
+        }
+        
+
+
+        public BaseSpecification<T> ThenInclude<TProperty>(Expression<Func<object, TProperty>> thenInclude)
+        {
+           
+            return this;
+        }
         public BaseSpecification<T> OrderByDesc(Expression<Func<T, object>> orderBy)
         {
             OrderByDescending = orderBy;

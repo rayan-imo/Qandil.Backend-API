@@ -35,7 +35,7 @@ namespace Qandil.Service.Services
             return Result<ChildTestSubjectMark>.Success(result);
         }
 
-        public async Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto)
+      /* public async Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto)
         {
             await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
             var result = new ChildTestSubjectMark
@@ -50,7 +50,7 @@ namespace Qandil.Service.Services
             await _uow.ChildTestSubjectMarkRepositoy.AddAsync(result);
             await _uow.CompleteAsync();
             return Result<Guid>.Success(result.Id);
-        }
+        }*/
         public async Task<Result<Guid>> UpdateAsync(ChildTestSubjectMarkRequestDto dto, Guid id)
         {
             if (id == Guid.Empty)
@@ -64,9 +64,7 @@ namespace Qandil.Service.Services
             await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
 
             result.ObtainMark = dto.ObtainMark;
-            result.ChildTestId = dto.ChildTestId;
             result.SubjectId = dto.SubjectId;
-            result.EmployeeId = dto.EmployeeId;
             result.Notes = dto.Notes;
 
             await _uow.ChildTestSubjectMarkRepositoy.UpdateAsync(result);

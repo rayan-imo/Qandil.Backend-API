@@ -6,7 +6,7 @@ namespace Qandil.Infrastructure.Specifications
 {
     public static class SpecificationEvaluator<T> where T : BaseEntity
     {
-        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> spec)
+        public static IQueryable<T>  GetQuery(IQueryable<T> inputQuery, ISpecification<T> spec)
         {
             var query = inputQuery;
 

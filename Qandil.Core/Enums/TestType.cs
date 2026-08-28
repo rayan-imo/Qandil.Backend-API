@@ -3,7 +3,7 @@
     public enum TestType
     {
         PreTest,
-        ProTest,
-        Periodic
+        PostTest,
+        PromotionTest
     }
 }

@@ -14,11 +14,10 @@ namespace Qandil.Core.Interfacres
         IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate, int take, int skip);
         IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate, int? take, int? skip,
             Expression<Func<T, object>> orederBy = null, string OrderByDirection = OrderBy.Ascending);
-
         //Async
         Task<List<T>> ListAsync(ISpecification<T> spec, CancellationToken ct = default);
         Task<PagedResult<T>> PagedListAsync(ISpecification<T> spec, CancellationToken ct = default);
-        Task<T?> GetBySpecAsync(ISpecification<T> spec, CancellationToken ct = default);
+        Task<T?> GetFirstBySpecAsync(ISpecification<T> spec, CancellationToken ct = default);
         Task<T> GetByIdAsync(Guid id, string[] includes = null);
         Task<IEnumerable<T>> GetAllAsync();
         public Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate, string[] includes = null);
