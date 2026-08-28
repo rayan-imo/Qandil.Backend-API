@@ -4,7 +4,7 @@ namespace Qandil.Core.Entity
 {
     public class ChildTestSubjectMark:BaseEntity
     {
-        public double ObtainMark {  get; set; }
+        public float ObtainMark {  get; set; }
         public string? Notes {  get; set; }
         public Guid ChildTestId { get; set; }
         public ChildTest ChildTest { get; set; }

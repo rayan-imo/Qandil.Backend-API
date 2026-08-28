@@ -109,6 +109,9 @@ namespace Qandil.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AttemptNumber")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
@@ -124,12 +127,14 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Mark")
-                        .HasColumnType("real");
+                    b.Property<bool>("IsPassed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nots")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Result")
+                        .HasColumnType("real");
 
                     b.Property<Guid>("TestId")
                         .HasColumnType("uniqueidentifier");
@@ -146,6 +151,49 @@ namespace Qandil.Infrastructure.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("ChildTests");
+                });
+
+            modelBuilder.Entity("Qandil.Core.Entity.ChildTestSubjectMark", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChildTestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("ObtainMark")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TestSubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChildTestId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TestSubjectId");
+
+                    b.ToTable("ChildTestSubjectMarks");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Classroom", b =>
@@ -216,7 +264,6 @@ namespace Qandil.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MedicalNots")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -590,14 +637,19 @@ namespace Qandil.Infrastructure.Migrations
                     b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("HasPreTest")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("LevelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SubjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalMark")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -605,9 +657,37 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("LevelId");
 
+                    b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("Qandil.Core.Entity.TestSubject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("MaxMark")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Tests");
+                    b.HasIndex("TestId");
+
+                    b.ToTable("TestSubjects");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Tracking", b =>
@@ -752,6 +832,35 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("Test");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.ChildTestSubjectMark", b =>
+                {
+                    b.HasOne("Qandil.Core.Entity.ChildTest", "ChildTest")
+                        .WithMany("ChildTestSubjectMarks")
+                        .HasForeignKey("ChildTestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Qandil.Core.Entity.Employee", null)
+                        .WithMany("ChildTestSubjectMarks")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Qandil.Core.Entity.Subject", "Subject")
+                        .WithMany("ChildTestSubjectMarks")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Qandil.Core.Entity.TestSubject", null)
+                        .WithMany("ChildTestSubjectMarks")
+                        .HasForeignKey("TestSubjectId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ChildTest");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Classroom", b =>
                 {
                     b.HasOne("Qandil.Core.Entity.ChildTest", "ChildTest")
@@ -805,7 +914,7 @@ namespace Qandil.Infrastructure.Migrations
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisAnswer", b =>
                 {
                     b.HasOne("Qandil.Core.Entity.Diagnosis", "Diagnosis")
-                        .WithMany()
+                        .WithMany("DiagnosisAnswers")
                         .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -884,20 +993,31 @@ namespace Qandil.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Qandil.Core.Entity.Level", "Level")
-                        .WithMany()
+                        .WithMany("Tests")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.Navigation("Level");
+                });
+
+            modelBuilder.Entity("Qandil.Core.Entity.TestSubject", b =>
+                {
                     b.HasOne("Qandil.Core.Entity.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("TestSubjects")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Level");
+                    b.HasOne("Qandil.Core.Entity.Test", "Test")
+                        .WithMany("TestSubjects")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Tracking", b =>
@@ -928,6 +1048,11 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("Tracking");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.ChildTest", b =>
+                {
+                    b.Navigation("ChildTestSubjectMarks");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Classroom", b =>
                 {
                     b.Navigation("Children");
@@ -935,6 +1060,8 @@ namespace Qandil.Infrastructure.Migrations
 
             modelBuilder.Entity("Qandil.Core.Entity.Diagnosis", b =>
                 {
+                    b.Navigation("DiagnosisAnswers");
+
                     b.Navigation("DiagnosisDisabilities");
 
                     b.Navigation("EvaluationCards");
@@ -961,6 +1088,8 @@ namespace Qandil.Infrastructure.Migrations
 
             modelBuilder.Entity("Qandil.Core.Entity.Employee", b =>
                 {
+                    b.Navigation("ChildTestSubjectMarks");
+
                     b.Navigation("Classrooms");
 
                     b.Navigation("Diagnoses");
@@ -973,6 +1102,8 @@ namespace Qandil.Infrastructure.Migrations
             modelBuilder.Entity("Qandil.Core.Entity.Level", b =>
                 {
                     b.Navigation("Classrooms");
+
+                    b.Navigation("Tests");
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.School", b =>
@@ -980,9 +1111,23 @@ namespace Qandil.Infrastructure.Migrations
                     b.Navigation("trackings");
                 });
 
+            modelBuilder.Entity("Qandil.Core.Entity.Subject", b =>
+                {
+                    b.Navigation("ChildTestSubjectMarks");
+
+                    b.Navigation("TestSubjects");
+                });
+
             modelBuilder.Entity("Qandil.Core.Entity.Test", b =>
                 {
                     b.Navigation("ChildTests");
+
+                    b.Navigation("TestSubjects");
+                });
+
+            modelBuilder.Entity("Qandil.Core.Entity.TestSubject", b =>
+                {
+                    b.Navigation("ChildTestSubjectMarks");
                 });
 #pragma warning restore 612, 618
         }

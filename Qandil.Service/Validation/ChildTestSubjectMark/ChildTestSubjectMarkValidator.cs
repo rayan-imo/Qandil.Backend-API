@@ -11,8 +11,7 @@ namespace Qandil.Service.Validation.ChildTestSubjectMark
             RuleFor(x => x.SubjectId)
            .NotEmpty().WithMessage("معرف المادة مطلوب");
 
-            RuleFor(x => x.EmployeeId)
-           .NotEmpty().WithMessage("معرف الموظف مطلوب");
+           
         }
 
     }

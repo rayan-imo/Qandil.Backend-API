@@ -37,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher,PasswordHasher>();
         services.AddScoped<IGenerateTokenJwt, GenerateTokenJwt>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IChildTestService, ChildTestService>();
 
         return services;
 
