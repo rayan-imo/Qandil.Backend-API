@@ -22,7 +22,7 @@ namespace Qandil.Service.Services
                 .Paginate(paginationParameter.page, paginationParameter.pageSize);
             return Result<PagedResult<ChildTest>>.Success(await _uow.ChildTestRepositoy.PagedListAsync(spec));
         }
-        public async Task<Result<ChildTest>> GetById(Guid id)
+        public async Task<Result<ChildTest>> GetById(Guid id)   
         {
             if (id == Guid.Empty)
                 return Result<ChildTest>.Failure("ChildTest ID cannot be empty.");
@@ -74,41 +74,38 @@ namespace Qandil.Service.Services
 
             if (dto.Type == TestType.PreTest)
             {
-                // 7.1 إذا كان لا يوجد أي محاولات سابقة
                 if (hasNoAttempts)
                 {
-                    // ✅ أول محاولة للطفل في هذا الامتحان → محاولة 1
+                 
                     attemptNumber = 1;
                 }
                 else
                 {
-                    // 7.2 جلب أكبر رقم محاولة
+                   
                     var maxAttemptNumber = allAttempts.Max(a => a.AttemptNumber);
 
-                    // 7.3 جلب سجلات أكبر محاولة
                     var lastAttempts = allAttempts.Where(a => a.AttemptNumber == maxAttemptNumber).ToList();
 
-                    // 7.4 التحقق من وجود بعدي في آخر محاولة
                     var hasPostTest = lastAttempts.Any(a => a.Type == TestType.PostTest);
 
                     if (!hasPostTest)
                     {
-                        // ❌ ما في بعدي → يجب إضافة البعدي أولاً
+
                         return Result<Guid>.Failure($"يجب إضافة الاختبار البعدي للمحاولة رقم {maxAttemptNumber} أولاً");
                     }
                     else
                     {
-                        // 7.5 جلب البعدي لآخر محاولة
+                     
                         var postTest = lastAttempts.FirstOrDefault(a => a.Type == TestType.PostTest);
 
                         if (postTest != null && postTest.IsPassed)
                         {
-                            // ❌ البعدي ناجح → تم اجتياز المستوى
+                           
                             return Result<Guid>.Failure("تم اجتياز هذا المستوى ولا يمكن إضافة امتحان آخر لهذا المستوى");
                         }
                         else
                         {
-                            // ✅ البعدي راسب → محاولة جديدة (+1)
+                            
                             attemptNumber = maxAttemptNumber + 1;
                         }
                     }
@@ -118,49 +115,39 @@ namespace Qandil.Service.Services
 
             else if (dto.Type == TestType.PostTest)
             {
-                // 8.1 إذا كان لا يوجد أي محاولات سابقة
+               
                 if (hasNoAttempts)
                 {
-                    // ❌ لا يوجد محاولات سابقة للطفل في هذا الامتحان
-                    // يجب أن يبدأ بالقبلي أولاً
+                    
                     return Result<Guid>.Failure("يجب إضافة الاختبار القبلي أولاً");
                 }
 
-                // 8.2 جلب أكبر رقم محاولة
+               
                 var maxAttemptNumber = allAttempts.Max(a => a.AttemptNumber);
 
-                // 8.3 جلب سجلات أكبر محاولة
-                // نحتاج إلى جميع سجلات المحاولة الأخيرة (قد يكون فيها قبلي وبعدي)
+               
                 var lastAttempts = allAttempts.Where(a => a.AttemptNumber == maxAttemptNumber).ToList();
 
-                // 8.4 التحقق من وجود بعدي في آخر محاولة
-                // هل الطفل قدم اختبار بعدي في هذه المحاولة؟
                 var hasPostTest = lastAttempts.Any(a => a.Type == TestType.PostTest);
 
                 if (!hasPostTest)
                 {
-                    // ✅ يوجد قبلي ولكن لا يوجد بعدي
-                    // → إضافة بعدي بنفس رقم المحاولة
+                   
                     attemptNumber = maxAttemptNumber;
                 }
                 else
                 {
-                    // يوجد قبلي وبعدي في آخر محاولة
-                    // نحتاج إلى معرفة حالة البعدي (ناجح أم راسب)
+                   
                     var postTest = lastAttempts.FirstOrDefault(a => a.Type == TestType.PostTest);
 
                     if (postTest != null && postTest.IsPassed)
                     {
-                        // ❌ البعدي ناجح
-                        // → تم اجتياز المستوى، لا يمكن إضافة محاولات جديدة
+                        
                         return Result<Guid>.Failure("تم اجتياز هذا المستوى ولا يمكن إضافة امتحان آخر لهذا المستوى");
                     }
                     else
                     {
-                        // ❌ البعدي راسب
-                        // → يجب إضافة قبلي للمحاولة الجديدة أولاً
-                        // maxAttemptNumber هو رقم المحاولة الحالية
-                        // maxAttemptNumber + 1 هو رقم المحاولة الجديدة
+                      
                         return Result<Guid>.Failure($"يجب إضافة الاختبار القبلي للمحاولة رقم {maxAttemptNumber + 1} أولاً");
                     }
                 }

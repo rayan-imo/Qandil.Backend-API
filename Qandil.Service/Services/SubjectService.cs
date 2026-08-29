@@ -4,11 +4,9 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.SchoolDto.Request;
 using Qandil.Service.Dtos.SubjectDto.Request;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Level;
-using Qandil.Service.Validation.School;
 
 namespace Qandil.Service.Services
 {
@@ -40,7 +38,7 @@ namespace Qandil.Service.Services
             await new SubjectValidator().ValidateAndThrowAsync(dto);
             var subject = new Subject
             {
-               Name=dto.Name
+                Name = dto.Name
             };
             await _uow.SubjectRepository.AddAsync(subject);
             await _uow.CompleteAsync();
@@ -57,7 +55,7 @@ namespace Qandil.Service.Services
                 return Result<Guid>.Failure($"Subject with ID was not found.");
 
             await new SubjectValidator().ValidateAndThrowAsync(dto);
-            subject.Name=dto.Name;
+            subject.Name = dto.Name;
 
             await _uow.SubjectRepository.UpdateAsync(subject);
             await _uow.CompleteAsync();
@@ -80,11 +78,11 @@ namespace Qandil.Service.Services
             foreach (var childTest in childTests)
                 childTest.DeletedAt = DateTime.UtcNow;
 
-            var childTestSubjectMarks=await _uow.ChildTestSubjectMarkRepositoy.FindAllAsync
-                (x=>x.SubjectId==id&& x.DeletedAt != null);
+            var childTestSubjectMarks = await _uow.ChildTestSubjectMarkRepositoy.FindAllAsync
+                (x => x.SubjectId == id && x.DeletedAt != null);
 
             foreach (var childTestSubjectMark in childTestSubjectMarks)
-             childTestSubjectMark.DeletedAt = DateTime.UtcNow;
+                childTestSubjectMark.DeletedAt = DateTime.UtcNow;
 
             subject.DeletedAt = DateTime.UtcNow;
             await _uow.CompleteAsync();

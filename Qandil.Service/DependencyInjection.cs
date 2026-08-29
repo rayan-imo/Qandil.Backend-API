@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -22,22 +21,23 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddService(this IServiceCollection services, IConfiguration config)
     {
-        services.Configure<JWT>(config.GetSection("JWT")); services.AddScoped<IEmployeeService,EmployeeService>();
-        services.AddScoped<IChildService,ChildService>();
-        services.AddScoped<ILevelService,LevelService>();
-        services.AddScoped<ITestService,TestService>();
-        services.AddScoped<ISchoolService,SchoolService>();
-        services.AddScoped<IClassroomService,ClassroomService>();
-        services.AddScoped<IEduProgramService,EduProgramService>();
-        services.AddScoped<IDiagnosisService,DiagnosisService>();
-        services.AddScoped<IDisabilityService,DisabilityService>();
+        services.Configure<JWT>(config.GetSection("JWT")); services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IChildService, ChildService>();
+        services.AddScoped<ILevelService, LevelService>();
+        services.AddScoped<ITestService, TestService>();
+        services.AddScoped<ISchoolService, SchoolService>();
+        services.AddScoped<IClassroomService, ClassroomService>();
+        services.AddScoped<IEduProgramService, EduProgramService>();
+        services.AddScoped<IDiagnosisService, DiagnosisService>();
+        services.AddScoped<IDisabilityService, DisabilityService>();
         services.AddScoped<IAnswerService, AnswerService>();
         services.AddScoped<IDiagnosisQuestionService, DiagnosisQuestionService>();
-        services.AddScoped<IAuthService,AuthService>();
-        services.AddScoped<IPasswordHasher,PasswordHasher>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IGenerateTokenJwt, GenerateTokenJwt>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IChildTestService, ChildTestService>();
+        services.AddScoped<ISubjectService, SubjectService>();
 
         return services;
 
@@ -63,7 +63,7 @@ public static class DependencyInjection
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Secret)),
-                RoleClaimType=ClaimTypes.Role
+                RoleClaimType = ClaimTypes.Role
             };
         });
         return services;
