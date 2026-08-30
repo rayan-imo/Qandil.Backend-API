@@ -2,7 +2,7 @@
 
 namespace Qandil.Core.Interfacres
 {
-    public interface IChildTestSubjectMarkRepositoy : IBaseRepository<ChildTestSubjectMark>
+    public interface IChildTestSubjectMarkRepositoy : IBaseRepository<SubjectMark>
     {
     
     }

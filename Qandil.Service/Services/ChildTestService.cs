@@ -207,13 +207,13 @@ namespace Qandil.Service.Services
                 ChildId = dto.ChildId,
                 TestId = dto.TestId,
                 EmployeeId = dto.EmployeeId,
-                ChildTestSubjectMarks = new List<ChildTestSubjectMark>()
+                ChildTestSubjectMarks = new List<SubjectMark>()
 
             };
 
             foreach (var markDto in dto.SubjectMarkDtos)
             {
-                childTest.ChildTestSubjectMarks.Add(new ChildTestSubjectMark
+                childTest.ChildTestSubjectMarks.Add(new SubjectMark
                 {
                     Id = Guid.NewGuid(),
                     ObtainMark = markDto.ObtainMark,

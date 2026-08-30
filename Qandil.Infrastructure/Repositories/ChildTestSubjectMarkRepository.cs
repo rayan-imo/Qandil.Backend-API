@@ -4,7 +4,7 @@ using Qandil.Infrastructure.Data;
 
 namespace Qandil.Infrastructure.Repositories
 {
-    public class ChildTestSubjectMarkRepository(ApplicationDbContext _context):BaseRepository<ChildTestSubjectMark>(_context),IChildTestSubjectMarkRepositoy
+    public class ChildTestSubjectMarkRepository(ApplicationDbContext _context):BaseRepository<SubjectMark>(_context),IChildTestSubjectMarkRepositoy
     {
         
     }

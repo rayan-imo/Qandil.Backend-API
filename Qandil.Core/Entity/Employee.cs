@@ -12,7 +12,7 @@ namespace Qandil.Core.Entity
         public ICollection<Diagnosis>? Diagnoses { get; set; }
         public ICollection<SupportivSession>? SupportivSessions { get; set; }
         public ICollection<Test>? Tests { get; set; }
-        public ICollection<ChildTestSubjectMark>? ChildTestSubjectMarks { get; set; }
+        public ICollection<SubjectMark>? ChildTestSubjectMarks { get; set; }
         public ICollection<Classroom>? Classrooms { get; set; }
 
     }

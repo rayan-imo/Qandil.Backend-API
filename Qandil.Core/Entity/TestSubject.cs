@@ -11,7 +11,7 @@ namespace Qandil.Core.Entity
             public Guid SubjectId { get; set; }
             public Subject Subject { get; set; }
             public double MaxMark {  get; set; }
-            public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }
+            public ICollection<SubjectMark> ChildTestSubjectMarks { get; set; }
 
         }
 }

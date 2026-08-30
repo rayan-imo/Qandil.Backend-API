@@ -6,6 +6,6 @@ namespace Qandil.Core.Entity
     {
         public string Name { get; set; }
         public ICollection<TestSubject> TestSubjects {  get; set; }
-        public ICollection<ChildTestSubjectMark> ChildTestSubjectMarks { get; set; }
+        public ICollection<SubjectMark> ChildTestSubjectMarks { get; set; }
     }
 }

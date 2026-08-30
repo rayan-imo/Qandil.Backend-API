@@ -14,25 +14,25 @@ namespace Qandil.Service.Services
 {
     public class ChildTestSubjectMarkService(IUnitOfWork _uow) : IChildTestSubjectMarkService
     {
-        public async Task<Result<PagedResult<ChildTestSubjectMark>>> GetAllAsync(PaginationParameter paginationParameter)
+        public async Task<Result<PagedResult<SubjectMark>>> GetAllAsync(PaginationParameter paginationParameter)
         {
-            var spec = BaseSpecification<ChildTestSubjectMark>
+            var spec = BaseSpecification<SubjectMark>
                 .Create()
                 .Where(x => x.DeletedAt == null)
                 .Paginate(paginationParameter.page, paginationParameter.pageSize);
-            return Result<PagedResult<ChildTestSubjectMark>>.Success(await _uow.ChildTestSubjectMarkRepositoy.PagedListAsync(spec));
+            return Result<PagedResult<SubjectMark>>.Success(await _uow.ChildTestSubjectMarkRepositoy.PagedListAsync(spec));
         }
-        public async Task<Result<ChildTestSubjectMark>> GetById(Guid id)
+        public async Task<Result<SubjectMark>> GetById(Guid id)
         {
             if (id == Guid.Empty)
-                return Result<ChildTestSubjectMark>.Failure("ChildTestSubjectMark ID cannot be empty.");
+                return Result<SubjectMark>.Failure("ChildTestSubjectMark ID cannot be empty.");
 
             var result = await _uow.ChildTestSubjectMarkRepositoy.GetByIdAsync(id);
 
             if (result == null || result.DeletedAt != null)
-                return Result<ChildTestSubjectMark>.Failure($" ChildTestSubjectMark with ID was not found.");
+                return Result<SubjectMark>.Failure($" ChildTestSubjectMark with ID was not found.");
 
-            return Result<ChildTestSubjectMark>.Success(result);
+            return Result<SubjectMark>.Success(result);
         }
 
       /* public async Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto)
