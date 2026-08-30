@@ -1,0 +1,15 @@
+﻿using Qandil.Core.Common;
+
+namespace Qandil.Core.Entity
+{
+    public class SubjectMark:BaseEntity
+    {
+        public float ObtainMark {  get; set; }
+        public string? Notes {  get; set; }
+        public Guid ChildTestId { get; set; }
+        public ChildTest ChildTest { get; set; }
+        public Guid SubjectId { get; set; }
+        public Subject Subject { get; set; }
+       
+    }  
+}
