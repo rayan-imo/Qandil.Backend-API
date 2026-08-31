@@ -9,7 +9,7 @@ namespace Qandil.Core.Entity
         public Guid ChildTestId { get; set; }
         public ChildTest ChildTest { get; set; }
         public Guid SubjectId { get; set; }
-        public Subject Subject { get; set; }
+        public Subject Subject { get; set; } 
        
     }  
-}
+} 

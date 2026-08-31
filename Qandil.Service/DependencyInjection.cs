@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IChildTestService, ChildTestService>();
         services.AddScoped<ISubjectService, SubjectService>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
 
