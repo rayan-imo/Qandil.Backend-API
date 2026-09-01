@@ -6,7 +6,6 @@ namespace Qandil.Core.Entity
     public class Test:BaseEntity
     {
         public string Name { get; set; }
-        public string Title {  get; set; }
         public bool HasPreTest {  get; set; }
         public Level Level { get; set; }
         public Guid LevelId { get; set; }  

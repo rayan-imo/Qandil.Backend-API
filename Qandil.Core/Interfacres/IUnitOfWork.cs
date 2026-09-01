@@ -7,14 +7,12 @@
         ILevelRepository LevelRepository { get; }
         ITestRepository TestRepository { get; }
         ISubjectRepository SubjectRepository { get; }
-  
         ISchoolRepository SchoolRepository { get; }
         IChildRepository ChildRepository { get; }
         IClassroomRepository ClassroomRepository { get; }
         ITestSubjectRepository TestSubjectRepository { get; }
         IChildTestSubjectMarkRepositoy ChildTestSubjectMarkRepositoy { get; }
-         IChildTestRepositoy ChildTestRepositoy { get; }
-
+        IChildTestRepositoy ChildTestRepositoy { get; }
         IDiagnosisRepository DiagnosisRepository { get; }
         IDisabilityRepository DisabilityRepository { get; }
         IUsersRepository UsersRepository { get; }

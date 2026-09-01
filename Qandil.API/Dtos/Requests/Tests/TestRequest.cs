@@ -1,12 +1,13 @@
-﻿using Qandil.Core.Enums;
+﻿using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 
 namespace Qandil.API.Dtos.Requests.Tests
 {
     public class TestRequest
     {
-        public int TotalMark { get; set; }
+        public string Name { get; set; }
+        public bool HasPreTest { get; set; }
         public Guid LevelId { get; set; }
-        public Guid SubjectId { get; set; }
-       
+
     }
 }

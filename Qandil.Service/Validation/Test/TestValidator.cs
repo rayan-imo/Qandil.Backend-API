@@ -13,8 +13,6 @@ namespace Qandil.Service.Validation.Test
                .NotEmpty().WithMessage("من فضلك، قم بإدخال الاسم");
 
 
-            RuleFor(x => x.Title)
-                .NotEmpty().WithMessage("من فضلك، قم بإدخال العنوان");
         }
     }
 }

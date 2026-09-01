@@ -49,10 +49,10 @@ namespace Qandil.API.Controllers
         {
             var testDto = new TestRequestDto
             {
-                
-              //  TotalMark=testRequest.TotalMark,
-                //SubjectId=testRequest.SubjectId,    
-                LevelId=testRequest.LevelId,
+
+                Name = testRequest.Name,
+                HasPreTest = testRequest.HasPreTest,
+                LevelId = testRequest.LevelId,
             };
 
             var result = await _testService.AddAsync(testDto);
@@ -81,8 +81,8 @@ namespace Qandil.API.Controllers
         {
             var testDto = new TestRequestDto
             {
-              //  TotalMark = testRequest.TotalMark,
-                //SubjectId = testRequest.SubjectId,
+                Name = testRequest.Name,
+                HasPreTest = testRequest.HasPreTest,
                 LevelId = testRequest.LevelId,
             };
 

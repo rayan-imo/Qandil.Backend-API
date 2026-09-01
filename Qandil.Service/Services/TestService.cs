@@ -40,7 +40,6 @@ namespace Qandil.Service.Services
             var test = new Test
             {
                 Name= dto.Name,
-                Title= dto.Title,
                 HasPreTest= dto.HasPreTest,
                 LevelId=dto.LevelId,
             };
@@ -60,7 +59,6 @@ namespace Qandil.Service.Services
 
             await new TestValidator().ValidateAndThrowAsync(dto);
             test.Name = dto.Name;
-            test.Title = dto.Title;
             test.HasPreTest = dto.HasPreTest;
             test.LevelId = dto.LevelId;
             await _uow.TestRepository.UpdateAsync(test);
