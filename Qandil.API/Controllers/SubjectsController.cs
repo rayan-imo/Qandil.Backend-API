@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Subject;
 using Qandil.API.Dtos.Responses.Subjects;
@@ -13,60 +14,54 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class SubjectsController(ISubjectService _subjectService) : ControllerBase
     {
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet]
-        public async Task<ActionResult<PagedResult<SubjectResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<SubjectResponse>>> GetAll(
+            [FromQuery] PaginationParameter paginationParameter)
         {
             var result = await _subjectService.GetAllAsync(paginationParameter);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "فشل في جلب المواد الدراسية",
                     MessageEn = "Failed to retrieve subjects"
                 });
-            }
 
-            var subjects = result.Value;
             return Ok(new ApiResponse<PagedResult<SubjectResponse>>
             {
                 Success = true,
                 MessageAr = "تم جلب المواد الدراسية بنجاح",
                 MessageEn = "Subjects retrieved successfully",
-                Data = subjects.MapTo(s => SubjectResponse.Transform(s))
+                Data = result.Value.MapTo(s => SubjectResponse.Transform(s))
             });
-
-
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _subjectService.GetById(id);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "المادة الدراسية غير موجودة",
                     MessageEn = "Subject not found"
                 });
-            }
-
-            var subjectEntity = result.Value;
 
             return Ok(new ApiResponse<SubjectResponse>
             {
                 Success = true,
                 MessageAr = "تم جلب المادة الدراسية بنجاح",
                 MessageEn = "Subject retrieved successfully",
-                Data = SubjectResponse.Transform(subjectEntity),
+                Data = SubjectResponse.Transform(result.Value)
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(SubjectRequest subjectRequest)
         {
@@ -78,27 +73,26 @@ namespace Qandil.API.Controllers
             var result = await _subjectService.AddAsync(subjectDto);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<Guid>
                 {
                     Success = false,
                     MessageAr = "فشلت عملية إضافة المادة الدراسية",
                     MessageEn = "Failed to add subject"
                 });
-            }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
                 MessageAr = "تمت إضافة المادة الدراسية بنجاح",
                 MessageEn = "Subject added successfully",
-                Data = result.Value,
+                Data = result.Value
             });
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(SubjectRequest subjectRequest, Guid id)
+        public async Task<IActionResult> Update(
+            SubjectRequest subjectRequest, Guid id)
         {
             var subjectDto = new SubjectRequestDto
             {
@@ -108,38 +102,35 @@ namespace Qandil.API.Controllers
             var result = await _subjectService.UpdateAsync(subjectDto, id);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
                     MessageAr = "فشل تحديث بيانات المادة الدراسية",
                     MessageEn = "Failed to update subject"
                 });
-            }
 
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
                 MessageAr = "تم تحديث بيانات المادة الدراسية بنجاح",
                 MessageEn = "Subject updated successfully",
-                Data = result.Value,
+                Data = result.Value
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _subjectService.DeleteAsync(id);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "فشل حذف المادة الدراسية",
                     MessageEn = "Failed to delete subject"
                 });
-            }
 
             return Ok(new ApiResponse<bool>
             {
@@ -152,4 +143,3 @@ namespace Qandil.API.Controllers
     }
 }
 
- 

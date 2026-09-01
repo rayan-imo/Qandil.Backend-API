@@ -1,131 +1,203 @@
-﻿using Qandil.Core.AuthServices.Hasher;
+﻿
+using System.IdentityModel.Tokens.Jwt;
+using Qandil.Core.AuthServices.Hasher;
 using Qandil.Core.Common;
 using Qandil.Core.Entity;
 using Qandil.Core.Enums;
 using Qandil.Core.Interfacres;
 using Qandil.Core.Interfacres.EmailService;
-using Qandil.Service.AuthServices.Helper.Dtos;
 using Qandil.Service.AuthServices.Helper.Dtos.OtpDto.Request;
+using Qandil.Service.AuthServices.Helper.Dtos.Requests;
+using Qandil.Service.AuthServices.Helper.Dtos.Responses;
 using Qandil.Service.AuthServices.Helper.EmailTemplates;
 using Qandil.Services.AuthServices.GenerateToken;
 using Qandil.Services.AuthServices.Helper;
 using Qandil.Services.AuthServices.Services;
+
 namespace Qandil.Services.AuthServices.Service;
 
-public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
-    IGenerateTokenJwt _generateTokenJwt, IEmailService _emailService) : IAuthService
+public class AuthService(
+    IUnitOfWork _uow, IPasswordHasher _passwordHasher, IGenerateTokenJwt _generateTokenJwt,
+    IEmailService _emailService) : IAuthService
 {
-    private AuthModel _authModel;
     public async Task<AuthModel> RegisterAsync(RegisterModel model)
     {
         if (await _uow.UsersRepository.GetByItemAsync(u => u.Email == model.Email) is not null)
-        {
-            return new AuthModel { Message = "Email is already Register " };
-        }
-        var haspassword = _passwordHasher.HashPassword(model.Password);
+            return new AuthModel { Message = "Email is already registered" };
+
         var user = new User
         {
             Email = model.Email,
-            Password = haspassword,
+            Password = _passwordHasher.HashPassword(model.Password),
             Role = RoleType.User
         };
+
         await _uow.UsersRepository.AddAsync(user);
+        await _uow.CompleteAsync();
 
         var jwt = _generateTokenJwt.GenerateAccessToken(user.Id, user.Role, user.Email);
-        await _uow.CompleteAsync();
+
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(jwt);
 
         return new AuthModel
         {
-            Email = model.Email,
+            Email = user.Email,
             IsAuthenticated = true,
             Token = jwt,
+            Role = user.Role,
+            ExpiresOn = token.ValidTo,
             Message = "Registration successful"
         };
-
     }
+
     public async Task<AuthModel> LogInAsync(LogInModel model)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == model.Email);
 
         if (user == null)
-        {
-            _authModel.Message = "Email or Password is incorrect";
-            return _authModel;
+            return new AuthModel { Message = "Email or Password is incorrect" };
 
-        }
-        var IsValidPassword = _passwordHasher.VerifyHashedPassword(user.Password, model.Password);
-        if (!IsValidPassword)
-        {
-            _authModel.Message = "Email or Password is incorrect";
-            return _authModel;
-        }
+        var isValidPassword = _passwordHasher.VerifyHashedPassword(user.Password, model.Password);
+
+        if (!isValidPassword)
+            return new AuthModel { Message = "Email or Password is incorrect" };
+
         var jwt = _generateTokenJwt.GenerateAccessToken(user.Id, user.Role, user.Email);
+
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(jwt);
 
         return new AuthModel
         {
             Email = user.Email,
             IsAuthenticated = true,
+            Role = user.Role,
             Token = jwt,
+            ExpiresOn = token.ValidTo,
             Message = "LogIn successful"
         };
     }
-    public async Task<AuthModel> CreateAdminAsync(CreateAdminDto dto)
+
+    public async Task<CreateUserResponseDto> CreateAdminAsync(CreateAdminDto dto)
     {
         if (await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email) is not null)
         {
-            return new AuthModel { Message = "Email is already Register " };
+            return new CreateUserResponseDto
+            {
+                Message = "Email is already registered",
+                Email = dto.Email,
+                IsAuthenticated = false
+            };
         }
-        var haspassword = _passwordHasher.HashPassword(dto.Password);
+
         var user = new User
         {
             Email = dto.Email,
-            Password = haspassword,
-            Role = RoleType.Admin
+            Password = _passwordHasher.HashPassword(dto.Password),
+            Role = RoleType.Admin,
         };
-        await _uow.UsersRepository.AddAsync(user);
 
-        var jwt = _generateTokenJwt.GenerateAccessToken(user.Id, user.Role, user.Email);
+        await _uow.UsersRepository.AddAsync(user);
         await _uow.CompleteAsync();
 
-        return new AuthModel
+        return new CreateUserResponseDto
         {
-            Email = dto.Email,
-            IsAuthenticated = true,
-            Token = jwt,
-            Message = "Admin created successfully"
+            Message = "Admin created successfully",
+            Email = user.Email,
+            Role = user.Role,
+            IsAuthenticated = true
         };
     }
+
+    public async Task<CreateUserResponseDto> CreateTeacherAsync(CreateStaffDto dto, Guid adminId)
+    {
+        if (await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email) is not null)
+        {
+            return new CreateUserResponseDto
+            {
+                Message = "Email is already registered",
+                Email = dto.Email,
+                IsAuthenticated = false
+            };
+        }
+
+        var teacher = new User
+        {
+            Email = dto.Email,
+            Password = _passwordHasher.HashPassword(dto.Password),
+            Role = RoleType.Teacher,
+            AdminId = adminId
+        };
+
+        await _uow.UsersRepository.AddAsync(teacher);
+        await _uow.CompleteAsync();
+
+        return new CreateUserResponseDto
+        {
+            Message = "Teacher created successfully",
+            Email = teacher.Email,
+            Role = teacher.Role,
+            IsAuthenticated = true
+        };
+    }
+
+    public async Task<CreateUserResponseDto> CreateSpecialistAsync(CreateStaffDto dto, Guid adminId)
+    {
+        if (await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email) is not null)
+        {
+            return new CreateUserResponseDto
+            {
+                Message = "Email is already registered",
+                Email = dto.Email,
+                IsAuthenticated = false
+            };
+        }
+
+        var specialist = new User
+        {
+            Email = dto.Email,
+            Password = _passwordHasher.HashPassword(dto.Password),
+            Role = RoleType.Specialist,
+            AdminId = adminId
+        };
+
+        await _uow.UsersRepository.AddAsync(specialist);
+        await _uow.CompleteAsync();
+
+        return new CreateUserResponseDto
+        {
+            Message = "Specialist created successfully",
+            Email = specialist.Email,
+            Role = specialist.Role,
+            IsAuthenticated = true
+        };
+    }
+
     public async Task<Result<string>> ForgetPasswordAsync(ForgetPasswordRequestDto dto)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
 
         if (user is null)
-        {
             return Result<string>.Failure("Account not found.");
-        }
-        var oldOtps = await _uow.UserOtpRepository.FindAllAsync(
-    o => o.UserId == user.Id && !o.IsUsed);
+
+        var oldOtps = await _uow.UserOtpRepository.FindAllAsync(o => o.UserId == user.Id && !o.IsUsed);
 
         foreach (var oldOtp in oldOtps)
         {
             oldOtp.IsUsed = true;
             await _uow.UserOtpRepository.UpdateAsync(oldOtp);
-        
         }
 
         var otp = new Random().Next(100000, 999999).ToString();
 
-
         await _emailService.SendEmailAsync(user.Email, "Password Reset Verification Code", EmailTemplate.ResetPAsswordOtp(otp));
-
-        var hashCode = _passwordHasher.HashPassword(otp);
-        Console.WriteLine($"Hash: {hashCode}");
 
         var result = new UserOtp
         {
             UserId = user.Id,
             Email = user.Email,
-            Code = hashCode,
+            Code = _passwordHasher.HashPassword(otp),
             IsUsed = false,
             CreatedAt = DateTime.UtcNow,
             ExpireDate = DateTime.UtcNow.AddMinutes(10)
@@ -133,49 +205,49 @@ public class AuthService(IUnitOfWork _uow, IPasswordHasher _passwordHasher,
 
         await _uow.UserOtpRepository.AddAsync(result);
         await _uow.CompleteAsync();
-        return Result<string>.Success("A verification code has been sent to your email.");
 
+        return Result<string>.Success("A verification code has been sent to your email.");
     }
+
     public async Task<Result<string>> VerfiyOtpAsync(VerifyOtpRequestDto dto)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
+
         if (user == null)
-        {
             return Result<string>.Failure("Account not found.");
-        }
-        var otps = await _uow.UserOtpRepository.FindAllAsync(o => o.UserId == user.Id
-        && o.IsUsed == false);
+
+        var otps = await _uow.UserOtpRepository.FindAllAsync(o => o.UserId == user.Id && !o.IsUsed);
+
         var otp = otps.OrderByDescending(o => o.CreatedAt).FirstOrDefault();
+
         if (otp == null)
-        { 
-            return Result<string>.Failure("Invalid verification code,Please request a new one."); 
-        }
+            return Result<string>.Failure("Invalid verification code, Please request a new one.");
 
-        var verfiy = _passwordHasher.VerifyHashedPassword(otp.Code, dto.Otp);
+        var verify = _passwordHasher.VerifyHashedPassword(otp.Code, dto.Otp);
 
-        if (!verfiy || DateTime.UtcNow > otp.ExpireDate)
-        {
-            return Result<string>.Failure("Invalid verification code,Please request a new one.");
-        }
+        if (!verify || DateTime.UtcNow > otp.ExpireDate)
+            return Result<string>.Failure("Invalid verification code, Please request a new one.");
+
         otp.IsUsed = true;
-  
-        await _uow.CompleteAsync();
-        return Result<string>.Success("Verification code confirmed successfully.");
 
+        await _uow.CompleteAsync();
+
+        return Result<string>.Success("Verification code confirmed successfully.");
     }
+
     public async Task<Result<string>> ResetPasswordAsync(ResetPasswordRequestDto dto)
     {
         var user = await _uow.UsersRepository.GetByItemAsync(u => u.Email == dto.Email);
+
         if (user == null)
-        {
             return Result<string>.Failure("Account not found.");
-        }
+
         user.Password = _passwordHasher.HashPassword(dto.NewPassword);
+
         await _uow.UsersRepository.UpdateAsync(user);
         await _uow.CompleteAsync();
+
         return Result<string>.Success("Password has been reset successfully.");
-
     }
-
 }
 

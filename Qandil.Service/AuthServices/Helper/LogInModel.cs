@@ -7,8 +7,9 @@ public class LogInModel
     [MaxLength(50)]
     public required string Email { get; set;}
 
-    [MaxLength(50)]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$",
-            ErrorMessage = "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.")]
-    public required string Password { set; get; }
+    [MaxLength(10)]
+    [MinLength(8)]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,10}$",
+      ErrorMessage = "Password must be between 8 and 10 characters and include uppercase, lowercase, number, and special character.")]
+    public required string Password { get; set; }
 }

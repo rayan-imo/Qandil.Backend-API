@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Levels;
 using Qandil.API.Dtos.Responses.Levels;
 using Qandil.Core.Common;
@@ -13,6 +15,7 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class LevelsController(ILevelService _levelService) : ControllerBase
     {
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<LevelResponse>>> GetAll(
             [FromQuery] PaginationParameter paginationParameter)
@@ -28,6 +31,7 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -52,6 +56,7 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(LevelRequest levelRequest)
         {
@@ -83,6 +88,7 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(LevelRequest levelRequest, Guid id)
         {
@@ -114,10 +120,12 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _levelService.DeleteAsync(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -138,3 +146,4 @@ namespace Qandil.API.Controllers
         }
     }
 }
+

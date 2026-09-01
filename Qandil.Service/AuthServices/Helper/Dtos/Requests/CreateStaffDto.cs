@@ -1,9 +1,9 @@
 ﻿using Qandil.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Qandil.API.Dtos.Requests.Users
+namespace Qandil.Service.AuthServices.Helper.Dtos.Requests
 {
-    public class UserRequest
+    public class CreateStaffDto
     {
         [MaxLength(50)]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
@@ -15,6 +15,7 @@ namespace Qandil.API.Dtos.Requests.Users
    ErrorMessage = "Password must be between 8 and 10 characters and include uppercase, lowercase, number, and special character.")]
         public required string Password { get; set; }
         public RoleType Role { get; set; }
+
+        // public RoleType Role { get; set; }
     }
 }
-

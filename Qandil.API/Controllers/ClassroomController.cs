@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Classroom;
 using Qandil.API.Dtos.Responses.Classrooms;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 using Qandil.Service.Dtos.ClassRoom.Requests;
 using Qandil.Service.IServices;
 
@@ -13,11 +16,12 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class ClassroomController(IClassroomService _classroomService) : ControllerBase
     {
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _classroomService.GetById(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -35,22 +39,23 @@ namespace Qandil.API.Controllers
                 MessageEn = "Classroom retrieved successfully",
                 Data = result.Value
             });
-
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(ClassroomRequest classroomRequest)
         {
             var classroomDto = new ClassroomRequestDto
             {
-
                 MaxCapacity = classroomRequest.MaxCapacity,
                 CurrentCapacity = classroomRequest.CurrentCapacity,
                 ProgramId = classroomRequest.ProgramId,
                 LevelId = classroomRequest.LevelId,
                 EmployeeId = classroomRequest.EmployeeId,
-
             };
+
             var result = await _classroomService.AddAsync(classroomDto);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -65,24 +70,27 @@ namespace Qandil.API.Controllers
             {
                 Success = true,
                 MessageAr = "تمت إضافة الصف بنجاح",
-                MessageEn = "Child added successfully",
+                MessageEn = "Classroom added successfully",
                 Data = result.Value
             });
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(ClassroomRequest classroomRequest, Guid id)
+        public async Task<IActionResult> Update(
+            ClassroomRequest classroomRequest, Guid id)
         {
             var classroomDto = new ClassroomRequestDto
             {
-
                 MaxCapacity = classroomRequest.MaxCapacity,
                 CurrentCapacity = classroomRequest.CurrentCapacity,
                 ProgramId = classroomRequest.ProgramId,
                 LevelId = classroomRequest.LevelId,
                 EmployeeId = classroomRequest.EmployeeId,
-
             };
+
             var result = await _classroomService.UpdateAsync(classroomDto, id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>
@@ -101,10 +109,13 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _classroomService.DeleteAsync(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -124,4 +135,3 @@ namespace Qandil.API.Controllers
         }
     }
 }
-

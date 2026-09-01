@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Employees;
 using Qandil.API.Dtos.Responses.Employees;
 using Qandil.Core.Common;
@@ -13,27 +15,28 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class EmployeesController(IEmployeeService _employeeService) : ControllerBase
     {
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
-        public async Task<ActionResult<PagedResult<EmployeeResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<EmployeeResponse>>> GetAll(
+            [FromQuery] PaginationParameter paginationParameter)
         {
             var employees = await _employeeService.GetAllAsync(paginationParameter);
             return Ok(employees?.Value?.MapTo(e => EmployeeResponse.Transform(e)));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _employeeService.GetById(id);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "الموظف غير موجود",
                     MessageEn = "Employee not found"
                 });
-            }
 
             return Ok(new ApiResponse<Employee>
             {
@@ -44,6 +47,7 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(EmployeeRequest employeeRequest)
         {
@@ -53,20 +57,18 @@ namespace Qandil.API.Controllers
                 LastName = employeeRequest.LastName,
                 Age = employeeRequest.Age,
                 Email = employeeRequest.Email,
-                Specicality = employeeRequest.Specicality,
+                Specicality = employeeRequest.Specicality
             };
 
             var result = await _employeeService.AddAsync(employeeDto);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "فشلت عملية إضافة الموظف",
                     MessageEn = "Failed to add employee"
                 });
-            }
 
             return Ok(new ApiResponse<Guid>
             {
@@ -77,8 +79,10 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(EmployeeRequest employeeRequest, Guid id)
+        public async Task<IActionResult> Update(
+            EmployeeRequest employeeRequest, Guid id)
         {
             var employeeDto = new EmployeeRequestDto
             {
@@ -86,20 +90,18 @@ namespace Qandil.API.Controllers
                 LastName = employeeRequest.LastName,
                 Age = employeeRequest.Age,
                 Email = employeeRequest.Email,
-                Specicality = employeeRequest.Specicality,
+                Specicality = employeeRequest.Specicality
             };
 
             var result = await _employeeService.UpdateAsync(employeeDto, id);
 
             if (!result.IsSuccess)
-            {
                 return BadRequest(new ApiResponse<object>
                 {
                     Success = false,
                     MessageAr = "فشل تحديث بيانات الموظف",
                     MessageEn = "Failed to update employee"
                 });
-            }
 
             return Ok(new ApiResponse<Guid>
             {
@@ -110,18 +112,19 @@ namespace Qandil.API.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _employeeService.DeleteAsync(id); if (!result.IsSuccess)
-            {
+            var result = await _employeeService.DeleteAsync(id);
+
+            if (!result.IsSuccess)
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
                     MessageAr = "فشل حذف الموظف",
                     MessageEn = "Failed to delete employee"
                 });
-            }
 
             return Ok(new ApiResponse<bool>
             {

@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Qandil.API.Dtos.Requests.Users
 {
-    public class UserRequest
+    public class CreateStaffDto
     {
         [MaxLength(50)]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
-        public string? Email { get; set; }
+        public required string Email { get; set; }
 
         [MaxLength(10)]
         [MinLength(8)]
@@ -15,6 +15,7 @@ namespace Qandil.API.Dtos.Requests.Users
    ErrorMessage = "Password must be between 8 and 10 characters and include uppercase, lowercase, number, and special character.")]
         public required string Password { get; set; }
         public RoleType Role { get; set; }
+       
     }
 }
 

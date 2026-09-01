@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Disability;
-using Qandil.API.Dtos.Responses.Diagnosises;
 using Qandil.API.Dtos.Responses.Disabilities;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
@@ -14,17 +15,21 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class DisabilitiesController(IDisabilityService _disabilityService) : ControllerBase
     {
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet]
-        public async Task<ActionResult<PagedResult<DisabilityResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<DisabilityResponse>>> GetAll(
+            [FromQuery] PaginationParameter paginationParameter)
         {
-            var diagnosises = await _disabilityService.GetAllAsync(paginationParameter);
-            return Ok(diagnosises?.Value?.MapTo(c => DisabilityResponse.Transform(c)));
+            var disabilities = await _disabilityService.GetAllAsync(paginationParameter);
+            return Ok(disabilities?.Value?.MapTo(c => DisabilityResponse.Transform(c)));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await _disabilityService.GetById(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -42,16 +47,19 @@ namespace Qandil.API.Controllers
                 MessageEn = "Disability retrieved successfully",
                 Data = result.Value
             });
-
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(DisabilityRequest disabilityRequest)
         {
             var disabilityDto = new DisabilityRequestDto
             {
-                Name = disabilityRequest.Name,
+                Name = disabilityRequest.Name
             };
+
             var result = await _disabilityService.AddAsync(disabilityDto);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>
@@ -70,14 +78,19 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(DisabilityRequest disabilityRequest, Guid id)
+        public async Task<IActionResult> Update(
+            DisabilityRequest disabilityRequest, Guid id)
         {
             var disabilityDto = new DisabilityRequestDto
             {
-                Name = disabilityRequest.Name,
+                Name = disabilityRequest.Name
             };
+
             var result = await _disabilityService.UpdateAsync(disabilityDto, id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<object>
@@ -87,6 +100,7 @@ namespace Qandil.API.Controllers
                     MessageEn = "Failed to update disability"
                 });
             }
+
             return Ok(new ApiResponse<Guid>
             {
                 Success = true,
@@ -95,10 +109,13 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _disabilityService.DeleteAsync(id);
+
             if (!result.IsSuccess)
             {
                 return BadRequest(new ApiResponse<string>

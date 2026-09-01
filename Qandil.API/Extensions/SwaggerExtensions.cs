@@ -4,7 +4,8 @@ namespace Qandil.API.Extensions
 {
     public static class SwaggerExtensions
     {
-        public static IServiceCollection AddCustomSwagger(this IServiceCollection services)
+        public static IServiceCollection AddCustomSwagger(
+            this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
             {
@@ -16,17 +17,20 @@ namespace Qandil.API.Extensions
 
                 options.CustomSchemaIds(type => type.ToString());
 
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
+                options.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.Http,
+                        Scheme = "bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "Enter your JWT token"
+                    });
 
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                options.AddSecurityRequirement(
+                    new OpenApiSecurityRequirement
+                    {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -38,7 +42,7 @@ namespace Qandil.API.Extensions
                         },
                         Array.Empty<string>()
                     }
-                });
+                    });
             });
 
             return services;

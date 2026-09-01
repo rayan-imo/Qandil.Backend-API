@@ -4,9 +4,10 @@ namespace Qandil.Service.AuthServices.Helper.Dtos.OtpDto.Request
 {
     public class VerifyOtpRequestDto
     {
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
         [MaxLength(50)]
-        public string Email { get; set; }
-        public string Otp { get; set; }
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+        public required string Email { get; set; }
+
+        public required string Otp { get; set; }
     }
 }

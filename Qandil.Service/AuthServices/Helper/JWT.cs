@@ -6,6 +6,5 @@ public class JWT
     public string? Issuer { get; set; }
     public string? Audience { get; set; }
     public int DurationInDays { get; set; }
-    public JWT? Value { get; internal set; }
 }
 
