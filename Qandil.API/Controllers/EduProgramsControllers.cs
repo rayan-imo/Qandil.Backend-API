@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.EduProgram;
 using Qandil.API.Dtos.Responses.EduPrograms;
 using Qandil.Core.Common;
@@ -14,6 +15,7 @@ namespace Qandil.API.Controllers
     public class EduProgramsController(IEduProgramService _eduProgramService) : ControllerBase
     {
 
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<EduProgramResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
@@ -21,6 +23,7 @@ namespace Qandil.API.Controllers
             return Ok(classroom?.Value?.MapTo(p => EduProgramResponse.Transform(p)));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -45,6 +48,7 @@ namespace Qandil.API.Controllers
             });
 
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpPost]
         public async Task<IActionResult> Add(EduProgramRequest eduProgramRequest)
         {
@@ -75,6 +79,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(EduProgramRequest eduProgramRequest, Guid id)
         {
@@ -106,6 +111,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
