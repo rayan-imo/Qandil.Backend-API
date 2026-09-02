@@ -11,7 +11,7 @@ namespace Qandil.Core.Entity
         public EduProgram? Program { get; set; }
         public Guid? LevelId { get; set; }
         public Level? Level { get; set; }
-        public Guid? EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; } 
         public Employee? Employee { get; set; }
           public ChildTest? ChildTest { get; set; }
 

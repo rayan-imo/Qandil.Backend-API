@@ -10,7 +10,7 @@ namespace Qandil.Service.Dtos.ChildTestDto.Requests
         public Guid EmployeeId { get; set; }
         public Guid ChildId { get; set; }
         public Guid TestId { get; set; }
-        public List<ChildTestSubjectMarkRequestDto> SubjectMarkDtos { get; set; }
+        public List<SubjectMarkRequestDto> SubjectMarkDtos { get; set; }
 
 
     }

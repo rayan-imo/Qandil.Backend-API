@@ -17,6 +17,7 @@ namespace Qandil.Service.Services
 
             var spec = BaseSpecification<DiagnosisAnswer>.Create()
                 .Where(a => a.DeletedAt == null)
+                .Include(a=>a.Question)
                 .AndFilter(a => a.DiagnosisId == id);
 
             return Result<PagedResult<DiagnosisAnswer>>.Success(await _uow.AnswerRepository.PagedListAsync(spec));
@@ -187,7 +188,7 @@ namespace Qandil.Service.Services
                 foreach (var question in group)
                 {
                     var answer = answers.FirstOrDefault(a => a.QuestionId == question.Id);
-
+                     
                     // فقط الأسئلة من نوع Score تدخل في الحساب
                     if (question.Type == QuestionType.Score)
                     {

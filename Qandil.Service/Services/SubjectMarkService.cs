@@ -4,15 +4,13 @@ using Qandil.Core.Dtos;
 using Qandil.Core.Entity;
 using Qandil.Core.Interfacres;
 using Qandil.Infrastructure.Specifications;
-using Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request;
-using Qandil.Service.Dtos.SubjectDto.Request;
+using Qandil.Service.Dtos.SubjectMarkDto.Request;
 using Qandil.Service.IServices;
-using Qandil.Service.Validation.ChildTestSubjectMark;
-using Qandil.Service.Validation.Level;
+using Qandil.Service.Validation.SubjectMark;
 
 namespace Qandil.Service.Services
 {
-    public class ChildTestSubjectMarkService(IUnitOfWork _uow) : IChildTestSubjectMarkService
+    public class SubjectMarkService(IUnitOfWork _uow) : ISubjectMarkService
     {
         public async Task<Result<PagedResult<SubjectMark>>> GetAllAsync(PaginationParameter paginationParameter)
         {
@@ -35,23 +33,22 @@ namespace Qandil.Service.Services
             return Result<SubjectMark>.Success(result);
         }
 
-      /* public async Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto)
+        public async Task<Result<Guid>> AddAsync(SubjectMarkRequestDto dto)
         {
-            await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
-            var result = new ChildTestSubjectMark
+            await new SubjectMarkValidator().ValidateAndThrowAsync(dto);
+            var result = new SubjectMark
             {
                 ObtainMark = dto.ObtainMark,
                 ChildTestId = dto.ChildTestId,
                 SubjectId = dto.SubjectId,
-                EmployeeId = dto.EmployeeId,
                 Notes = dto.Notes
 
             };
             await _uow.ChildTestSubjectMarkRepositoy.AddAsync(result);
             await _uow.CompleteAsync();
             return Result<Guid>.Success(result.Id);
-        }*/
-        public async Task<Result<Guid>> UpdateAsync(ChildTestSubjectMarkRequestDto dto, Guid id)
+        }
+        public async Task<Result<Guid>> UpdateAsync(SubjectMarkRequestDto dto, Guid id)
         {
             if (id == Guid.Empty)
                 return Result<Guid>.Failure("ChildTestSubjectMark ID cannot be empty.");
@@ -61,7 +58,7 @@ namespace Qandil.Service.Services
             if (result == null || result.DeletedAt != null)
                 return Result<Guid>.Failure($"ChildTestSubjectMark with ID was not found.");
 
-            await new ChildTestSubjectMarkValidator().ValidateAndThrowAsync(dto);
+            await new SubjectMarkValidator().ValidateAndThrowAsync(dto);
 
             result.ObtainMark = dto.ObtainMark;
             result.SubjectId = dto.SubjectId;

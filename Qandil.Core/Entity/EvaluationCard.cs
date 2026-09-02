@@ -11,7 +11,7 @@ namespace Qandil.Core.Entity
         public Diagnosis Diagnosis { get; set; }
         public string CardName { get; set; }
         public string MainTitleScoresJson { get; set; }
-       public int TotalScore { get; set; }
+        public int TotalScore { get; set; }
         public string EvaluationMessage { get; set; }
 
         [NotMapped]

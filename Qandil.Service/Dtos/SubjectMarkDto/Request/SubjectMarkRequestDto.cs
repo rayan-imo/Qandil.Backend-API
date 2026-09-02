@@ -1,7 +1,8 @@
-﻿namespace Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request
+﻿namespace Qandil.Service.Dtos.SubjectMarkDto.Request
 {
-    public class ChildTestSubjectMarkRequestDto
+    public class SubjectMarkRequestDto
     {
+        public Guid ChildTestId {  get; set; }
         public float ObtainMark { get; set; }
         public string? Notes { get; set; }
         public Guid SubjectId { get; set; }

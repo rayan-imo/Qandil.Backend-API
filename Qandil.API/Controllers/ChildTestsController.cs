@@ -73,7 +73,7 @@ namespace Qandil.API.Controllers
                 EmployeeId = childTestRequest.EmployeeId,
                 Type = childTestRequest.Type,
                 Nots = childTestRequest.Nots,
-                SubjectMarkDtos = childTestRequest.SubjectMarks.Select(m => new ChildTestSubjectMarkRequestDto
+                SubjectMarkDtos = childTestRequest.SubjectMarks.Select(m => new SubjectMarkRequestDto
                 {
                     ObtainMark = m.ObtainMark,
                     Notes = m.Notes
