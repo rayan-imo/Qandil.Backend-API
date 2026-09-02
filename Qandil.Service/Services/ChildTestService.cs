@@ -20,14 +20,14 @@ namespace Qandil.Service.Services
                 .Create()
                 .Where(x => x.DeletedAt == null)
                 .Paginate(paginationParameter.page, paginationParameter.pageSize);
-            return Result<PagedResult<ChildTest>>.Success(await _uow.ChildTestRepositoy.PagedListAsync(spec));
+            return Result<PagedResult<ChildTest>>.Success(await _uow.ChildTestRepository.PagedListAsync(spec));
         }
         public async Task<Result<ChildTest>> GetById(Guid id)   
         {
             if (id == Guid.Empty)
                 return Result<ChildTest>.Failure("ChildTest ID cannot be empty.");
 
-            var childTest = await _uow.ChildTestRepositoy.GetByIdAsync(id);
+            var childTest = await _uow.ChildTestRepository.GetByIdAsync(id);
 
             if (childTest == null || childTest.DeletedAt != null)
                 return Result<ChildTest>.Failure($" ChildTest with ID was not found.");
@@ -66,7 +66,7 @@ namespace Qandil.Service.Services
          .OrderByDesc(ct => ct.AttemptNumber)
          .OrderByDesc(ct => ct.Date);
 
-            var allAttempts = await _uow.ChildTestRepositoy.ListAsync(spec);
+            var allAttempts = await _uow.ChildTestRepository.ListAsync(spec);
 
             var hasNoAttempts = allAttempts == null || !allAttempts.Any();
 
@@ -224,14 +224,14 @@ namespace Qandil.Service.Services
                 });
 
             }
-            await _uow.ChildTestRepositoy.AddAsync(childTest);
+            await _uow.ChildTestRepository.AddAsync(childTest);
             await _uow.CompleteAsync();
             return Result<Guid>.Success(childTest.Id);
         }
 
         public async Task<Result<Guid>> UpdateAsync(ChildTestUpdateRequestDto dto, Guid id)
         {
-            var childTest = await _uow.ChildTestRepositoy.GetByIdAsync(id);
+            var childTest = await _uow.ChildTestRepository.GetByIdAsync(id);
 
             if (childTest == null)
                 return Result<Guid>.Failure("الاختبار الذي تريد تعديله غير موجود");
@@ -277,7 +277,7 @@ namespace Qandil.Service.Services
                 .OrderByDesc(ct => ct.AttemptNumber)
                 .OrderByDesc(ct => ct.Date);
 
-            var otherAttempts = await _uow.ChildTestRepositoy.ListAsync(otherAttemptsSpec);
+            var otherAttempts = await _uow.ChildTestRepository.ListAsync(otherAttemptsSpec);
             var hasNoAttempts = otherAttempts == null || !otherAttempts.Any();
 
             int newAttemptNumber;
@@ -389,7 +389,7 @@ namespace Qandil.Service.Services
 
             // ... تحديث باقي البيانات ...
 
-            await _uow.ChildTestRepositoy.UpdateAsync(childTest);
+            await _uow.ChildTestRepository.UpdateAsync(childTest);
             await _uow.CompleteAsync();
 
             return Result<Guid>.Success(childTest.Id);
@@ -404,7 +404,7 @@ namespace Qandil.Service.Services
                 .AndFilter(ct => ct.DeletedAt == null)
                 .Include(m => m.ChildTestSubjectMarks);
 
-            var childTest = await _uow.ChildTestRepositoy.GetFirstBySpecAsync(spec);
+            var childTest = await _uow.ChildTestRepository.GetFirstBySpecAsync(spec);
 
 
 
@@ -441,7 +441,7 @@ namespace Qandil.Service.Services
                      .Include(ct => ct.Test)
                           .ThenInclude(test => test.Level));
 
-            var childTests = await _uow.ChildTestRepositoy.ListAsync(spec);
+            var childTests = await _uow.ChildTestRepository.ListAsync(spec);
 
             if (childTests is null || !childTests.Any())
                 return Result<LevelAttemptsResponseDto>.Failure("No exams found for this child.");
@@ -538,7 +538,7 @@ namespace Qandil.Service.Services
                      .Include(ct => ct.Test)
                           .ThenInclude(test => test.Level));
 
-            var childTests = await _uow.ChildTestRepositoy.ListAsync(spec);
+            var childTests = await _uow.ChildTestRepository.ListAsync(spec);
 
             if (!childTests.Any())
                 return Result<TestAttemptsResponseDto>.Failure("No attempts found for this child in this test.");

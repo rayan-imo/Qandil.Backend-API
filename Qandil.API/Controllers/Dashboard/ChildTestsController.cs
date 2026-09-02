@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.ChildTests;
 using Qandil.API.Dtos.Responses.ChildTests;
 using Qandil.Core.Common;
@@ -7,13 +8,13 @@ using Qandil.Service.Dtos.ChildTestDto.Requests;
 using Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ChildTestsController(IChildTestService _childTestService) : ControllerBase
     {
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
@@ -38,7 +39,7 @@ namespace Qandil.API.Controllers
             });
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -62,7 +63,7 @@ namespace Qandil.API.Controllers
                 Data = ChildTestResponse.Transform(result.Value)
             });
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpPost]
         public async Task<IActionResult> Add(ChildTestAddRequest childTestRequest)
         {
@@ -100,7 +101,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(ChildTestUpdateRequest childTestRequest, Guid id)
         {
@@ -133,7 +134,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -157,7 +158,7 @@ namespace Qandil.API.Controllers
             });
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher")]
         [HttpGet("childTest/{childId}/history")]
         public async Task<IActionResult> GetChildExamLevelHistory(Guid childId)
         {

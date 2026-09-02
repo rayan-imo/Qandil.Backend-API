@@ -15,7 +15,7 @@ namespace Qandil.API.Controllers
     [ApiController]
     public class LevelsController(ILevelService _levelService) : ControllerBase
     {
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<LevelResponse>>> GetAll(
             [FromQuery] PaginationParameter paginationParameter)
@@ -31,7 +31,7 @@ namespace Qandil.API.Controllers
             });
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

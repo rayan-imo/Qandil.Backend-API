@@ -9,13 +9,13 @@ using Qandil.Core.Enums;
 using Qandil.Service.Dtos.ChildDto.Request;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ChildrenController(IChildService _childService) : ControllerBase
     {
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<ChildAddResponse>>> GetAll(
             [FromQuery] PaginationParameter paginationParameter)
@@ -24,7 +24,7 @@ namespace Qandil.API.Controllers
             return Ok(children?.Value?.MapTo(c => ChildAddResponse.Transform(c)));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

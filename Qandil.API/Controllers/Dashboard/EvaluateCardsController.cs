@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.EvaluateCards;
 using Qandil.API.Dtos.Responses.EvaluateCards;
@@ -6,14 +7,13 @@ using Qandil.Core.Common;
 using Qandil.Service.Dtos.AnswerDto.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EvaluateCardsController(IAnswerService _answerService) : ControllerBase
     {
-
-
+       [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPost("parent")]
         public async Task<ActionResult<ApiResponse<EvaluateCardResponse>>> EvaluateParentCard([FromBody] EvaluateCardRequest dto)
         {
@@ -45,6 +45,7 @@ namespace Qandil.API.Controllers
                 Data = EvaluateCardResponse.Transform(result.Value)
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpPost("under7")]
         public async Task<ActionResult<EvaluateCardResponse>> EvaluateUnder7Card([FromBody] EvaluateCardRequestDto dto)
@@ -71,7 +72,7 @@ namespace Qandil.API.Controllers
             });
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPost("above7")]
         public async Task<ActionResult<ApiResponse<EvaluateCardResponse>>> EvaluateAbove7Card([FromBody] EvaluateCardRequestDto dto)
         {

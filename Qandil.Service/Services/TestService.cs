@@ -77,7 +77,7 @@ namespace Qandil.Service.Services
                 return Result<bool>.Failure($"Test with ID was not found.");
 
             test.DeletedAt = DateTime.UtcNow;
-            var childTests= await _uow.ChildTestRepositoy.FindAllAsync
+            var childTests= await _uow.ChildTestRepository.FindAllAsync
                 (x=>x.TestId == id && x.DeletedAt!=null);
 
             foreach (var childTest in childTests)

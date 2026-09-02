@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.DiagnosisQuestions;
 using Qandil.API.Dtos.Responses.DiagnosisQuestions;
 using Qandil.Core.Common;
 using Qandil.Service.Dtos.QuestionDto.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class QuestionsController(IDiagnosisQuestionService _questionService) : ControllerBase
     {
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet("Card")]
         public async Task<ActionResult<ApiResponse<List<CardQuestionResponse>>>> GetQustionByCardName(string cardName)
         {
@@ -39,6 +41,7 @@ namespace Qandil.API.Controllers
             });
 
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpGet("Diagnosis")]
         public async Task<ActionResult<ApiResponse<List<DiagnosisQuestionResponse>>>> GetDiagnosisQuestions()
@@ -64,6 +67,7 @@ namespace Qandil.API.Controllers
             });
 
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuestionById(Guid id)
         {
@@ -101,7 +105,7 @@ namespace Qandil.API.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPost]
         public async Task<IActionResult> AddQuestion([FromBody] DiagnosisQuestionRequest dto)
         {
@@ -148,6 +152,7 @@ namespace Qandil.API.Controllers
 
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuestion(Guid id)

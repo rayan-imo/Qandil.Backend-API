@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Diagnisis;
 using Qandil.API.Dtos.Responses.Diagnosises;
 using Qandil.Core.Common;
@@ -6,20 +7,20 @@ using Qandil.Core.Dtos;
 using Qandil.Service.Dtos.DiagnosisDto.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class DiagnosisesConroller(IDiagnosisService _diagnosisService, IAnswerService answerService) : ControllerBase
     {
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<DiagnosisResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
             var diagnosises = await _diagnosisService.GetAllAsync(paginationParameter);
             return Ok(diagnosises?.Value?.MapTo(c => DiagnosisResponse.Transform(c)));
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet("{diagnosisId}/full")]
         public async Task<ActionResult<ApiResponse<FullDiagnosisResponse>>> GetFullDiagnosis(Guid id)
         {
@@ -54,6 +55,7 @@ namespace Qandil.API.Controllers
             });
 
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse<DiagnosisResponse>>> GetById(Guid id)
@@ -79,6 +81,7 @@ namespace Qandil.API.Controllers
             });
 
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPost]
         public async Task<ActionResult<DiagnosisResponse>> Add(DiagnosisRequest diagnosisRequest)
         {
@@ -113,6 +116,8 @@ namespace Qandil.API.Controllers
                 Data = DiagnosisResponse.Transform(diagnosisEntity)
             });
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPut("{id}")]
         public async Task<ActionResult<DiagnosisResponse>> Update(DiagnosisRequest diagnosisRequest, Guid id)
         {
@@ -144,6 +149,7 @@ namespace Qandil.API.Controllers
 
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

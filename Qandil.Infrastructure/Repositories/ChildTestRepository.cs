@@ -6,7 +6,7 @@ using Qandil.Infrastructure.Data;
 
 namespace Qandil.Infrastructure.Repositories
 {
-    public class ChildTestRepository(ApplicationDbContext _context):BaseRepository<ChildTest>(_context),IChildTestRepositoy
+    public class ChildTestRepository(ApplicationDbContext _context):BaseRepository<ChildTest>(_context),IChildTestRepository
     {
         public async Task<ChildTest?> GetLastAttemptTestInfoAsync(Guid childId, Guid testId)
         {

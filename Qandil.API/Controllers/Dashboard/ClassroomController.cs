@@ -10,13 +10,13 @@ using Qandil.Core.Enums;
 using Qandil.Service.Dtos.ClassRoom.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ClassroomController(IClassroomService _classroomService) : ControllerBase
     {
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

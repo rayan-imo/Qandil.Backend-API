@@ -18,7 +18,7 @@ namespace Qandil.Infrastructure
         private IUsersRepository? _usersRepository;
         private IUserOtpRepository? _usersOtpRepository;
         private ISubjectRepository? _subjectRepository;
-        private IChildTestRepositoy? _childTestRepositoy;
+        private IChildTestRepository? _childTestRepository;
         private IQuestionRepository? _questionRepository;
         private IAnswerRepository? _answerRepository;
         public IEvaluationCardRepository _evaluationCardRepository;
@@ -33,7 +33,7 @@ namespace Qandil.Infrastructure
         public ITestRepository? TestRepository => _testRepository ??= new TestRepository(_context);
         public IChildRepository? ChildRepository => _childRepository ??= new ChildRepository(_context);
         public ISubjectRepository? SubjectRepository => _subjectRepository ??= new SubjectRepository(_context);
-        public IChildTestRepositoy? ChildTestRepositoy =>  _childTestRepositoy??= new ChildTestRepository(_context);
+        public IChildTestRepository? ChildTestRepository =>  _childTestRepository??= new ChildTestRepository(_context);
         public IClassroomRepository? ClassroomRepository => _classroomRepository??=new ClassroomRepository(_context);
         public IDisabilityRepository? DisabilityRepository=> _disabilityRepository??= new DisabilityRepository(_context);
         public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);

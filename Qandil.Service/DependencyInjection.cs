@@ -39,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<IChildTestService, ChildTestService>();
         services.AddScoped<ISubjectService, SubjectService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IChildSiteService, ChildSiteService>();
 
         return services;
 

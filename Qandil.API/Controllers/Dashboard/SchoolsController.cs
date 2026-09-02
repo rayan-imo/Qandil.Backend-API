@@ -8,7 +8,7 @@ using Qandil.Core.Entity;
 using Qandil.Service.Dtos.SchoolDto.Request;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]

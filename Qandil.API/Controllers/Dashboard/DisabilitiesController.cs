@@ -9,13 +9,13 @@ using Qandil.Core.Entity;
 using Qandil.Service.Dtos.Disability.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class DisabilitiesController(IDisabilityService _disabilityService) : ControllerBase
     {
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<DisabilityResponse>>> GetAll(
             [FromQuery] PaginationParameter paginationParameter)
@@ -24,7 +24,7 @@ namespace Qandil.API.Controllers
             return Ok(disabilities?.Value?.MapTo(c => DisabilityResponse.Transform(c)));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

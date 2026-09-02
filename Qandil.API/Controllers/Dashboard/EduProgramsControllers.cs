@@ -8,14 +8,14 @@ using Qandil.Core.Entity;
 using Qandil.Service.Dtos.Program.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EduProgramsController(IEduProgramService _eduProgramService) : ControllerBase
     {
 
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<EduProgramResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
@@ -23,7 +23,7 @@ namespace Qandil.API.Controllers
             return Ok(classroom?.Value?.MapTo(p => EduProgramResponse.Transform(p)));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -48,7 +48,7 @@ namespace Qandil.API.Controllers
             });
 
         }
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Add(EduProgramRequest eduProgramRequest)
         {
@@ -79,7 +79,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(EduProgramRequest eduProgramRequest, Guid id)
         {
@@ -111,7 +111,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
-        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

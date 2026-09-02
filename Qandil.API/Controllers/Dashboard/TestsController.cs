@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.Tests;
 using Qandil.API.Dtos.Responses.Tests;
 using Qandil.Core.Common;
@@ -7,19 +8,20 @@ using Qandil.Core.Entity;
 using Qandil.Service.Dtos.TestDto.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers
+namespace Qandil.API.Controllers.Dashboard
 {
     [Route("api/[controller]")]
     [ApiController]
     public class TestsController(ITestService _testService) : ControllerBase
     {
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet]
         public async Task<ActionResult<PagedResult<TestResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
             var tests = await _testService.GetAllAsync(paginationParameter);
             return Ok(tests?.Value?.MapTo(t => TestResponse.Transform(t)));
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
@@ -43,7 +45,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
         [HttpPost]
         public async Task<IActionResult> Add(TestRequest testRequest)
         {
@@ -75,6 +77,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(TestRequest testRequest, Guid id)
@@ -106,6 +109,7 @@ namespace Qandil.API.Controllers
                 Data = result.Value
             });
         }
+        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)

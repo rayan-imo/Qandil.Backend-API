@@ -12,7 +12,9 @@
         IClassroomRepository ClassroomRepository { get; }
         ITestSubjectRepository TestSubjectRepository { get; }
         IChildTestSubjectMarkRepositoy ChildTestSubjectMarkRepositoy { get; }
-        IChildTestRepositoy ChildTestRepositoy { get; }
+
+         IChildTestRepository ChildTestRepository { get; }
+
         IDiagnosisRepository DiagnosisRepository { get; }
         IDisabilityRepository DisabilityRepository { get; }
         IUsersRepository UsersRepository { get; }
