@@ -36,6 +36,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors("Qandeel");
 //app.UseHttpsRedirection();
 
 app.UseAuthentication();
