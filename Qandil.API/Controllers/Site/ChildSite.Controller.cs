@@ -12,7 +12,7 @@ namespace Qandil.API.Controllers.Site
     public class ChildSite(IChildSiteService _childSiteService) : ControllerBase
     {
         [Authorize(Roles = "User")]
-        [HttpGet("{childId}/pre-test")]
+        [HttpPost("childProfile")]
         public async Task<IActionResult> GetChildPostTest(Guid childId)
         {
             var result = await _childSiteService.GetChildPreTestAsync(childId);
@@ -22,16 +22,16 @@ namespace Qandil.API.Controllers.Site
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    MessageAr = result.Error ?? "تعذر جلب معلومات الطفل والاختبار البعدي",
-                    MessageEn = "Failed to retrieve child information and post-test"
+                    MessageAr = result.Error ?? "تعذر جلب معلومات الطفل ",
+                    MessageEn = "Failed to retrieve child information "
                 });
             }
 
             return Ok(new ApiResponse<ChildPostTestResponseDto>
             {
                 Success = true,
-                MessageAr = "تم جلب معلومات الطفل والاختبار البعدي بنجاح",
-                MessageEn = "Child information and post-test retrieved successfully",
+                MessageAr = "تم جلب معلومات الطفل بنجاح",
+                MessageEn = "Child information retrieved successfully",
                 Data = result.Value
             });
         }
