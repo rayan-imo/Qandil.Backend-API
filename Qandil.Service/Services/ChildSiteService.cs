@@ -62,11 +62,10 @@ namespace Qandil.Service.Services
 
             var marks = await _uow.ChildTestSubjectMarkRepositoy.ListAsync(marksSpec);
 
-            var testResponse = new PostTestResponseDto
+            var testResponse = new PreTestResponseDto
             {
                 TestId = childTest.TestId,
                 TestName = test?.Name ?? string.Empty,
-                TestTitle = test?.Title ?? string.Empty,
                 Date = childTest.Date,
                 Result = childTest.Result,
                 IsPassed = childTest.IsPassed

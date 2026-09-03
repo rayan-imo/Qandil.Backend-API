@@ -1,5 +1,6 @@
 ﻿using Qandil.Core.Enums;
-using Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request;
+
+using Qandil.Service.Dtos.SubjectMarkDto.Request;
 
 namespace Qandil.Service.Dtos.ChildTestDto.Requests
 {

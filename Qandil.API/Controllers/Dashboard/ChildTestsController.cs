@@ -5,7 +5,7 @@ using Qandil.API.Dtos.Responses.ChildTests;
 using Qandil.Core.Common;
 using Qandil.Core.Dtos;
 using Qandil.Service.Dtos.ChildTestDto.Requests;
-using Qandil.Service.Dtos.ChildTestSubjectMarkDto.Request;
+using Qandil.Service.Dtos.SubjectMarkDto.Request;
 using Qandil.Service.IServices;
 
 namespace Qandil.API.Controllers.Dashboard

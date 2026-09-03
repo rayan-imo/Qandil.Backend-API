@@ -8,7 +8,7 @@
         public required string FatherName {  get; set; }
         public DateTime JoiningDate { get; set; }
         public string? ProgramName { get; set; }
-        public PostTestResponseDto? LatestTest { get; set; }
+        public PreTestResponseDto? LatestTest { get; set; }
     }
 }
   
