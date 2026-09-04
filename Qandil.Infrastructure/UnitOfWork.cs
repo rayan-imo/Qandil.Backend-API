@@ -18,10 +18,10 @@ namespace Qandil.Infrastructure
         private IUsersRepository? _usersRepository;
         private IUserOtpRepository? _usersOtpRepository;
         private ISubjectRepository? _subjectRepository;
-        private IChildTestRepository? _childTestRepository;
-        private IQuestionRepository? _questionRepository;
+        private IChildTestRepositoy? _childTestRepositoy;
+        private IDiagnosisQuestionRepository? _diagnosisQuestionRepository;
+        private IQuestionOptionRepository? _questionOptionRepository;
         private IAnswerRepository? _answerRepository;
-        public IEvaluationCardRepository _evaluationCardRepository;
         public IChildTestSubjectMarkRepositoy  _childTestSubjectMark;
         public ITestSubjectRepository _testSubject ;
 
@@ -33,19 +33,19 @@ namespace Qandil.Infrastructure
         public ITestRepository? TestRepository => _testRepository ??= new TestRepository(_context);
         public IChildRepository? ChildRepository => _childRepository ??= new ChildRepository(_context);
         public ISubjectRepository? SubjectRepository => _subjectRepository ??= new SubjectRepository(_context);
-        public IChildTestRepository? ChildTestRepository =>  _childTestRepository??= new ChildTestRepository(_context);
+        public IChildTestRepositoy? ChildTestRepositoy =>  _childTestRepositoy??= new ChildTestRepository(_context);
         public IClassroomRepository? ClassroomRepository => _classroomRepository??=new ClassroomRepository(_context);
         public IDisabilityRepository? DisabilityRepository=> _disabilityRepository??= new DisabilityRepository(_context);
         public IDiagnosisRepository? DiagnosisRepository=> _diagnosisRepository??= new DiagnosisRepository(_context);
 
         public IUsersRepository? UsersRepository=> _usersRepository??= new UsersRepository(_context);
         public IUserOtpRepository? UserOtpRepository=> _usersOtpRepository??= new UserOtpRepository(_context);
-        public IQuestionRepository? QuestionRepository => _questionRepository ??= new QuestionRepository(_context);
+        public IDiagnosisQuestionRepository? DiagnosisQuestionRepository => _diagnosisQuestionRepository ??= new DiagnosisQuestionRepository(_context);
         public IAnswerRepository? AnswerRepository => _answerRepository ??= new AnswerRepository(_context);
 
-        public IEvaluationCardRepository EvaluationCardRepository => _evaluationCardRepository ??= new EvaluationCardRepository(_context);
-        public IChildTestSubjectMarkRepositoy ChildTestSubjectMarkRepositoy => _childTestSubjectMark??new ChildTestSubjectMarkRepository(_context);
+         public IChildTestSubjectMarkRepositoy ChildTestSubjectMarkRepositoy => _childTestSubjectMark??new ChildTestSubjectMarkRepository(_context);
         public ITestSubjectRepository TestSubjectRepository => _testSubject ??= new TestSubjectRepository(_context);
+        public IQuestionOptionRepository QuestionOptionRepository => _questionOptionRepository ??= new QuestionOptionRepository(_context);
 
 
 

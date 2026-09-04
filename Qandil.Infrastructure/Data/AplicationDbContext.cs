@@ -26,7 +26,6 @@ namespace Qandil.Infrastructure.Data
         public DbSet<UserOtp> UserOtp{ get; set; }
         public DbSet<DiagnosisAnswer> DiagnosisAnswers { get; set; }
         public DbSet<DiagnosisQuestion> DiagnosisQuestions { get; set; }
-        public DbSet<EvaluationCard> EvaluationCards { get; set; }
         public DbSet<TestSubject> TestSubjects { get; set; }
         public DbSet<SubjectMark> ChildTestSubjectMarks { get; set; }
 

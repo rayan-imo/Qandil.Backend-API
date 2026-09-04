@@ -1,18 +1,20 @@
 ﻿using Qandil.Core.Common;
-using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 using Qandil.Service.Dtos.AnswerDto.Requests;
-using Qandil.Service.Dtos.QuestionDto.Requests;
+using Qandil.Service.Dtos.DiagnisisAnswerDto.Requests;
+using Qandil.Service.Dtos.DiagnosisQuestionDto.Responses;
 
 namespace Qandil.Service.IServices
 {
     public interface IAnswerService
     {
-        public  Task<Result<PagedResult<DiagnosisAnswer>>> GetAnswersByDiagnosisId(Guid id);
-        public  Task<Result<Guid>> SaveDiagnosisAnswersAsync(Guid diagnosisId, List<AnswerRequestDto> answers);
-        public Task<Result<EvaluationCard>> SaveAndEvaluateCardAsync(EvaluateCardRequestDto dto);
-        public  Task<Result<EvaluationCard>> CalculateEvaluationForCard(List<DiagnosisAnswer> answers, string cardName);
 
-      
-       
+        Task<Result<CardResultDto>> SaveAndEvaluateCardAsync(EvaluateCardRequestDto dto);
+        Task<Result<Guid>> SaveDiagnosisSubTitleAnswersAsync(SaveDiagnosisSubTitleAnswersRequestDto dto);
+        Task<Result<List<CardResultDto>>> GetCardResultsAsync(Guid diagnosisId);
+        Task<Result<CardDetailsResponseDto>> GetCardAnswerDetailsAsync(Guid diagnosisId, CardType cardType);
+        Task<Result<List<DiagnosisSubTitleResultDto>>> GetDiagnosisQuestionsResultsAsync(Guid diagnosisId);
+        Task<Result<bool>> UpdateAnswerAsync(Guid answerId, UpdateAnswerRequestDto dto);
+
     }
 }

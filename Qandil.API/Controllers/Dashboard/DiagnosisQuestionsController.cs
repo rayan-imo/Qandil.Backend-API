@@ -3,179 +3,289 @@ using Microsoft.AspNetCore.Mvc;
 using Qandil.API.Dtos.Requests.DiagnosisQuestions;
 using Qandil.API.Dtos.Responses.DiagnosisQuestions;
 using Qandil.Core.Common;
-using Qandil.Service.Dtos.QuestionDto.Requests;
+using Qandil.Core.Enums;
+using Qandil.Service.Dtos.DiagnosisQuestionDto.Requests;
+using Qandil.Service.Dtos.QuestionOptionsDto.Requests;
 using Qandil.Service.IServices;
 
-namespace Qandil.API.Controllers.Dashboard
+namespace Qandil.API.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = false)]
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionsController(IDiagnosisQuestionService _questionService) : ControllerBase
+    public class QuestionsController(IDiagnosisQuestionService _diagnosisQuestionService) : ControllerBase
     {
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-        [HttpGet("Card")]
-        public async Task<ActionResult<ApiResponse<List<CardQuestionResponse>>>> GetQustionByCardName(string cardName)
-        {
-            var result = await _questionService.GetQuestionsByCardName(cardName);
-
-
-            if (!result.IsSuccess)
-
-                return BadRequest(new ApiResponse<string>
-
-                {
-                    Success = false,
-                    MessageAr = "لا يوجد اسئلة لهذه البطاقة",
-                    MessageEn = "there are no question for this card",
-                });
-
-            var questionResponses = result.Value.Select(CardQuestionResponse.Transform).ToList();
-
-            return Ok(new ApiResponse<List<CardQuestionResponse>>
+       
+            [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+            [HttpGet("diagnosis-questions")]
+            public async Task<IActionResult> GetAllDiagnosisQuestions()
             {
-                Success = true,
-                MessageAr = "تم جلب أسئلة البطاقة بنجاح",
-                MessageEn = "Card questions were successfully fetched",
-                Data = questionResponses
+                var result = await _diagnosisQuestionService.GetAllDiagnosisQuestionsAsync();
 
-            });
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = "فشل جلب أسئلة التشخيص",
+                        MessageEn = "Failed to retrieve diagnosis questions"
+                    });
 
-        }
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-
-        [HttpGet("Diagnosis")]
-        public async Task<ActionResult<ApiResponse<List<DiagnosisQuestionResponse>>>> GetDiagnosisQuestions()
-        {
-            var result = await _questionService.GetDiagnosisQuestions();
-
-
-            if (!result.IsSuccess)
-
-                return BadRequest(new ApiResponse<List<string>>
+                var response = result.Value.Select(g => new DiagnosisQuestionResponse
                 {
-                    Success = false,
-                    MessageAr = "لا يوجد اسئلة تشخيص ",
-                    MessageEn = "there are no diagnosis questions ",
-                });
-            var questionResponses = result.Value.Select(DiagnosisQuestionResponse.Transform).ToList();
-            return Ok(new ApiResponse<List<DiagnosisQuestionResponse>>
-            {
-                Success = true,
-                MessageAr = "تم جلب أسئلة التشخيص بنجاح",
-                MessageEn = "diagnosis questions are successfully fetched",
-                Data = questionResponses
-            });
+                    SubTitle = g.SubTitle,
+                    Questions = g.Questions.Select(q => new DiagnosisQuestionItemResponse
+                    {
+                        Id = q.Id,
+                        QuestionText = q.QuestionText,
+                        Type = q.Type,
+                        Order = q.Order,
+                        Options = q.Options.Select(o => new DiagnosisOptionResponse
+                        {
+                            Id = o.Id,
+                            Text = o.Text
+                        }).ToList()
+                    }).ToList()
+                }).ToList();
 
-        }
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuestionById(Guid id)
-        {
-            var result = await _questionService.GetQuestionByIdAsync(id);
-            if (!result.IsSuccess)
-                return NotFound(new ApiResponse<string>
-                {
-                    Success = false,
-                    MessageAr = "السؤال غير موجود",
-                    MessageEn = "question is not exist "
-
-                });
-            var questionEntity = result.Value;
-
-            if (questionEntity.CardName != null)
-
-                return Ok(new ApiResponse<DiagnosisQuestionResponse>
+                return Ok(new ApiResponse<List<DiagnosisQuestionResponse>>
                 {
                     Success = true,
-                    MessageAr = "تم جلب السؤال المطلوب بنجاح ",
-                    MessageEn = "question is successfully fetched",
-                    Data = DiagnosisQuestionResponse.Transform(questionEntity)
-
+                    MessageAr = "تم جلب أسئلة التشخيص بنجاح",
+                    MessageEn = "Diagnosis questions retrieved successfully",
+                    Data = response
                 });
+            }
 
-            return Ok(new ApiResponse<DiagnosisQuestionResponse>
+            [Authorize(Roles = "Admin,SuperAdmin")]
+            [HttpPost("diagnosis")]
+            public async Task<IActionResult> AddDiagnosisQuestion([FromBody] DiagnosisQuestionRequest request)
             {
-                Success = true,
-                MessageAr = "تم جلب السؤال المطلوب بنجاح ",
-                MessageEn = "question is successfully fetched",
-                Data = DiagnosisQuestionResponse.Transform(questionEntity)
+                var dto = new DiagnosisQuestionRequestDto
+                {
+                    SubTitle = request.SubTitle,
+                    QuestionText = request.QuestionText,
+                    Type = request.Type,
+                    Order = request.Order,
+                    Options = request.Options?.Select(o => new DiagnosisQuestionOptionRequestDto
+                    {
+                        Text = o.Text,
+                        Order = o.Order
+                    }).ToList()
+                };
 
-            });
+                var result = await _diagnosisQuestionService.AddDiagnosisQuestionAsync(dto);
 
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "فشلت عملية إضافة السؤال",
+                        MessageEn = "Failed to add question"
+                    });
 
-        }
+                return Ok(new ApiResponse<string>
+                {
+                    Success = true,
+                    MessageAr = "تمت إضافة السؤال بنجاح",
+                    MessageEn = "Question added successfully"
+                });
+            }
 
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-        [HttpPost]
-        public async Task<IActionResult> AddQuestion([FromBody] DiagnosisQuestionRequest dto)
-        {
-            var questionDto = new QuestionRequestDto
+            [Authorize(Roles = "Admin,SuperAdmin")]
+            [HttpPut("diagnosis/{id:guid}")]
+            public async Task<IActionResult> UpdateDiagnosisQuestion(Guid id, [FromBody] DiagnosisQuestionRequest request)
             {
-                CardName = dto.CardName,
-                MainTitle = dto.MainTitle,
-                SubTitle = dto.SubTitle,
-                QuestionText = dto.QuestionText,
-                Options = dto.Options,
-                Type = dto.Type,
-                Order = dto.Order,
-            };
-
-            var result = await _questionService.AddQuestionAsync(questionDto);
-
-            if (!result.IsSuccess)
-                return BadRequest(new ApiResponse<string>
+                var dto = new DiagnosisQuestionRequestDto
                 {
-                    Success = false,
-                    MessageAr = "فشلت عملية اضافة سؤال",
-                    MessageEn = "Failed to add Question"
-                });
+                    SubTitle = request.SubTitle,
+                    QuestionText = request.QuestionText,
+                    Type = request.Type,
+                    Order = request.Order,
+                    Options = request.Options?.Select(o => new DiagnosisQuestionOptionRequestDto
+                    {
+                        Text = o.Text,
+                        Order = o.Order
+                    }).ToList()
+                };
 
-            var questionEntity = result.Value;
+                var result = await _diagnosisQuestionService.UpdateDiagnosisQuestionAsync(id, dto);
 
-            if (questionDto.CardName == null)
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "فشل تحديث السؤال",
+                        MessageEn = "Failed to update question"
+                    });
 
-                return Ok(new ApiResponse<DiagnosisQuestionResponse> 
+                return Ok(new ApiResponse<string>
                 {
-                    
-                    Success = true, 
-                    MessageAr="تم اضافة سؤال تشخيص",
-                    MessageEn= "Question added successfully",
-                    Data = DiagnosisQuestionResponse.Transform(questionEntity),
-
+                    Success = true,
+                    MessageAr = "تم تحديث السؤال بنجاح",
+                    MessageEn = "Question updated successfully"
                 });
-            return Ok(new ApiResponse<CardQuestionResponse>
+            }
+
+            [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+            [HttpGet("cards")]
+            public async Task<IActionResult> GetAllCardQuestions()
             {
-                Success = true,
-                MessageAr = "تم اضافة سؤال لليطاقة",
-                MessageEn = "Question card added successfully",
-                Data = CardQuestionResponse.Transform(questionEntity),
+                var result = await _diagnosisQuestionService.GetAllCardQuestionsAsync();
 
-            });
-        }
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = "فشل جلب أسئلة البطاقات",
+                        MessageEn = "Failed to retrieve card questions"
+                    });
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestion(Guid id)
-        {
-            var result = await _questionService.DeleteQuestionAsync(id);
-            if (!result.IsSuccess)
-
-                return NotFound(new ApiResponse<string> 
+                var response = result.Value.Select(c => new CardQuestionsResponse
                 {
-                    Success = false, 
-                    MessageAr = "فشل حذف السؤال",
-                    MessageEn= "Failed to delete question"
+                    CardType = c.CardType,
+                    DisplayName = c.DisplayName,
+                    SubTitleGroups = c.SubTitleGroups.Select(sg => new SubTitleGroupResponse
+                    {
+                        SubTitle = sg.SubTitle,
+                        Questions = sg.Questions.Select(q => new CardQuestionItemResponse
+                        {
+                            Id = q.Id,
+                            QuestionText = q.QuestionText,
+                            Type = q.Type,
+                            ScoreInputType = q.ScoreInputType,
+                            MinValue = q.MinValue,
+                            MaxValue = q.MaxValue
+                        }).ToList()
+                    }).ToList()
+                }).ToList();
 
+                return Ok(new ApiResponse<List<CardQuestionsResponse>>
+                {
+                    Success = true,
+                    MessageAr = "تم جلب أسئلة البطاقات بنجاح",
+                    MessageEn = "Card questions retrieved successfully",
+                    Data = response
                 });
+            }
 
-            return Ok(new ApiResponse<bool> 
-            { 
-                Success = true,
-                MessageAr = "تم حذف السؤال بنجاح",
-                MessageEn = "Question is deleted successfully",
-                Data = result.Value
-            });
-        }
-    }
+            [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+            [HttpGet("cards/{cardType}")]
+            public async Task<IActionResult> GetQuestionsByCardType(CardType cardType)
+            {
+                var result = await _diagnosisQuestionService.GetQuestionsByCardType(cardType);
+
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "لا يوجد أسئلة لهذه البطاقة",
+                        MessageEn = "No questions found for this card"
+                    });
+
+                var response = result.Value.Select(q => new CardQuestionItemResponse
+                {
+                    Id = q.Id,
+                    QuestionText = q.QuestionText,
+                    Type = q.Type,
+                    ScoreInputType = q.ScoreInputType,
+                    MinValue = q.MinValue,
+                    MaxValue = q.MaxValue
+                }).ToList();
+
+                return Ok(new ApiResponse<List<CardQuestionItemResponse>>
+                {
+                    Success = true,
+                    MessageAr = "تم جلب أسئلة البطاقة بنجاح",
+                    MessageEn = "Card questions retrieved successfully",
+                    Data = response
+                });
+            }
+
+            [Authorize(Roles = "Admin,SuperAdmin")]
+            [HttpPost("cards")]
+            public async Task<IActionResult> AddCardQuestion([FromBody] CardQuestionRequest request)
+            {
+                var dto = new CardQuestionRequestDto
+                {
+                    CardType = request.CardType,
+                    SubTitle = request.SubTitle,
+                    QuestionText = request.QuestionText,
+                    MinValue = request.MinValue,
+                    MaxValue = request.MaxValue,
+                    Order = request.Order
+                };
+
+                var result = await _diagnosisQuestionService.AddCardQuestionAsync(dto);
+
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "فشلت عملية إضافة سؤال البطاقة",
+                        MessageEn = "Failed to add card question"
+                    });
+
+                return Ok(new ApiResponse<string>
+                {
+                    Success = true,
+                    MessageAr = "تمت إضافة سؤال البطاقة بنجاح",
+                    MessageEn = "Card question added successfully"
+                });
+            }
+
+            [Authorize(Roles = "Admin,SuperAdmin")]
+            [HttpPut("cards/{id:guid}")]
+            public async Task<IActionResult> UpdateCardQuestion(Guid id, [FromBody] CardQuestionRequest request)
+            {
+                var dto = new CardQuestionRequestDto
+                {
+                    CardType = request.CardType,
+                    SubTitle = request.SubTitle,
+                    QuestionText = request.QuestionText,
+                    MinValue = request.MinValue,
+                    MaxValue = request.MaxValue,
+                    Order = request.Order
+                };
+
+                var result = await _diagnosisQuestionService.UpdateCardQuestionAsync(id, dto);
+
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "فشل تحديث سؤال البطاقة",
+                        MessageEn = "Failed to update card question"
+                    });
+
+                return Ok(new ApiResponse<string>
+                {
+                    Success = true,
+                    MessageAr = "تم تحديث سؤال البطاقة بنجاح",
+                    MessageEn = "Card question updated successfully"
+                });
+            }
+
+            [Authorize(Roles = "Admin,SuperAdmin")]
+            [HttpDelete("{id:guid}")]
+            public async Task<IActionResult> DeleteQuestion(Guid id)
+            {
+                var result = await _diagnosisQuestionService.DeleteQuestionAsync(id);
+
+                if (!result.IsSuccess)
+                    return BadRequest(new ApiResponse<string>
+                    {
+                        Success = false,
+                        MessageAr = result.Error ?? "فشل حذف السؤال",
+                        MessageEn = "Failed to delete question"
+                    });
+
+                return Ok(new ApiResponse<bool>
+                {
+                    Success = true,
+                    MessageAr = "تم حذف السؤال بنجاح",
+                    MessageEn = "Question deleted successfully",
+                    Data = true
+                });
+            }
+     }
 }
-

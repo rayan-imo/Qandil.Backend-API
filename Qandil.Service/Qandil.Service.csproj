@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Dtos\DiagnosisDto\Response\" />
     <Folder Include="Validation\EvaluateCard\" />
     <Folder Include="Validation\Answer\" />
   </ItemGroup>

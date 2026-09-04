@@ -189,7 +189,7 @@ namespace Qandil.Service.Services
             var subjectCount = dto.SubjectMarkDtos.Count;
 
             var result = (float)Math.Round(
-                totalMarks / subjectCount,
+               (double)totalMarks / subjectCount,
                 MidpointRounding.AwayFromZero
             );
 

@@ -19,9 +19,9 @@
         IDisabilityRepository DisabilityRepository { get; }
         IUsersRepository UsersRepository { get; }
         IUserOtpRepository UserOtpRepository { get; }
-        IQuestionRepository QuestionRepository { get; }
+        IDiagnosisQuestionRepository DiagnosisQuestionRepository { get; }
+        IQuestionOptionRepository QuestionOptionRepository { get; }
         IAnswerRepository AnswerRepository { get; }
-        IEvaluationCardRepository EvaluationCardRepository { get; }
 
         int Complete();
         public Task<int> CompleteAsync();
