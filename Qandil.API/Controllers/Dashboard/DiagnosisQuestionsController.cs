@@ -13,7 +13,7 @@ namespace Qandil.API.Controllers
     [ApiExplorerSettings(IgnoreApi = false)]
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionsController(IDiagnosisQuestionService _diagnosisQuestionService) : ControllerBase
+    public class DiagnosisQuestionsController(IDiagnosisQuestionService _diagnosisQuestionService) : ControllerBase
     {
        
             [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
