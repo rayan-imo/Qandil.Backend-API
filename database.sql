@@ -411,3 +411,100 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+ALTER TABLE [Users] ADD [AdminId] uniqueidentifier NULL;
+GO
+
+CREATE INDEX [IX_Users_AdminId] ON [Users] ([AdminId]);
+GO
+
+ALTER TABLE [Users] ADD CONSTRAINT [FK_Users_Users_AdminId] FOREIGN KEY ([AdminId]) REFERENCES [Users] ([Id]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260831202132_AddAdminColumn', N'8.0.26');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260831202917_InitialCreate', N'8.0.26');
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+DROP TABLE [EvaluationCards];
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Tests]') AND [c].[name] = N'Title');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Tests] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [Tests] DROP COLUMN [Title];
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[DiagnosisQuestions]') AND [c].[name] = N'CardName');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [DiagnosisQuestions] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [DiagnosisQuestions] DROP COLUMN [CardName];
+GO
+
+DECLARE @var2 sysname;
+SELECT @var2 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[DiagnosisQuestions]') AND [c].[name] = N'Options');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [DiagnosisQuestions] DROP CONSTRAINT [' + @var2 + '];');
+ALTER TABLE [DiagnosisQuestions] DROP COLUMN [Options];
+GO
+
+ALTER TABLE [DiagnosisQuestions] ADD [CardType] int NULL;
+GO
+
+ALTER TABLE [DiagnosisQuestions] ADD [MaxValue] int NULL;
+GO
+
+ALTER TABLE [DiagnosisQuestions] ADD [MinValue] int NULL;
+GO
+
+ALTER TABLE [DiagnosisQuestions] ADD [ScoreInputType] int NULL;
+GO
+
+CREATE TABLE [QuestionOption] (
+    [Id] uniqueidentifier NOT NULL,
+    [Text] nvarchar(max) NOT NULL,
+    [Value] int NULL,
+    [Order] int NOT NULL,
+    [DiagnosisQuestionId] uniqueidentifier NOT NULL,
+    [DeletedAt] datetime2 NULL,
+    [CreatedAt] datetime2 NULL,
+    CONSTRAINT [PK_QuestionOption] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_QuestionOption_DiagnosisQuestions_DiagnosisQuestionId] FOREIGN KEY ([DiagnosisQuestionId]) REFERENCES [DiagnosisQuestions] ([Id])
+);
+GO
+
+CREATE INDEX [IX_QuestionOption_DiagnosisQuestionId] ON [QuestionOption] ([DiagnosisQuestionId]);
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260904135329_init2', N'8.0.26');
+GO
+
+COMMIT;
+GO
+

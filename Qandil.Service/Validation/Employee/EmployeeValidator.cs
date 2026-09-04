@@ -16,7 +16,9 @@ namespace Qandil.Service.Validation.Employee
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("البريد الإلكتروني مطلوب")
                 .EmailAddress().WithMessage("صيغة البريد الإلكتروني غير صحيحة");
-
+            RuleFor(x => x.Age)
+                 .GreaterThan(17)
+                 .WithMessage("العمر يجب أن يكون 18 سنة أو أكثر");
         }
 
     }

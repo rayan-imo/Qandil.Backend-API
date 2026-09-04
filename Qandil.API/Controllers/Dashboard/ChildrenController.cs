@@ -23,6 +23,14 @@ namespace Qandil.API.Controllers.Dashboard
             var children = await _childService.GetAllAsync(paginationParameter);
             return Ok(children?.Value?.MapTo(c => ChildAddResponse.Transform(c)));
         }
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        [HttpGet("with-diagnosis")]
+        public async Task<ActionResult<PagedResult<ChildAddResponse>>> GetAllWithDiagnosis(
+            [FromQuery] PaginationParameter paginationParameter)
+        {
+            var children = await _childService.GetAllWithDiagnosisAsync(paginationParameter);
+            return Ok(children?.Value?.MapTo(c => ChildAddResponse.Transform(c)));
+        }
 
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]

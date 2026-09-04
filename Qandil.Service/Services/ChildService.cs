@@ -21,6 +21,15 @@ namespace Qandil.Service.Services
 
             return Result<PagedResult<Child>>.Success(await _uow.ChildRepository.PagedListAsync(spec));
         }
+        public async Task<Result<PagedResult<Child>>> GetAllWithDiagnosisAsync(PaginationParameter paginationParameter)
+        {
+            var spec = BaseSpecification<Child>
+                  .Create()
+                  .Where(x => x.DeletedAt == null&& x.Diagnosis!=null)
+                  .Paginate(paginationParameter.page, paginationParameter.pageSize);
+
+            return Result<PagedResult<Child>>.Success(await _uow.ChildRepository.PagedListAsync(spec));
+        }
         public async Task<Result<Child>> GetById(Guid id)
         {
             if (id == Guid.Empty)

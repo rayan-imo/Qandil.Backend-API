@@ -8,6 +8,7 @@ namespace Qandil.Service.IServices
     public interface IChildService
     {
         public Task<Result<PagedResult<Child>>> GetAllAsync(PaginationParameter paginationParameter);
+        public Task<Result<PagedResult<Child>>> GetAllWithDiagnosisAsync(PaginationParameter paginationParameter);
         public Task<Result<Child>> GetById(Guid id);
         public Task<Result<Child>> AddAsync(ChildAddRequesDto dto);
         public Task<Result<Child>> UpdateAsync(ChildUpdateRequesDto dto,Guid id);
