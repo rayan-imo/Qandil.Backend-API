@@ -20,47 +20,7 @@ namespace Qandil.API.Controllers.Dashboard
             var diagnosises = await _diagnosisService.GetAllAsync(paginationParameter);
             return Ok(diagnosises?.Value?.MapTo(c => DiagnosisResponse.Transform(c)));
         }
-<<<<<<<< HEAD:Qandil.API/Controllers/Dashboard/DiagnosisesConroller.cs
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-        [HttpGet("{diagnosisId}/full")]
-        public async Task<ActionResult<ApiResponse<FullDiagnosisResponse>>> GetFullDiagnosis(Guid id)
-        {
-            var result = await _diagnosisService.GetFullDiagnosisAsync(id);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(new ApiResponse<string>
-                {
-                    Success = false,
-                    MessageAr = "التشخيص غير موجود",
-                    MessageEn = "Diagnnsise not found"
-                });
-
-            }
-
-            var resultValu = result.Value;
-            var fullDiaignosis = new FullDiagnosisResponse
-            {
-                ChildId = resultValu.ChildId,
-                DiagnosisId = resultValu.DiagnosisId,
-                DiagnosisQuestions = resultValu.DiagnosisQuestions,
-                Evaluations = resultValu.Evaluations,
-
-            };
-            return Ok(new ApiResponse<FullDiagnosisResponse>
-            {
-                Success = true,
-                MessageAr = "تم جلب بيانات التشخيص بنجاح",
-                MessageEn = "Diagnonsise retrieved successfully",
-                Data = fullDiaignosis
-
-            });
-
-        }
-        [Authorize(Roles = "Admin,SuperAdmin,Specialist")]
-========
-
->>>>>>>> 89d7f83 (complete diagnosis mechanism):Qandil.API/Controllers/DiagnosisesController.cs
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse<DiagnosisResponse>>> GetById(Guid id)
         {
