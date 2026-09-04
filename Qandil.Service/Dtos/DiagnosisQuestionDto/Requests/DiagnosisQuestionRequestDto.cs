@@ -9,6 +9,6 @@ namespace Qandil.Service.Dtos.DiagnosisQuestionDto.Requests
         public string QuestionText { get; set; }
         public QuestionType Type { get; set; }
         public int Order { get; set; }
-        public List<DiagnosisQuestionOptionRequestDto>? Options { get; set; }
+        public List<DiagnosisQuestionOptionRequestDto>? Options { get; set; }=null;
     }
 }

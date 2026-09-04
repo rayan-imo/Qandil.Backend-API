@@ -83,12 +83,16 @@ namespace Qandil.API.Controllers
                         MessageEn = "Failed to add question"
                     });
 
-                return Ok(new ApiResponse<string>
-                {
-                    Success = true,
-                    MessageAr = "تمت إضافة السؤال بنجاح",
-                    MessageEn = "Question added successfully"
-                });
+            return Ok(new ApiResponse<DiagnosisQuestionItemResponse>
+            {
+                Success = true,
+                MessageAr = "تمت إضافة السؤال بنجاح",
+                MessageEn = "Question added successfully",
+                Data = DiagnosisQuestionItemResponse.Transform(result.Value)
+
+
+
+            });
             }
 
             [Authorize(Roles = "Admin,SuperAdmin")]
@@ -225,11 +229,13 @@ namespace Qandil.API.Controllers
                         MessageEn = "Failed to add card question"
                     });
 
-                return Ok(new ApiResponse<string>
+                return Ok(new ApiResponse<DiagnosisQuestionItemResponse>
                 {
                     Success = true,
                     MessageAr = "تمت إضافة سؤال البطاقة بنجاح",
-                    MessageEn = "Card question added successfully"
+                    MessageEn = "Card question added successfully",
+                    Data= DiagnosisQuestionItemResponse.Transform(result.Value)
+
                 });
             }
 

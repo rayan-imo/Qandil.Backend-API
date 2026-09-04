@@ -1,4 +1,5 @@
-﻿using Qandil.Core.Enums;
+﻿using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 
 namespace Qandil.API.Dtos.Responses.DiagnosisQuestions
 {
@@ -9,5 +10,25 @@ namespace Qandil.API.Dtos.Responses.DiagnosisQuestions
         public QuestionType Type { get; set; }
         public int Order { get; set; }
         public List<DiagnosisOptionResponse> Options { get; set; } = new();
+
+        public static DiagnosisQuestionItemResponse Transform(DiagnosisQuestion diagnosisQuestion)
+        {
+            return new DiagnosisQuestionItemResponse()
+            {
+                Id = diagnosisQuestion.Id,
+                QuestionText = diagnosisQuestion.QuestionText,
+                Type = diagnosisQuestion.Type,
+                Order = diagnosisQuestion.Order,
+                Options = diagnosisQuestion.QuestionOptions?
+                .Select(o => new DiagnosisOptionResponse
+                {
+                    Id = o.Id,
+                    Text = o.Text,
+                }).ToList() ?? new List<DiagnosisOptionResponse>()
+
+
+            };
+        }
     }
+
 }

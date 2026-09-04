@@ -64,7 +64,7 @@ namespace Qandil.Service.Services
         {
             var spec = BaseSpecification<DiagnosisQuestion>.Create()
         .Where(x => x.DeletedAt == null)
-        // ← .Include(x => x.QuestionOptions) اتشالت، أسئلة البطاقات ما إلها Options
+        .AndFilter(x => x.CardType != null)
         .OrderByDesc(x => x.CardType)
         .OrderByDesc(x => x.SubTitle)
         .OrderByDesc(x => x.Order);
