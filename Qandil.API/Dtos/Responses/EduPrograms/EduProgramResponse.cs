@@ -4,17 +4,19 @@ namespace Qandil.API.Dtos.Responses.EduPrograms
 {
     public class EduProgramResponse
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public int SessionNumber { get; set; }
         public string SessionDuration { get; set; }
-        
-       public static EduProgramResponse Transform (EduProgram program)
+
+        public static EduProgramResponse Transform(EduProgram program)
         {
-            return new EduProgramResponse 
-            { 
-               Name= program.Name,
-               SessionDuration= program.SessionDuration,
-               SessionNumber= program.SessionNumber,
+            return new EduProgramResponse
+            {
+                Id = program.Id,
+                Name = program.Name,
+                SessionDuration = program.SessionDuration,
+                SessionNumber = program.SessionNumber,
 
             };
 

@@ -30,7 +30,6 @@ namespace Qandil.Service.Validation.Child
                 .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على حروف فقط");
 
             RuleFor(x => x.Gender)
-                .NotEmpty().WithMessage("الجنس مطلوب")
                 .IsInEnum().WithMessage("الجنس غير صحيح");
 
             RuleFor(x => x.DateOfBirth)

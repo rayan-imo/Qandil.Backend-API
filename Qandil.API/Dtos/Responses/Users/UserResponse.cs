@@ -6,13 +6,17 @@ namespace Qandil.API.Dtos.Responses.Users
 {
     public class UserResponse
     {
+        public Guid Id { get; set; }
         public string? Email { get; set; }
         public RoleType Role { get; set; }
         public static UserResponse Transform(User user)
         {
             return new UserResponse
-            {Email=user.Email,
-            Role=user.Role};
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Role = user.Role
+            };
 
         }
     }

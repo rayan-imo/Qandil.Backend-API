@@ -17,6 +17,14 @@ namespace Qandil.API.Controllers.Dashboard
     public class ClassroomController(IClassroomService _classroomService) : ControllerBase
     {
         [Authorize(Roles = "Admin,SuperAdmin")]
+        [HttpGet]
+        public async Task<ActionResult<PagedResult<ClassroomResponse>>> GetAll(  PaginationParameter paginationParameter)
+        {
+            var classrooms = await _classroomService.GetAllAsync(paginationParameter);
+
+            return Ok(classrooms?.Value?.MapTo(c => ClassroomResponse.Transform(c)));
+        }
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

@@ -3,7 +3,8 @@
 namespace Qandil.API.Dtos.Responses.Classrooms
 {
     public class ClassroomResponse
-    {
+    { 
+        public Guid Id {  get; set; }
         public int MaxCapacity { get; set; }
         public int CurrentCapacity { get; set; }
         public Guid? ProgramId { get; set; }
@@ -13,7 +14,7 @@ namespace Qandil.API.Dtos.Responses.Classrooms
      public static ClassroomResponse Transform (Classroom classroom)
         {
             return new ClassroomResponse
-            {
+            {   Id=classroom.Id,
                 MaxCapacity = classroom.MaxCapacity,
                 CurrentCapacity = classroom.CurrentCapacity,
                 ProgramId = classroom.ProgramId,
