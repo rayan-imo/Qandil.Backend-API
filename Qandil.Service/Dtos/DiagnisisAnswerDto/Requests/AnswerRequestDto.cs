@@ -1,4 +1,5 @@
 ﻿using Qandil.Core.Entity;
+using Qandil.Core.Enums;
 
 namespace Qandil.Service.Dtos.AnswerDto.Requests
 {
@@ -17,6 +18,7 @@ namespace Qandil.Service.Dtos.AnswerDto.Requests
 
         // لأسئلة التشخيص (Type == Options)
         public string? SelectedOption { get; set; }
+        public AnswerFrequency ? answerFrequency { get; set; }
 
         public string? Notes { get; set; }
     }

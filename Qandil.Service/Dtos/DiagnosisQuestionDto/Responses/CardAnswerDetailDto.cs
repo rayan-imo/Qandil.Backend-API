@@ -3,6 +3,7 @@
     public class CardAnswerDetailDto
     {
         public Guid? AnswerId { get; set; }
+        public Guid QuistionId { get; set; }
         public string QuestionText { get; set; }
         public string SubTitle { get; set; }
         public int? ScoreValue { get; set; }

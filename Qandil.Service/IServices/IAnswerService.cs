@@ -15,6 +15,7 @@ namespace Qandil.Service.IServices
         Task<Result<CardDetailsResponseDto>> GetCardAnswerDetailsAsync(Guid diagnosisId, CardType cardType);
         Task<Result<List<DiagnosisSubTitleResultDto>>> GetDiagnosisQuestionsResultsAsync(Guid diagnosisId);
         Task<Result<bool>> UpdateAnswerAsync(Guid answerId, UpdateAnswerRequestDto dto);
+        Task<Result<bool>> DeleteAnswerByQuestionAsync(Guid diagnosisId, Guid questionId);
 
     }
 }

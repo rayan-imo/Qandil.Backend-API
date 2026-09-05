@@ -178,7 +178,8 @@ namespace Qandil.API.Controllers.Dashboard
                 DisplayName = result.Value.DisplayName,
                 Answers = result.Value.Answers.Select(a => new CardAnswerDetailResponse
                 {
-                    AnswerId = a.AnswerId,
+                    AnswerId = a?.AnswerId,
+                    QuestionId=a.QuistionId,
                     QuestionText = a.QuestionText,
                     SubTitle = a.SubTitle,
                     ScoreValue = a.ScoreValue,
@@ -230,6 +231,28 @@ namespace Qandil.API.Controllers.Dashboard
                 MessageAr = "تم جلب نتائج أسئلة التشخيص بنجاح",
                 MessageEn = "Diagnosis results retrieved successfully",
                 Data = response
+            });
+        }
+        [Authorize(Roles = "Admin,SuperAdmin,Teacher,Specialist")]
+        [HttpDelete("answer/{diagnosisId:guid}/{questionId:guid}")]
+        public async Task<IActionResult> DeleteAnswerByQuestion(Guid diagnosisId, Guid questionId)
+        {
+            var result = await _answerService.DeleteAnswerByQuestionAsync(diagnosisId, questionId);
+
+            if (!result.IsSuccess)
+                return BadRequest(new ApiResponse<string>
+                {
+                    Success = false,
+                    MessageAr = result.Error ?? "فشل حذف الإجابة",
+                    MessageEn = "Failed to delete answer"
+                });
+
+            return Ok(new ApiResponse<bool>
+            {
+                Success = true,
+                MessageAr = "تم حذف الإجابة بنجاح",
+                MessageEn = "Answer deleted successfully",
+                Data = true
             });
         }
     }

@@ -8,8 +8,9 @@ namespace Qandil.Core.Entity
         public bool? BooleanValue { get; set; } 
         public int? ScoreValue { get; set; } 
         public string? TextValue { get; set; }      
-        public string? SelectedOption { get; set; }  
+        public string? SelectedOption { get; set; }
         public string? Notes { get; set; }
+        public AnswerFrequency? answerFrequency { get; set; }
 
         public Guid DiagnosisId { get; set; }
         public Diagnosis Diagnosis { get; set; }

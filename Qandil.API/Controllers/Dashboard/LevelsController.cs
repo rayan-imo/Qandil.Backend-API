@@ -63,7 +63,7 @@ namespace Qandil.API.Controllers
             var levelDto = new LevelRequestDto
             {
                 LevelName = levelRequest.LevelName,
-                ProgramName = levelRequest.ProgramName,
+              
                 ProgramId = levelRequest.ProgramId
             };
 
@@ -79,7 +79,7 @@ namespace Qandil.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<Guid>
+            return Ok(new ApiResponse<Level>
             {
                 Success = true,
                 MessageAr = "تمت إضافة المستوى بنجاح",
@@ -95,7 +95,6 @@ namespace Qandil.API.Controllers
             var levelDto = new LevelRequestDto
             {
                 LevelName = levelRequest.LevelName,
-                ProgramName = levelRequest.ProgramName,
                 ProgramId = levelRequest.ProgramId
             };
 

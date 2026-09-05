@@ -63,6 +63,7 @@ namespace Qandil.Service.Services
                     DiagnosisId = dto.DiagnosisId,
                     QuestionId = answerDto.QuestionId,
                     ScoreValue = answerDto.ScoreValue,
+                    answerFrequency=answerDto.answerFrequency,
                     Notes = answerDto.Notes,
                     CreatedAt = DateTime.UtcNow
                 };
@@ -294,7 +295,9 @@ namespace Qandil.Service.Services
 
                 return new CardAnswerDetailDto
                 {
+                    
                     AnswerId = answer?.Id,
+                    QuistionId=q.Id,
                     QuestionText = q.QuestionText,
                     SubTitle = q.SubTitle,
                     ScoreValue = scoreValue,
@@ -385,6 +388,31 @@ namespace Qandil.Service.Services
             answer.SelectedOption = dto.SelectedOption;
             answer.Notes = dto.Notes;
 
+
+            await _uow.AnswerRepository.UpdateAsync(answer);
+            await _uow.CompleteAsync();
+
+            return Result<bool>.Success(true);
+        }
+        public async Task<Result<bool>> DeleteAnswerByQuestionAsync(Guid diagnosisId, Guid questionId)
+        {
+            if (diagnosisId == Guid.Empty)
+                return Result<bool>.Failure("معرف التشخيص غير صالح");
+
+            if (questionId == Guid.Empty)
+                return Result<bool>.Failure("معرف السؤال غير صالح");
+
+            var answerSpec = BaseSpecification<DiagnosisAnswer>.Create()
+                .Where(a => a.DeletedAt == null)
+                .AndFilter(a => a.DiagnosisId == diagnosisId)
+                .AndFilter(a => a.QuestionId == questionId);
+
+            var answer = (await _uow.AnswerRepository.ListAsync(answerSpec)).FirstOrDefault();
+
+            if (answer == null)
+                return Result<bool>.Failure("لا توجد إجابة لهذا السؤال ضمن هذا التشخيص");
+
+            answer.DeletedAt = DateTime.UtcNow;
 
             await _uow.AnswerRepository.UpdateAsync(answer);
             await _uow.CompleteAsync();

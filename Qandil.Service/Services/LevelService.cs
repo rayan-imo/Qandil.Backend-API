@@ -33,7 +33,7 @@ namespace Qandil.Service.Services
             return Result<Level>.Success(level);
         }
 
-        public async Task<Result<Guid>> AddAsync(LevelRequestDto dto)
+        public async Task<Result<Level>> AddAsync(LevelRequestDto dto)
         {
             await new LevelValidator().ValidateAndThrowAsync(dto);
             var level = new Level
@@ -45,7 +45,7 @@ namespace Qandil.Service.Services
             };
             await _uow.LevelRepository.AddAsync(level);
             await _uow.CompleteAsync();
-            return Result<Guid>.Success(level.Id);
+            return Result<Level>.Success(level);
         }
         public async Task<Result<Guid>> UpdateAsync(LevelRequestDto dto, Guid id)
         {

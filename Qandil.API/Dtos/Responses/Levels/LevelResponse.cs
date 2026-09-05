@@ -16,6 +16,7 @@ namespace Qandil.API.Dtos.Responses.Levels
                 Id = level.Id,
                 LevelName = level.LevelName,
                 ProgramName = level.Program.Name,
+                ProgramId=level.ProgramId,
             };
         }
     }

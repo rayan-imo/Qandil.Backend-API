@@ -7,21 +7,19 @@ namespace Qandil.API.Dtos.Responses.Diagnosises
         public Guid Id { get; set; }
         public DateTime DisabilityOnsetDate { get; set; }
         public string MedicalNots { get; set; }
-        public Guid EmployeeId { get; set; }
         public Guid ChildId { get; set; }
+        public Guid EmployeeId { get; set; }
 
-        public static DiagnosisResponse Transform(Diagnosis diagnosi)
+        public static DiagnosisResponse Transform(Diagnosis diagnosis)
         {
             return new DiagnosisResponse
             {
-                Id=diagnosi.Id,
-                DisabilityOnsetDate = diagnosi.DisabilityOnsetDate,
-                MedicalNots = diagnosi.MedicalNots,
-                EmployeeId = diagnosi.EmployeeId,
-                ChildId = diagnosi.ChildId,
+                Id = diagnosis.Id,
+                DisabilityOnsetDate = diagnosis.DisabilityOnsetDate,
+                MedicalNots = diagnosis.MedicalNots,
+                ChildId = diagnosis.ChildId,
+                EmployeeId = diagnosis.EmployeeId
             };
         }
-    
-
     }
 }
