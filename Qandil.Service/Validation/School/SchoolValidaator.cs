@@ -8,7 +8,9 @@ namespace Qandil.Service.Validation.School
         public SchoolValidaator()
         {
             RuleFor(x => x.SchoolName)
-              .NotEmpty().WithMessage("من فضلك، قم بإدخال اسم المدرسة");
+              .NotEmpty().WithMessage("من فضلك، قم بإدخال اسم المدرسة")
+                .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على محارف فقط");
+            ;
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Qandil.Service.Validation.User
         public UserValidator()
         {
             RuleFor(x => x.Email)
-              .NotEmpty().WithMessage("من فضلك، قم بإدخال الايميل");
+              .NotEmpty().WithMessage("من فضلك، قم بإدخال الايميل")
+              .EmailAddress().WithMessage("صيغة البريد الإلكتروني غير صحيحة");
 
 
         }

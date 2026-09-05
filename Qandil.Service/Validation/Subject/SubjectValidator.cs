@@ -9,9 +9,11 @@ namespace Qandil.Service.Validation.Level
         public SubjectValidator()
         {
             RuleFor(x => x.Name)
-              .NotEmpty().WithMessage("من فضلك، قم بإدخال اسم المادة");
+              .NotEmpty().WithMessage("من فضلك، قم بإدخال اسم المادة")
+              .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على محارف فقط");
+            
 
-          
+
         }
     }
 }

@@ -9,7 +9,9 @@ namespace Qandil.Service.Validation.Program
         {
        
             RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("اسم البرنامج مطلوب ");
+            .NotEmpty().WithMessage("اسم البرنامج مطلوب ")
+              .Matches(@"^[\p{L}\s]+$").WithMessage("الاسم يجب أن يحتوي على محارف فقط");
+ 
 
             RuleFor(x => x.SessionNumber)
             .NotEmpty().WithMessage("عدد الجلسات مطلوب ");
