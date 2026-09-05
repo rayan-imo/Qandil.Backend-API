@@ -18,7 +18,7 @@ namespace Qandil.API.Controllers.Dashboard
     {
         [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
-        public async Task<ActionResult<PagedResult<ClassroomResponse>>> GetAll(  PaginationParameter paginationParameter)
+        public async Task<ActionResult<PagedResult<ClassroomResponse>>> GetAll([FromQuery] PaginationParameter paginationParameter)
         {
             var classrooms = await _classroomService.GetAllAsync(paginationParameter);
 
