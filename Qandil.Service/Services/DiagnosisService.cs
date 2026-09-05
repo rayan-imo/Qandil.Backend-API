@@ -47,6 +47,13 @@ namespace Qandil.Service.Services
             var child = await _uow.ChildRepository.GetByIdAsync(dto.ChildId);
             if (child == null)
                 return Result<Diagnosis>.Failure("الطفل غير موجود ");
+
+            var hasExistingDiagnosis = await _uow.DiagnosisRepository
+     .AnyAsync(d => d.ChildId == dto.ChildId && d.DeletedAt == null);
+
+            if (hasExistingDiagnosis == true)
+                return Result<Diagnosis>.Failure("لا يمكن الإضافة، هذا الطفل لديه تشخيص مسبقاً");
+
             var employee =await _uow.EmployeeRepository.GetByIdAsync(dto.EmployeeId);
             if (employee == null)
                 return Result<Diagnosis>.Failure("الموظف غير موجود");
@@ -54,7 +61,7 @@ namespace Qandil.Service.Services
             {
                 Id = Guid.NewGuid(),
                 DisabilityOnsetDate = dto.DisabilityOnsetDate,
-                MedicalNots = dto.MedicalNots,
+                MedicalNots = dto.MedicalNots,  
                 ChildId = dto.ChildId,
                 EmployeeId = dto.EmployeeId,
 
