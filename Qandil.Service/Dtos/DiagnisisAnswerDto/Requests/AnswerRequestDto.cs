@@ -13,7 +13,7 @@ namespace Qandil.Service.Dtos.AnswerDto.Requests
         public bool? BooleanValue { get; set; }
 
         // لأسئلة التشخيص (Type == Text)
-        public string TextValue { get; set; }
+        public string? TextValue { get; set; }
 
         // لأسئلة التشخيص (Type == Options)
         public string? SelectedOption { get; set; }

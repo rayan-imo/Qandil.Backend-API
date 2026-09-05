@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qandil.Service.Validation.DiagnosisQuestion
+namespace Qandil.Service.Validation.DiagnosisQuestions
 {
     public class CardQuestionAddValidator : AbstractValidator<CardQuestionRequestDto>
     {

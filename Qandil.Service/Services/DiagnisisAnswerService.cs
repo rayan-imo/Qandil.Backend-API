@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Extensions;
+﻿using FluentValidation;
+using Microsoft.OpenApi.Extensions;
 using Qandil.Core.Common;
 using Qandil.Core.Entity;
 using Qandil.Core.Enums;
@@ -8,6 +9,8 @@ using Qandil.Service.Dtos.AnswerDto.Requests;
 using Qandil.Service.Dtos.DiagnisisAnswerDto.Requests;
 using Qandil.Service.Dtos.DiagnosisQuestionDto.Responses;
 using Qandil.Service.IServices;
+using Qandil.Service.Validation.Answer;
+using Qandil.Service.Validation.DiagnosisQuestions;
 
 namespace Qandil.Service.Services
 {
@@ -27,6 +30,7 @@ namespace Qandil.Service.Services
 
             if (dto.Answers == null || !dto.Answers.Any())
                 return Result<CardResultDto>.Failure("قائمة الإجابات فارغة");
+            await new SaveCardAnsweValidator(_uow).ValidateAndThrowAsync(dto);
 
             // 1.1 جلب أسئلة هاي البطاقة بس
             var questionsSpec = BaseSpecification<DiagnosisQuestion>.Create()

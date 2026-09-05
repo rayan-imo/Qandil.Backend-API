@@ -9,7 +9,7 @@ using Qandil.Service.Dtos.DiagnosisQuestionDto.Requests;
 using Qandil.Service.Dtos.DiagnosisQuestionDto.Responses;
 using Qandil.Service.Dtos.QuestionOptionsDto.Responses;
 using Qandil.Service.IServices;
-using Qandil.Service.Validation.DiagnosisQuestion;
+using Qandil.Service.Validation.DiagnosisQuestions;
 
 namespace Qandil.Service.Services
 {
@@ -260,7 +260,7 @@ namespace Qandil.Service.Services
                 return Result<DiagnosisQuestion>.Failure("معرف السؤال غير صالح");
 
 
-            await new DiagnosisQuestionValidator().ValidateAndThrowAsync(dto);
+            // await new DiagnosisQuestionValidator().ValidateAndThrowAsync(dto);
 
 
             var spec = BaseSpecification<DiagnosisQuestion>.Create()
@@ -318,7 +318,7 @@ namespace Qandil.Service.Services
 
             return Result<DiagnosisQuestion>.Success(updatedQuestion);
         }
-         public async Task<Result<bool>> DeleteQuestionAsync(Guid id)
+        public async Task<Result<bool>> DeleteQuestionAsync(Guid id)
         {
             var spec = BaseSpecification<DiagnosisQuestion>.Create()
         .Where(x => x.DeletedAt == null && x.Id == id)
