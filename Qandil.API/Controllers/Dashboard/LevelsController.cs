@@ -79,12 +79,12 @@ namespace Qandil.API.Controllers
                 });
             }
 
-            return Ok(new ApiResponse<Level>
+            return Ok(new ApiResponse<LevelResponse>
             {
                 Success = true,
                 MessageAr = "تمت إضافة المستوى بنجاح",
                 MessageEn = "Level added successfully",
-                Data = result.Value
+                Data = LevelResponse.Transform(result.Value)
             });
         }
 

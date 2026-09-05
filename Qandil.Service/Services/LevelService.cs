@@ -16,7 +16,7 @@ namespace Qandil.Service.Services
             var spec = BaseSpecification<Level>
              .Create()
              .Where(x=> x.DeletedAt == null)
-              .Include(x => x.Program);  // أضف هذا السطر
+              .Include(x => x.Program);  
 
             return Result<PagedResult<Level>>.Success(await _uow.LevelRepository.PagedListAsync(spec));
         }
@@ -25,7 +25,12 @@ namespace Qandil.Service.Services
             if (id == Guid.Empty)
                 return Result<Level>.Failure("Level ID cannot be empty.");
 
-            var level = await _uow.LevelRepository.GetByIdAsync(id);
+            var spec = BaseSpecification<Level>.Create()
+       .Where(x => x.Id == id && x.DeletedAt == null)
+       .Include(x => x.Program);
+
+            var levels = await _uow.LevelRepository.ListAsync(spec);
+            var level = levels.FirstOrDefault();
 
             if (level == null || level.DeletedAt != null)
                 return Result<Level>.Failure($" Level with ID was not found.");
@@ -45,7 +50,13 @@ namespace Qandil.Service.Services
             };
             await _uow.LevelRepository.AddAsync(level);
             await _uow.CompleteAsync();
-            return Result<Level>.Success(level);
+
+            var spec = BaseSpecification<Level>.Create()
+       .Where(x => x.Id == level.Id)
+       .Include(x => x.Program);
+
+            var savedLevel = (await _uow.LevelRepository.ListAsync(spec)).FirstOrDefault();
+            return Result<Level>.Success(savedLevel);
         }
         public async Task<Result<Guid>> UpdateAsync(LevelRequestDto dto, Guid id)
         {

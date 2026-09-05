@@ -99,8 +99,10 @@ namespace Qandil.Service.Validation.Answer
                     return answer.BooleanValue.HasValue;
 
                 case QuestionType.Score:
-                case QuestionType.FrequencyScore:
                     return answer.ScoreValue.HasValue;
+
+                case QuestionType.FrequencyScore:
+                    return answer.answerFrequency.HasValue;
 
                 case QuestionType.Text:
                     return !string.IsNullOrWhiteSpace(answer.TextValue);

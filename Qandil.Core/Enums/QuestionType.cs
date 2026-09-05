@@ -5,7 +5,7 @@
         Boolean, 
         Score,
         Text,
-        Options,
+        Options, 
         FrequencyScore
     }
 }
