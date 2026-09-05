@@ -100,7 +100,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("ProgramId");
 
-                    b.ToTable("Childs");
+                    b.ToTable("Childs", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.ChildTest", b =>
@@ -150,7 +150,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("ChildTests");
+                    b.ToTable("ChildTests", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Classroom", b =>
@@ -196,7 +196,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("ProgramId");
 
-                    b.ToTable("Classrooms");
+                    b.ToTable("Classrooms", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Diagnosis", b =>
@@ -230,7 +230,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Diagnoses");
+                    b.ToTable("Diagnoses", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisAnswer", b =>
@@ -275,7 +275,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("DiagnosisAnswers");
+                    b.ToTable("DiagnosisAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisDisability", b =>
@@ -302,7 +302,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("DisabilityId");
 
-                    b.ToTable("DiagnosisDisabilities");
+                    b.ToTable("DiagnosisDisabilities", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.DiagnosisQuestion", b =>
@@ -348,7 +348,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiagnosisQuestions");
+                    b.ToTable("DiagnosisQuestions", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Disability", b =>
@@ -369,7 +369,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Disabilities");
+                    b.ToTable("Disabilities", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.EduProgram", b =>
@@ -397,7 +397,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Programs");
+                    b.ToTable("Programs", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Employee", b =>
@@ -432,7 +432,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Level", b =>
@@ -458,7 +458,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("ProgramId");
 
-                    b.ToTable("Levels");
+                    b.ToTable("Levels", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.QuestionOption", b =>
@@ -490,7 +490,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("DiagnosisQuestionId");
 
-                    b.ToTable("QuestionOption");
+                    b.ToTable("QuestionOption", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.School", b =>
@@ -524,7 +524,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schools");
+                    b.ToTable("Schools", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Subject", b =>
@@ -545,7 +545,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subject");
+                    b.ToTable("Subject", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.SubjectMark", b =>
@@ -588,7 +588,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("TestSubjectId");
 
-                    b.ToTable("ChildTestSubjectMarks");
+                    b.ToTable("ChildTestSubjectMarks", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.SupportivSession", b =>
@@ -623,7 +623,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("SupportivSessions");
+                    b.ToTable("SupportivSessions", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Test", b =>
@@ -657,7 +657,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("Tests");
+                    b.ToTable("Tests", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.TestSubject", b =>
@@ -687,7 +687,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestSubjects");
+                    b.ToTable("TestSubjects", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Tracking", b =>
@@ -725,7 +725,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("SchoolId");
 
-                    b.ToTable("Trackings");
+                    b.ToTable("Trackings", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.User", b =>
@@ -756,7 +756,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasIndex("AdminId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.UserOtp", b =>
@@ -790,7 +790,7 @@ namespace Qandil.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserOtp");
+                    b.ToTable("UserOtp", (string)null);
                 });
 
             modelBuilder.Entity("Qandil.Core.Entity.Child", b =>

@@ -1,6 +1,8 @@
-﻿namespace Qandil.API.Dtos.Requests.ChildTestSubjectMark
+﻿using Qandil.Core.Common;
+
+namespace Qandil.API.Dtos.Requests.ChildTestSubjectMark
 {
-    public class ChildTestSubjectMarkRequest
+    public class ChildTestSubjectMarkRequest:BaseEntity
     {
         public float ObtainMark { get; set; }
         public string? Notes { get; set; }

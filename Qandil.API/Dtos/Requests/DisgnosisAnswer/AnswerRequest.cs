@@ -1,4 +1,6 @@
-﻿namespace Qandil.API.Dtos.Requests.DisgnosisAnswer
+﻿using Qandil.Core.Enums;
+
+namespace Qandil.API.Dtos.Requests.DisgnosisAnswer
 {
     public class AnswerRequest
     {
@@ -7,6 +9,8 @@
         public bool? BooleanValue { get; set; }
         public string? TextValue { get; set; }
         public string? SelectedOption { get; set; }
+        public AnswerFrequency? answerFrequency { get; set; }
+
         public string? Notes { get; set; }
     }
 }

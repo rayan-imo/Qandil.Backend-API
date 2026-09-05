@@ -50,7 +50,7 @@ namespace Qandil.API.Controllers.Dashboard
                 return BadRequest(new ApiResponse<string>
                 {
                     Success = false,
-                    MessageAr = "الاختبار غير موجود",
+                    MessageAr = "اختبار الطفل غير موجود",
                     MessageEn = "Child test not found"
                 });
             }
@@ -58,7 +58,7 @@ namespace Qandil.API.Controllers.Dashboard
             return Ok(new ApiResponse<ChildTestResponse>
             {
                 Success = true,
-                MessageAr = "تم جلب الاختبار بنجاح",
+                MessageAr = "تم جلب اختبار الطفل بنجاح",
                 MessageEn = "Child test retrieved successfully",
                 Data = ChildTestResponse.Transform(result.Value)
             });
