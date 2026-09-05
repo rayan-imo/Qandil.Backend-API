@@ -14,9 +14,9 @@ namespace Qandil.Service.Services
         public async Task<Result<PagedResult<Level>>> GetAllAsync(PaginationParameter paginationParameter)
         {
             var spec = BaseSpecification<Level>
-                 .Create()
-                 .Where(x => x.DeletedAt == null)
-                 .Paginate(paginationParameter.page, paginationParameter.pageSize);
+             .Create()
+             .Where(x=> x.DeletedAt == null)
+              .Include(x => x.Program);  // أضف هذا السطر
 
             return Result<PagedResult<Level>>.Success(await _uow.LevelRepository.PagedListAsync(spec));
         }

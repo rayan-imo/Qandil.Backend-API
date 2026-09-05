@@ -10,7 +10,6 @@ using Qandil.Service.Dtos.DiagnisisAnswerDto.Requests;
 using Qandil.Service.Dtos.DiagnosisQuestionDto.Responses;
 using Qandil.Service.IServices;
 using Qandil.Service.Validation.Answer;
-using Qandil.Service.Validation.DiagnosisQuestions;
 
 namespace Qandil.Service.Services
 {
@@ -351,7 +350,7 @@ namespace Qandil.Service.Services
                         if (q.Type == QuestionType.Options && answer?.SelectedOption != null)
                         {
                             selectedOptionText = answer.SelectedOption;
-                                
+
                         }
 
                         return new DiagnosisAnswerDetailDto
@@ -385,7 +384,7 @@ namespace Qandil.Service.Services
             answer.TextValue = dto.TextValue;
             answer.SelectedOption = dto.SelectedOption;
             answer.Notes = dto.Notes;
-             
+
 
             await _uow.AnswerRepository.UpdateAsync(answer);
             await _uow.CompleteAsync();
