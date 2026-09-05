@@ -36,6 +36,11 @@ namespace Qandil.Service.Services
 
         public async Task<Result<Guid>> AddAsync(TestRequestDto dto)
         {
+            // 1. التحقق من وجود الـ Level
+            var level = await _uow.LevelRepository.GetByIdAsync(dto.LevelId);
+            if (level == null || level.DeletedAt != null)
+                return Result<Guid>.Failure("Level not found. Please provide a valid LevelId.");
+
             await new TestValidator().ValidateAndThrowAsync(dto);
             var test = new Test
             {
