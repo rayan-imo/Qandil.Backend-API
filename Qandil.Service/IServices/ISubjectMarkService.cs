@@ -9,7 +9,7 @@ namespace Qandil.Service.IServices
     {
         public Task<Result<PagedResult<SubjectMark>>> GetAllAsync(PaginationParameter paginationParameter);
         public Task<Result<SubjectMark>> GetById(Guid id);
-        // public Task<Result<Guid>> AddAsync(ChildTestSubjectMarkRequestDto dto);
+         public Task<Result<Guid>> AddAsync(SubjectMarkRequestDto dto);
         public Task<Result<Guid>> UpdateAsync(SubjectMarkRequestDto dto, Guid id);
         public Task<Result<bool>> DeleteAsync(Guid id);
     }

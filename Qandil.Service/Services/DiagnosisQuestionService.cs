@@ -306,7 +306,7 @@ namespace Qandil.Service.Services
                 }
             }
 
-          //  await _uow.DiagnosisQuestionRepository.UpdateAsync(question);
+            //  await _uow.DiagnosisQuestionRepository.UpdateAsync(question);
             await _uow.CompleteAsync();
 
 
@@ -320,33 +320,34 @@ namespace Qandil.Service.Services
             return Result<DiagnosisQuestion>.Success(updatedQuestion);
         }
         public async Task<Result<bool>> DeleteQuestionAsync(Guid id)
-{
-    var spec = BaseSpecification<DiagnosisQuestion>.Create()
-        .Where(x => x.DeletedAt == null && x.Id == id)
-        .Include(x => x.QuestionOptions.Where(o => o.DeletedAt == null));
-
-    var question = await _uow.DiagnosisQuestionRepository
-        .GetFirstBySpecAsync(spec);
-
-    if (question == null)
-        return Result<bool>.Failure("السؤال غير موجود");
-
-    var deletedAt = DateTime.UtcNow;
-
-    // Soft Delete للسؤال
-    question.DeletedAt = deletedAt;
-
-    // Soft Delete للخيارات الفعالة فقط
-    if (question.QuestionOptions != null)
-    {
-        foreach (var option in question.QuestionOptions)
         {
-            option.DeletedAt = deletedAt;
+            var spec = BaseSpecification<DiagnosisQuestion>.Create()
+                .Where(x => x.DeletedAt == null && x.Id == id)
+                .Include(x => x.QuestionOptions.Where(o => o.DeletedAt == null));
+
+            var question = await _uow.DiagnosisQuestionRepository
+                .GetFirstBySpecAsync(spec);
+
+            if (question == null)
+                return Result<bool>.Failure("السؤال غير موجود");
+
+            var deletedAt = DateTime.UtcNow;
+
+            // Soft Delete للسؤال
+            question.DeletedAt = deletedAt;
+
+            // Soft Delete للخيارات الفعالة فقط
+            if (question.QuestionOptions != null)
+            {
+                foreach (var option in question.QuestionOptions)
+                {
+                    option.DeletedAt = deletedAt;
+                }
+            }
+
+            await _uow.CompleteAsync();
+
+            return Result<bool>.Success(true);
         }
     }
-
-    await _uow.CompleteAsync();
-
-    return Result<bool>.Success(true);
-}
 }
