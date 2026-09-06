@@ -287,9 +287,9 @@ namespace Qandil.Service.Services
                     oldOption.DeletedAt = DateTime.UtcNow;
                 }
             }
-
-            // 5.2 إضافة الخيارات الجديدة (فقط إذا كان النوع Options)
-            if (dto.Type == QuestionType.Options && dto.Options != null && dto.Options.Any())
+            if (dto.Type == QuestionType.Options &&
+                   dto.Options != null &&
+                   dto.Options.Any())
             {
                 foreach (var optionDto in dto.Options)
                 {
@@ -299,13 +299,14 @@ namespace Qandil.Service.Services
                         Text = optionDto.Text,
                         Order = optionDto.Order,
                         DiagnosisQuestionId = question.Id,
+                        CreatedAt = DateTime.UtcNow
                     };
-                    question.QuestionOptions.Add(option);
+
+                    await _uow.QuestionOptionRepository.AddAsync(option);
                 }
             }
 
-
-            await _uow.DiagnosisQuestionRepository.UpdateAsync(question);
+          //  await _uow.DiagnosisQuestionRepository.UpdateAsync(question);
             await _uow.CompleteAsync();
 
 

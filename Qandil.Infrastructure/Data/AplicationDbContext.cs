@@ -28,6 +28,9 @@ namespace Qandil.Infrastructure.Data
         public DbSet<DiagnosisQuestion> DiagnosisQuestions { get; set; }
         public DbSet<TestSubject> TestSubjects { get; set; }
         public DbSet<SubjectMark> ChildTestSubjectMarks { get; set; }
+        public DbSet<QuestionOption> QuestionOptions { get; set; }
+        public DbSet<SubjectMark> SubjectMarks { get; set; }
+       
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
