@@ -320,36 +320,33 @@ namespace Qandil.Service.Services
             return Result<DiagnosisQuestion>.Success(updatedQuestion);
         }
         public async Task<Result<bool>> DeleteQuestionAsync(Guid id)
-        {
-            var spec = BaseSpecification<DiagnosisQuestion>.Create()
+{
+    var spec = BaseSpecification<DiagnosisQuestion>.Create()
         .Where(x => x.DeletedAt == null && x.Id == id)
-        .Include(x => x.QuestionOptions);  // ← أضف Include للخيارات
+        .Include(x => x.QuestionOptions.Where(o => o.DeletedAt == null));
 
-            var question = await _uow.DiagnosisQuestionRepository.GetFirstBySpecAsync(spec);
+    var question = await _uow.DiagnosisQuestionRepository
+        .GetFirstBySpecAsync(spec);
 
-            if (question == null)
-                return Result<bool>.Failure("السؤال غير موجود");
+    if (question == null)
+        return Result<bool>.Failure("السؤال غير موجود");
 
-            // Soft Delete للسؤال
-            question.DeletedAt = DateTime.UtcNow;
+    var deletedAt = DateTime.UtcNow;
 
-            // Soft Delete للخيارات
-            if (question.QuestionOptions != null && question.QuestionOptions.Any())
-            {
-                foreach (var option in question.QuestionOptions)
-                {
-                    option.DeletedAt = DateTime.UtcNow;
-                }
-            }
+    // Soft Delete للسؤال
+    question.DeletedAt = deletedAt;
 
-            await _uow.DiagnosisQuestionRepository.UpdateAsync(question);
-            await _uow.CompleteAsync();
-
-            return Result<bool>.Success(true);
+    // Soft Delete للخيارات الفعالة فقط
+    if (question.QuestionOptions != null)
+    {
+        foreach (var option in question.QuestionOptions)
+        {
+            option.DeletedAt = deletedAt;
         }
-
-
-
-
     }
+
+    await _uow.CompleteAsync();
+
+    return Result<bool>.Success(true);
+}
 }
